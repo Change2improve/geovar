@@ -4,11 +4,12 @@
 *
 '''
 
-from    onshapepy.play      import  *
-from    time                import  sleep, time
-from    platform            import  system
-from    datetime            import  datetime
-import  os
+from    onshapepy.play      import  *                   # Onshape API
+from    time                import  sleep, time         # Timers/delays
+from    platform            import  system              # Running platform info
+from    datetime            import  datetime            # Get date and time
+from    pexpect             import  spawn               # Call external programs
+import  os, pexpect                                     # Directory and path manipulation
 
 DEV_MODE = True
 ## ###
@@ -18,7 +19,8 @@ DEV_MODE = True
 if( system()=='Linux' ):
     # Define useful paths
     src = os.getcwd()
-    dst = src + "/output/{}/".format( datetime.now().strftime("%Y-%m-%d__%H_%M_%S") )
+    dst = "{}/output/{}/".format( src, datetime.now().strftime("%Y-%m-%d__%H_%M_%S") )
+    tet = "{}/tetgen1.5.1/tetgen".format( src )
 
     try:
         os.makedirs( dst )
@@ -27,12 +29,12 @@ if( system()=='Linux' ):
         quit()
     else:
         print( "Created {}".format(dst) )
-        os.chdir( dst )
         
 if( system()=='Windows' ):
     # Define useful paths
     src = os.getcwd()
-    dst = src + "\\output\\{}\\".format( datetime.now().strftime("%Y-%m-%d__%H_%M_%S") )
+    dst = "{}\\output\\{}\\".format( src, datetime.now().strftime("%Y-%m-%d__%H_%M_%S") )
+##    tet = "{}\\tetgen1.5.1\\"                         # Don't know how to call cmd line software from windows
 
     try:
         os.makedirs( dst )
@@ -41,7 +43,6 @@ if( system()=='Windows' ):
         quit()
     else:
         print( "Created {}".format(dst) )
-        os.chdir( dst )
 
 ## ###
 ## Connect to sketch
@@ -81,7 +82,7 @@ print( parameters )
 #   You MUST multiply the value with whatever unit
 #   you want it to be (i.e 3*u.in == 3in)
 
-LB = 0; UB = 10                                         # Define lower and upper bounds
+LB = 0; UB = 2                                         # Define lower and upper bounds
 for i in range( LB, UB ):
     print( "\nr_inner \t r_outer \t height \t t_regen" )
     print( "========================================================\n" )
@@ -107,7 +108,15 @@ for i in range( LB, UB ):
             # get the STL export
             stl = c.part_studio_stl(did, wid, eid)
 
-            file_name = "ri{}_ro{}_h{}.stl".format( i, j, k )
+            file_name = "{}ri{}_ro{}_h{}.stl".format( dst, i, j, k )
             with open( file_name, 'w' ) as f:
                 f.write( stl.text )
+
+            cmd = "{} -pq1.2 -g -F -C -V -N -E -a0.1 {}".format( tet, file_name )
+            child = spawn(cmd, timeout=None)                            # Spawn child
+            for line in child:                                          # Read STDOUT ...
+                out = line.decode('unicode-escape').strip('\r\n')       # ... of spawned child ...
+                print( out )                                            # ... process and print.
+            child.close()                                               # Kill child process
+
 

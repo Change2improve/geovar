@@ -42,3 +42,8 @@ pip3 install onshapepy
 ```
 
 3. Place the generated API keys in the user's home directory under _```.onshapepy```_
+```
+cd ~
+nano .onshapepy
+```
+Then copy the API keys using the same format as in the Windows section.
