@@ -2,15 +2,16 @@
 *
 * Configure Onshpae parts using Python
 *
-* VERSION: 1.1
+* VERSION: 1.1.1
 *   - ADDED   : Script is now COMPLETELY independent of hardcoded
 *               values. Script can now determine number of
 *               features and dynamically adjust as needed.
+*   - ADDED   : Optimized script for speed. If current feature parameter
+*               is the same as the previous value (no change to it), then
+*               it is not sent to Onshape to reduce time needed.
 *
 * KNOWN ISSUES:
-*   - No speed optimizations have been attempted yet. For now, script
-*     communicates EVERY feature variable to Onshape, even though that
-*     variable has not changed from the last iteration.
+*   - Can't know if file failed to regenerate or not.
 * 
 * AUTHOR                    :   Mohammad Odeh
 * DATE                      :   Dec. 10th, 2018 Year of Our Lord
@@ -62,7 +63,7 @@ ap.add_argument( "-H", "--step-size"    , type = float  ,
 
 args = ap.parse_args()
 
-args.dev_mode    = True
+args.dev_mode    = False
 if( args.dev_mode ):
     args.tetgen_dir     = '/home/moe/Desktop/geovar/tetgen1.5.1/'
     args.verbose        = True
@@ -193,29 +194,36 @@ class GeoVar( object ):
             you want it to be (i.e 3*u.in == 3in)
         '''
         
-        ranges  = [range(arr.shape[1])] * arr.shape[0]
-        b       = np.array( list(product(*ranges)) )
+        ranges      = [range(arr.shape[1])] * arr.shape[0]          # Range we would like to go through
+        b           = np.array( list(product(*ranges)) )            # Create an array of indices of the products
+
+        param_prvs  = np.copy( arr.T[0] )                           # Previous unchanged value of the parameters
         
-        for i in range( 0, b.shape[0] ):
+        for i in range( 0, b.shape[0] ):                            # Loop over ALL possible combinations
             
-            for ii in range( 0, len(self.keys) ):
-                print( "{}".format( self.keys[ii] ), end='\t\t' )
-            print( "t_regen" )
+            for ii in range( 0, len(self.keys) ):                   # [INFO] ...
+                print( "{}".format( self.keys[ii] ), end='\t\t' )   # ...
+            print( "t_regen" )                                      # ...
             print( "========================================================" )
 
-            temp    = str()
-            start   = time()
-            for j in range( 0, arr.shape[0] ):
-                self.myPart.params = { self.keys[j]: arr.T[b[i][j]][j]*u.mm }
+            temp    = str()                                         # Temporary string to hold filename
+            start   = time()                                        # Timer for regeneration time
+            for j in range( 0, arr.shape[0] ):                      # Loop over ALL features
+
+                if( arr.T[b[i][j]][j] != param_prvs[j] ):           # If current and previous parameters are different
+                    self.myPart.params = { self.keys[j]: arr.T[b[i][j]][j]*u.mm }
+                else:                                               # Otherwise don't do anything
+                    pass                                            # ...
                 print( "{:4.3f}".format( arr.T[b[i][j]][j] ), end='\t\t' )
 
-                temp = "{}{}{}__".format( temp, self.keys[j], arr.T[b[i][j]][j] )
-            print( "{:4.3f}".format(time() - start) )
+                temp = "{}{}{}__".format( temp, self.keys[j],       # Build file name
+                                          arr.T[b[i][j]][j] )       # ...
+            print( "{:4.3f}".format(time() - start) )               # [INFO] ...
             print( "--------------------------------------------------------\n" )
 
             # get the STL export
-            file = "{}{}.stl".format( self.dst, temp.rstrip('_') )
-            self.export_stl( file )
+            file = "{}{}.stl".format( self.dst, temp.rstrip('_') )  # Build file name
+            self.export_stl( file )                                 # Export the STL file
 
 # --------------------------
 
@@ -229,10 +237,10 @@ class GeoVar( object ):
             you want it to be (i.e 3*u.in == 3in)
         '''
 
-        stl = self.c.part_studio_stl( self.did, self.wid, self.eid )
+        stl = self.c.part_studio_stl( self.did, self.wid, self.eid )# Get the STL
 
-        with open( file_name, 'w' ) as f:
-            f.write( stl.text )
+        with open( file_name, 'w' ) as f:                           # Write STL to file
+            f.write( stl.text )                                     # ...
 
         cmd = "{}tetgen -pq1.2 -g -F -C -V -N -E -a0.1 {}".format( self.tet, file_name )
         child = spawn(cmd, timeout=None)                            # Spawn child
