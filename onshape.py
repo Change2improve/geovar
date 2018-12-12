@@ -2,20 +2,29 @@
 *
 * Configure Onshpae parts using Python
 *
-* VERSION: 1.1.1
+* VERSION: 1.1.2
 *   - ADDED   : Script is now COMPLETELY independent of hardcoded
 *               values. Script can now determine number of
 *               features and dynamically adjust as needed.
 *   - ADDED   : Optimized script for speed. If current feature parameter
 *               is the same as the previous value (no change to it), then
 *               it is not sent to Onshape to reduce time needed.
+*   - MODIFIED: Adaptive width line printing.
+*
+*
+* VERSION: 1.2
+*   - ADDED   : Ability to check whether part failed to mutate or not!
+*
 *
 * KNOWN ISSUES:
-*   - Can't know if file failed to regenerate or not.
-* 
+*   - Excessive calls to check_default().
+*   - Issues with exporting as in it exports STL's that failed to regenerate.
+*                   [ check_default() logic needs fixin' ]
+*
+*
 * AUTHOR                    :   Mohammad Odeh
 * DATE                      :   Dec. 10th, 2018 Year of Our Lord
-* LAST CONTRIBUTION DATE    :   Dec. 11th, 2018 Year of Our Lord
+* LAST CONTRIBUTION DATE    :   Dec. 12th, 2018 Year of Our Lord
 *
 '''
 
@@ -35,35 +44,41 @@ import  os, re                                                      # Dir/path m
 
 ap = ArgumentParser()
 
+# Developer mode, makes life easy for me
 ap.add_argument( "--dev-mode"           ,
                  dest   = "dev_mode"    ,
                  action = 'store_true'  , default=False ,
                  help   = "Enter developer mode"        )
 
+# Directory that points to COMPILED tetgen
 ap.add_argument( "--tetgen-dir"         , type = str    ,
                  dest   = "tetgen_dir"  , default="foo" ,
                  help   = "Point to TetGen directory"   )
 
+# Print out stuff to help debug
 ap.add_argument( "-v", "--verbose"      ,
                  dest   = "verbose"     ,
                  action = 'store_true'  , default=False ,
                  help   = "WARNING: Prints EVERYTHING!!")
 
+# Lower bound for variations array
 ap.add_argument( "-LB", "--lower-bound" , type = int    ,
                  dest   = "lower_bound" , default = 50  ,
                  help   = "Minimum value desired"       )
 
+# Upper bound for variations array
 ap.add_argument( "-UB", "--upper-bound" , type = int    ,
                  dest   = "upper_bound" , default = 51  ,
                  help   = "Maximum value desired"       )
 
+# Step size for variations array
 ap.add_argument( "-H", "--step-size"    , type = float  ,
                  dest   = "upper_bound" , default = 0.1 ,
                  help   = "Variations step size"        )
 
 args = ap.parse_args()
 
-args.dev_mode    = False
+##args.dev_mode    = True
 if( args.dev_mode ):
     args.tetgen_dir     = '/home/moe/Desktop/geovar/tetgen1.5.1/'
     args.verbose        = True
@@ -77,13 +92,16 @@ if( args.dev_mode ):
 class GeoVar( object ):
 
     def __init__( self ):
-        if( args.tetgen_dir == "foo"):                              # Make sure a directory for 
-                raise NameError( "No TetGen directory sepcified" )  # TetGen was given
+        if( args.tetgen_dir == "foo" ):                             # Make sure a directory for
+            raise NameError( "No TetGen directory sepcified" )      # TetGen was given
+
+        self.allow_export    = False                                # Flag to allow STL exports
+        self.valid_mutations = 0                                    # Counter for successful mutations
         
         self.setup_directories()                                    # Setup & define directories
         self.connect_to_sketch()                                    # Instantiate Onshape client and connect
 
-        self.get_default()                                          # Get configurable part features and CURRENT default values
+        self.get_values( initRun=True )                             # Get configurable part features and CURRENT default values
 
 # --------------------------
 
@@ -149,10 +167,14 @@ class GeoVar( object ):
 
 # --------------------------
 
-    def get_default( self ):
+    def get_values( self, initRun=False, feature="foo" ):
         '''
         Extract configured variable names from part
-        and get the current default values
+        and get the current values.
+        When initRun is True, it gets the default values
+        and stores them for later usage.
+
+        FROM: https://stackoverflow.com/questions/4703390/how-to-extract-a-floating-number-from-a-string
 
         NOTE:-
             myPart.param = {
@@ -168,15 +190,23 @@ class GeoVar( object ):
         numeric_const_pattern = '[-+]? (?: (?: \d* \. \d+ ) | (?: \d+ \.? ) )(?: [Ee] [+-]? \d+ ) ?'
         rx = re.compile(numeric_const_pattern, re.VERBOSE)
 
-        self.keys       = list( self.myPart.params )
-        self.default    = [None] * len( self.keys )
+        if( initRun ):                                              # If this is the initial run, get defaults
+            self.keys       = list( self.myPart.params )            #   Cast dict as list to extract keys
+            self.default    = [None] * len( self.keys )             #   Create a list of length for values
 
-        print( "Found {} configurable parts with defaults:-".format(len(self.keys)) )
-        for i in range( 0, len(self.keys) ):
-            param = str( self.myPart.params[ self.keys[i] ] )
-            self.default[i] = float( rx.findall(param)[0] )
-            print( "  {:3}. {:12}: {: >10.3f}".format(i+1, self.keys[i], self.default[i]) )
-        print( '' )
+            print( "Found {} configurable parts with defaults:-".format(len(self.keys)) )
+            for i in range( 0, len(self.keys) ):                    #   Loop over all dict entries
+                param = str( self.myPart.params[ self.keys[i] ] )   #       Get dict value as string
+                self.default[i] = float( rx.findall(param)[0] )     #       Extract value from string
+                print( "  {:3}. {:12}: {: >10.3f}".format(i+1, self.keys[i], self.default[i]) )
+            print( '' )
+
+        else:
+            if( feature == "foo" ):                                 # Check that a valid feature name was given
+                raise NameError( "No feature given. Terminating" )  #   Raise Error if not!
+            
+            param = str(self.myPart.params[ feature ])              # Get current value of feature as a string
+            return( float(rx.findall(param)[0]) )                   # Extract & return value as float
         
 # --------------------------
 
@@ -198,33 +228,86 @@ class GeoVar( object ):
         b           = np.array( list(product(*ranges)) )            # Create an array of indices of the products
 
         param_prvs  = np.copy( arr.T[0] )                           # Previous unchanged value of the parameters
-        
+
+        fmt_str = str()
+        for name in self.keys:                                      # Build row with key names
+            fmt_str = "{}{}\t\t".format( fmt_str, name )            # for visual presentation
+        fmt_str = "{}t_regen".format( fmt_str )                     # ...
+
+        # ------ Mutate  Part ------
         for i in range( 0, b.shape[0] ):                            # Loop over ALL possible combinations
+            print( fmt_str )                                        #   [INFO] Print FORMATTED key names
+            print( "=" * len(fmt_str) * round(len(self.keys)/2) )   #   [INFO] Print adaptive width dashes
+
+            temp    = str()                                         #   Temporary string to hold filename
+            start   = time()                                        #   Timer for regeneration time
             
-            for ii in range( 0, len(self.keys) ):                   # [INFO] ...
-                print( "{}".format( self.keys[ii] ), end='\t\t' )   # ...
-            print( "t_regen" )                                      # ...
-            print( "========================================================" )
+            for j in range( 0, arr.shape[0] ):                      #   Loop over ALL features
+                param_crnt = arr.T[b[i][j]][j]                      #       Get current value to be passed
+                
+                if( param_crnt != param_prvs[j] ):                  #       If current and previous parameters are different
+                    self.myPart.params = { self.keys[j]:            #           Pass new value (aka mutate part)
+                                           param_crnt*u.mm }        #           ...
 
-            temp    = str()                                         # Temporary string to hold filename
-            start   = time()                                        # Timer for regeneration time
-            for j in range( 0, arr.shape[0] ):                      # Loop over ALL features
+                    param_prvs[j] = param_crnt                      #           Update previous parameter
+                    
+                    self.check_default( self.keys[j]    ,           #           Check if part regenerated properly
+                                        self.default[j] ,           #           ...
+                                        param_crnt      )           #           ...
+                    
+                else: pass                                          #       Otherwise don't do anything
+                
+                print( "{:4.3f}".format(param_crnt), end='\t\t' )
 
-                if( arr.T[b[i][j]][j] != param_prvs[j] ):           # If current and previous parameters are different
-                    self.myPart.params = { self.keys[j]: arr.T[b[i][j]][j]*u.mm }
-                else:                                               # Otherwise don't do anything
-                    pass                                            # ...
-                print( "{:4.3f}".format( arr.T[b[i][j]][j] ), end='\t\t' )
-
-                temp = "{}{}{}__".format( temp, self.keys[j],       # Build file name
-                                          arr.T[b[i][j]][j] )       # ...
-            print( "{:4.3f}".format(time() - start) )               # [INFO] ...
-            print( "--------------------------------------------------------\n" )
+                temp = "{}{}{}__".format( temp, self.keys[j],       #       Build file name
+                                          param_crnt )              #       ...
+                
+            print( "{:4.3f}".format(time() - start) )               #       [INFO] Print regeneration time
+            print( "-" * len(fmt_str) * round(len(self.keys)/2), end='\n\n' )
 
             # get the STL export
-            file = "{}{}.stl".format( self.dst, temp.rstrip('_') )  # Build file name
-            self.export_stl( file )                                 # Export the STL file
+            file = "{}{}.stl".format( self.dst, temp.rstrip('_') )  #       Build file name
+            
+            if( self.allow_export ):                                #       Export the STL file
+                self.export_stl( file )                             #       ...
 
+        # --- Revert to defaults ---
+        print( "*" * len(fmt_str) * round(len(self.keys)/2) )       # [INFO] ...
+        print( "RESULTS:-" )                                        # ...
+        print( "  {} mutations performed\n".format(b.shape[0]) )    # ...
+        print( "  {} Successful mutations".format(self.valid_mutations))
+        print( "*" * len(fmt_str) * round(len(self.keys)/2) )       # ...
+
+        print( "Reverting part to defaults", end='' )               # [INFO] ...
+        for i in range( 0, arr.shape[0] ):                          # Loop over ALL features
+            self.myPart.params = { self.keys[i]:                    #   Set back to default
+                                   self.default[i]*u.mm }           #   ...
+        print( "...DONE!" )
+
+# --------------------------
+
+    def check_default( self, feature_name, default_value, passed_value ):
+        '''
+        Check if the value reverted to the default value after
+        being changed.
+        This indicates that the feature failed to mutate.
+        '''
+
+        current_value = self.get_values( feature=feature_name )     # Read value from Onshape
+        
+        if( passed_value == default_value ):                        # If passed value is the same as the default
+            self.allow_export = True                                #   Allow exporting of STL
+            self.valid_mutations += 1                               #   Increment counter
+            
+        elif( passed_value != default_value ):                      # If passed value is different than the default
+            if( current_value == default_value ):                   #   Current value is equal to the default
+                self.allow_export = False                           #       File failed to regenerate, don't export!
+                print( "FAILED TO GENERATE" )                       #       [INFO] ...
+
+            elif( current_value != default_value ):                 #   Current value is different than default
+                self.allow_export = True                            #       Allow exporting of STL
+                self.valid_mutations += 1                           #       Increment counter
+                
 # --------------------------
 
     def export_stl( self, file_name ):
@@ -265,4 +348,3 @@ for i in range( 0, len(prog.keys) ):                                # depending 
     arr[i] = np.array( np.linspace(LB, UB, (UB-LB)/h+1) )           # varying features
 
 prog.mutate_part( arr )                                             # Do da tang!
-
