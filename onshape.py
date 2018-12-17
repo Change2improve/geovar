@@ -84,10 +84,10 @@ ap.add_argument( "-H", "--step-size"    , type = float  ,
 
 args = ap.parse_args()
 
-##args.dev_mode    = True
+args.dev_mode    = True
 if( args.dev_mode ):
-    args.tetgen_dir     = r'C:\Users\modeh\Desktop\geovar\tetgen1.5.1\Build\Debug'
-##    args.verbose        = True
+    args.tetgen_dir     = 'C:\\Users\\modeh\\Desktop\\geovar\\tetgen1.5.1\\Build\\Debug\\'
+    args.verbose        = True
     args.lower_bound    = 9
     args.upper_bound    = 10
     args.step_size      = 0.5
@@ -132,7 +132,7 @@ class GeoVar( object ):
                 print( "Created {}".format(self.dst) )
 
         # ----- Windows system -----
-        if( system()=='Windows' ):
+        elif( system()=='Windows' ):
             # Define useful paths
             src = os.getcwd()
             self.dst = "{}\\output\\{}\\".format( src, datetime.now().strftime("%Y-%m-%d__%H_%M_%S") )
@@ -346,12 +346,18 @@ class GeoVar( object ):
         with open( file_name, 'w' ) as f:                           # Write STL to file
             f.write( stl.text )                                     # ...
 
-        cmd = "{}tetgen -pq1.2 -g -F -C -V -N -E -a0.1 {}".format( self.tet, file_name )
+        if( system()=='Linux' ):
+            cmd = "{}tetgen -pq1.2 -g -F -C -V -N -E -a0.1 {}".format( self.tet, file_name )
+        elif( system()=='Windows' ):
+            cmd = "{}tetgen.exe -pq1.2 -g -F -C -V -N -E -a0.1 {}".format( self.tet, file_name )
+            
         child = spawn(cmd, timeout=None)                            # Spawn child
+        
         for line in child:                                          # Read STDOUT ...
-            out = line.decode('unicode-escape').strip('\r\n')       # ... of spawned child ...
+            out = line.decode('utf-8').strip('\r\n')                # ... of spawned child ...
             if( args.verbose ): print( out )                        # ... process and print.
-        child.close()                                               # Kill child process
+        
+        if( system()=='Linux' ): child.close()                      # Kill child process
 
 # ************************************************************************
 # =========================> MAKE IT ALL HAPPEN <=========================
@@ -364,6 +370,11 @@ LB  = args.lower_bound                                              # Lower boun
 UB  = args.upper_bound                                              # Upper bound
 h   = args.step_size                                                # Step size
 
+'''
+NOTE THAT ALL THE ARRAYS CREATED ARE REPLICAS OF ONE ANOTHER.
+THIS WAS DONE FOR THE SAKE OF SIMPLICITY. EACH ARRAY CAN BE
+CONSTRUCTED ON ITS OWN MANUALLY IF THE USER WANTS TO DO SO.
+'''
 arr = np.zeros( [len(prog.keys), int((UB-LB)/h)+1] )                # Dynamically create array
 for i in range( 0, len(prog.keys) ):                                # depending on number of
     arr[i] = np.array( np.linspace(LB, UB, int((UB-LB)/h)+1) )      # varying features
