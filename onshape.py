@@ -12,8 +12,9 @@
 *   - MODIFIED: Adaptive width line printing.
 *
 *
-* VERSION: 1.2
+* VERSION: 1.2.1
 *   - ADDED   : Ability to check whether part failed to mutate or not!
+*   - FIXED   : Now fully compatible with Windows machines
 *
 *
 * KNOWN ISSUES:
@@ -24,7 +25,7 @@
 *
 * AUTHOR                    :   Mohammad Odeh
 * DATE                      :   Dec. 10th, 2018 Year of Our Lord
-* LAST CONTRIBUTION DATE    :   Dec. 12th, 2018 Year of Our Lord
+* LAST CONTRIBUTION DATE    :   Dec. 17th, 2018 Year of Our Lord
 *
 '''
 
@@ -32,7 +33,12 @@ from    onshapepy.play              import  *                       # Onshape AP
 from    time                        import  sleep, time             # Timers/delays
 from    platform                    import  system                  # Running platform info
 from    datetime                    import  datetime                # Get date and time
-from    pexpect                     import  spawn                   # Call external programs
+
+try:
+    from    pexpect                 import  spawn                   # Call external programs (UNIX)
+except:
+    from    pexpect.popen_spawn     import  PopenSpawn as spawn     # Call external programs (Windows)
+    
 from    argparse                    import  ArgumentParser          # Add input arguments to script
 from    itertools                   import  product                 # Apply product rule on combinations
 import  numpy                       as      np                      # Fast array creation
@@ -80,8 +86,8 @@ args = ap.parse_args()
 
 ##args.dev_mode    = True
 if( args.dev_mode ):
-    args.tetgen_dir     = '/home/moe/Desktop/geovar/tetgen1.5.1/'
-    args.verbose        = True
+    args.tetgen_dir     = r'C:\Users\modeh\Desktop\geovar\tetgen1.5.1\Build\Debug'
+##    args.verbose        = True
     args.lower_bound    = 9
     args.upper_bound    = 10
     args.step_size      = 0.5
@@ -129,8 +135,8 @@ class GeoVar( object ):
         if( system()=='Windows' ):
             # Define useful paths
             src = os.getcwd()
-            dst = "{}\\output\\{}\\".format( src, datetime.now().strftime("%Y-%m-%d__%H_%M_%S") )
-##            tet = "{}\\tetgen1.5.1\\"                               # Don't know how to call cmd line software from windows
+            self.dst = "{}\\output\\{}\\".format( src, datetime.now().strftime("%Y-%m-%d__%H_%M_%S") )
+            self.tet = args.tetgen_dir
 
             try:
                 os.makedirs( self.dst )
@@ -175,6 +181,11 @@ class GeoVar( object ):
         and stores them for later usage.
 
         FROM: https://stackoverflow.com/questions/4703390/how-to-extract-a-floating-number-from-a-string
+
+        INPUT:-
+            - initRun: Set to True ONLY the first time this command is run.
+                       This allows us to store the default values for the part.
+            - feature: Name of the feature we want to get the value of.
 
         NOTE:-
             myPart.param = {
@@ -291,6 +302,12 @@ class GeoVar( object ):
         Check if the value reverted to the default value after
         being changed.
         This indicates that the feature failed to mutate.
+
+        INPUT:-
+            - feature_name : Name of feature to check.
+            - default_value: The default value that was stored
+                             at the initial run of the script.
+            - passed_value : Value that was sent to Onshape.
         '''
 
         current_value = self.get_values( feature=feature_name )     # Read value from Onshape
@@ -318,6 +335,10 @@ class GeoVar( object ):
         NOTE:-
             You MUST multiply the value with whatever unit
             you want it to be (i.e 3*u.in == 3in)
+
+        INPUT:-
+            - file_name: The name you'd like the STL file
+                         to be given.
         '''
 
         stl = self.c.part_studio_stl( self.did, self.wid, self.eid )# Get the STL
@@ -345,6 +366,6 @@ h   = args.step_size                                                # Step size
 
 arr = np.zeros( [len(prog.keys), int((UB-LB)/h)+1] )                # Dynamically create array
 for i in range( 0, len(prog.keys) ):                                # depending on number of
-    arr[i] = np.array( np.linspace(LB, UB, (UB-LB)/h+1) )           # varying features
+    arr[i] = np.array( np.linspace(LB, UB, int((UB-LB)/h)+1) )      # varying features
 
 prog.mutate_part( arr )                                             # Do da tang!
