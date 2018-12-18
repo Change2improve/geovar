@@ -1,6 +1,6 @@
 '''
 *
-* Configure Onshpae parts using Python
+* Automatic configuration and meshing of Onshape parts using Python
 *
 * VERSION: 1.1.2
 *   - ADDED   : Script is now COMPLETELY independent of hardcoded
@@ -12,20 +12,21 @@
 *   - MODIFIED: Adaptive width line printing.
 *
 *
-* VERSION: 1.2.1
+* VERSION: 1.2.5
 *   - ADDED   : Ability to check whether part failed to mutate or not!
 *   - FIXED   : Now fully compatible with Windows machines
+*   - FIXED   : Fixed check_default() method's logic. Now we only export
+*               parts that do NOT revert back to default value after mutation.
+*   - ADDED   : More beautiful formatting FTW!
 *
 *
 * KNOWN ISSUES:
-*   - Excessive calls to check_default().
-*   - Issues with exporting as in it exports STL's that failed to regenerate.
-*                   [ check_default() logic needs fixin' ]
+*   - Non at the moment
 *
 *
 * AUTHOR                    :   Mohammad Odeh
 * DATE                      :   Dec. 10th, 2018 Year of Our Lord
-* LAST CONTRIBUTION DATE    :   Dec. 17th, 2018 Year of Our Lord
+* LAST CONTRIBUTION DATE    :   Dec. 18th, 2018 Year of Our Lord
 *
 '''
 
@@ -56,7 +57,7 @@ ap.add_argument( "--dev-mode"           ,
                  action = 'store_true'  , default=False ,
                  help   = "Enter developer mode"        )
 
-# Directory that points to COMPILED tetgen
+# Directory that points to COMPILED/EXECCUTABLE tetgen
 ap.add_argument( "--tetgen-dir"         , type = str    ,
                  dest   = "tetgen_dir"  , default="foo" ,
                  help   = "Point to TetGen directory"   )
@@ -86,11 +87,11 @@ args = ap.parse_args()
 
 args.dev_mode    = True
 if( args.dev_mode ):
-    args.tetgen_dir     = 'C:\\Users\\modeh\\Desktop\\geovar\\tetgen1.5.1\\Build\\Debug\\'
-    args.verbose        = True
+    args.tetgen_dir     = '/home/moe/Desktop/geovar/tetgen1.5.1/'
+##    args.verbose        = True
     args.lower_bound    = 9
     args.upper_bound    = 10
-    args.step_size      = 0.5
+    args.step_size      = 1
 # ************************************************************************
 # ===========================> PROGRAM  SETUP <==========================*
 # ************************************************************************
@@ -98,8 +99,8 @@ if( args.dev_mode ):
 class GeoVar( object ):
 
     def __init__( self ):
-        if( args.tetgen_dir == "foo" ):                             # Make sure a directory for
-            raise NameError( "No TetGen directory sepcified" )      # TetGen was given
+        if( args.tetgen_dir == "foo" ):                             # Make sure a directory for TetGen was given
+            raise NameError( "No TetGen directory sepcified" )      # ...
 
         self.allow_export    = False                                # Flag to allow STL exports
         self.valid_mutations = 0                                    # Counter for successful mutations
@@ -119,7 +120,7 @@ class GeoVar( object ):
 
         # ------ UNIX systems ------
         if( system()=='Linux' ):
-            src = os.getcwd()
+            src      = os.getcwd()
             self.dst = "{}/output/{}/".format( src, datetime.now().strftime("%Y-%m-%d__%H_%M_%S") )
             self.tet = args.tetgen_dir
 
@@ -134,7 +135,7 @@ class GeoVar( object ):
         # ----- Windows system -----
         elif( system()=='Windows' ):
             # Define useful paths
-            src = os.getcwd()
+            src      = os.getcwd()
             self.dst = "{}\\output\\{}\\".format( src, datetime.now().strftime("%Y-%m-%d__%H_%M_%S") )
             self.tet = args.tetgen_dir
 
@@ -173,7 +174,7 @@ class GeoVar( object ):
 
 # --------------------------
 
-    def get_values( self, initRun=False, feature="foo" ):
+    def get_values( self, initRun=False ):
         '''
         Extract configured variable names from part
         and get the current values.
@@ -185,7 +186,6 @@ class GeoVar( object ):
         INPUT:-
             - initRun: Set to True ONLY the first time this command is run.
                        This allows us to store the default values for the part.
-            - feature: Name of the feature we want to get the value of.
 
         NOTE:-
             myPart.param = {
@@ -211,13 +211,18 @@ class GeoVar( object ):
                 self.default[i] = float( rx.findall(param)[0] )     #       Extract value from string
                 print( "  {:3}. {:12}: {: >10.3f}".format(i+1, self.keys[i], self.default[i]) )
             print( '' )
+            return( 0 )
 
         else:
-            if( feature == "foo" ):                                 # Check that a valid feature name was given
-                raise NameError( "No feature given. Terminating" )  #   Raise Error if not!
+            current    = [None] * len( self.keys )                  #   Create a list of length for values
             
-            param = str(self.myPart.params[ feature ])              # Get current value of feature as a string
-            return( float(rx.findall(param)[0]) )                   # Extract & return value as float
+            print( "{:8}:".format("CURRENT"), end='\t' )
+            for i in range( 0, len(self.keys) ):                    #   Loop over all dict entries
+                param = str( self.myPart.params[ self.keys[i] ] )   #       Get dict value as string
+                current[i] = float( rx.findall(param)[0] )          #       Extract value from string
+                print( "{:4.3f}".format(current[i]), end='\t\t' )
+            print("//"); print( "-" * self.len_cte )
+            return( current )
         
 # --------------------------
 
@@ -239,102 +244,99 @@ class GeoVar( object ):
         b           = np.array( list(product(*ranges)) )            # Create an array of indices of the products
 
         param_prvs  = np.copy( arr.T[0] )                           # Previous unchanged value of the parameters
+        param_crnt  = np.zeros_like( param_prvs )
 
         fmt_str = str()
         for name in self.keys:                                      # Build row with key names
-            fmt_str = "{}{}\t\t".format( fmt_str, name )            # for visual presentation
-        fmt_str = "{}t_regen".format( fmt_str )                     # ...
+            fmt_str = "{}\t\t{}".format( fmt_str, name )            # for visual presentation
+        fmt_str = "{}\t\tt_regen".format( fmt_str )                 # ...
 
+        self.len_cte = len(fmt_str) * round(len(self.keys)/2)       # Format length constant
+        
         # ------ Mutate  Part ------
+        self.i = 0
         for i in range( 0, b.shape[0] ):                            # Loop over ALL possible combinations
             print( fmt_str )                                        #   [INFO] Print FORMATTED key names
-            print( "=" * len(fmt_str) * round(len(self.keys)/2) )   #   [INFO] Print adaptive width dashes
+            print( "=" * self.len_cte )                             #   [INFO] Print adaptive width dashes
+            print( "{:8}:".format("SENT"), end='\t' )               #   [INFO] Print values
 
             temp    = str()                                         #   Temporary string to hold filename
             start   = time()                                        #   Timer for regeneration time
             
             for j in range( 0, arr.shape[0] ):                      #   Loop over ALL features
-                param_crnt = arr.T[b[i][j]][j]                      #       Get current value to be passed
+                param_crnt[j] = arr.T[b[i][j]][j]                   #       Get current value to be passed
                 
-                if( param_crnt != param_prvs[j] ):                  #       If current and previous parameters are different
+                if( param_crnt[j] != param_prvs[j] ):               #       If current and previous parameters are different
                     self.myPart.params = { self.keys[j]:            #           Pass new value (aka mutate part)
-                                           param_crnt*u.mm }        #           ...
+                                           param_crnt[j]*u.mm }     #           ...
 
-                    param_prvs[j] = param_crnt                      #           Update previous parameter
-                    
-                    self.check_default( self.keys[j]    ,           #           Check if part regenerated properly
-                                        self.default[j] ,           #           ...
-                                        param_crnt      )           #           ...
+                    param_prvs[j] = param_crnt[j]                   #           Update previous parameter
+                    self.i += 1
                     
                 else: pass                                          #       Otherwise don't do anything
                 
-                print( "{:4.3f}".format(param_crnt), end='\t\t' )
+                print( "{:4.3f}".format(param_crnt[j]), end='\t\t' )#       [INFO] Print value being sent to Onshape
 
                 temp = "{}{}{}__".format( temp, self.keys[j],       #       Build file name
-                                          param_crnt )              #       ...
+                                          param_crnt[j] )           #       ...
                 
             print( "{:4.3f}".format(time() - start) )               #       [INFO] Print regeneration time
-            print( "-" * len(fmt_str) * round(len(self.keys)/2), end='\n\n' )
+            print( "-" * self.len_cte )                             #       [INFO] Print break lines
 
             # get the STL export
             file = "{}{}.stl".format( self.dst, temp.rstrip('_') )  #       Build file name
             
+            self.check_default( param_crnt )                        #       Check if part regenerated properly
+
             if( self.allow_export ):                                #       Export the STL file
                 self.export_stl( file )                             #       ...
 
         # --- Revert to defaults ---
-        print( "*" * len(fmt_str) * round(len(self.keys)/2) )       # [INFO] ...
+        print( "*" * self.len_cte )                                 # [INFO] Print break lines
         print( "RESULTS:-" )                                        # ...
-        print( "  {} mutations performed\n".format(b.shape[0]) )    # ...
-        print( "  {} Successful mutations".format(self.valid_mutations))
-        print( "*" * len(fmt_str) * round(len(self.keys)/2) )       # ...
+        print( "  {:5} mutations performed".format(b.shape[0]) )    # ...
+        print( "    {:5} successful mutations".format(self.valid_mutations))
+        print( "    {:5} failed     mutations".format(b.shape[0]-self.valid_mutations))
+        print( "  {:5} calls to Onshape".format(self.i) )
+        print( "*" * self.len_cte )                                 # [INFO] Print break lines
 
-        print( "Reverting part to defaults", end='' )               # [INFO] ...
-        for i in range( 0, arr.shape[0] ):                          # Loop over ALL features
-            self.myPart.params = { self.keys[i]:                    #   Set back to default
-                                   self.default[i]*u.mm }           #   ...
-        print( "...DONE!" )
+        self.reset_myPart()                                         # Go back to defaults
 
 # --------------------------
 
-    def check_default( self, feature_name, default_value, passed_value ):
+    def check_default( self, passed_value ):
         '''
         Check if the value reverted to the default value after
         being changed.
         This indicates that the feature failed to mutate.
 
         INPUT:-
-            - feature_name : Name of feature to check.
-            - default_value: The default value that was stored
-                             at the initial run of the script.
             - passed_value : Value that was sent to Onshape.
         '''
 
-        current_value = self.get_values( feature=feature_name )     # Read value from Onshape
-        
-        if( passed_value == default_value ):                        # If passed value is the same as the default
-            self.allow_export = True                                #   Allow exporting of STL
-            self.valid_mutations += 1                               #   Increment counter
-            
-        elif( passed_value != default_value ):                      # If passed value is different than the default
-            if( current_value == default_value ):                   #   Current value is equal to the default
-                self.allow_export = False                           #       File failed to regenerate, don't export!
-                print( "FAILED TO GENERATE" )                       #       [INFO] ...
+        print( "{:8}:".format("DEFAULT"), end='\t' )                # [INFO] Print DEFAULT values
+        for num in self.default:                                    # ...
+            print( "{:4.3f}".format(num), end='\t\t' )              # ...
+        print( "//" ); print( "-" * self.len_cte )                  # ...
 
-            elif( current_value != default_value ):                 #   Current value is different than default
-                self.allow_export = True                            #       Allow exporting of STL
-                self.valid_mutations += 1                           #       Increment counter
+        current_value = self.get_values( )                          # Read CURRENT value from Onshape
+        for i in range( 0, len(current_value) ):
+                
+            if( passed_value[i] != self.default[i] ):               # If passed value is different than the default
+                if( current_value[i] == self.default[i] ):          #   Current value is equal to the default
+                    self.allow_export = False                       #       File failed to regenerate, don't export!
+                    print( "{:_^{width}}".format("FAILED MUTATION", width=self.len_cte), end='\n\n' )
+                    return 0
+
+        self.allow_export = True                                    #       Allow exporting of STL
+        self.valid_mutations += 1                                   #       Increment counter
+        print( "{:_^{width}}".format("VALID  MUTATION", width=self.len_cte), end='\n\n' )
                 
 # --------------------------
 
     def export_stl( self, file_name ):
         '''
-        Apply product rule on part to get as many
-        geometric variations as needed
-
-        NOTE:-
-            You MUST multiply the value with whatever unit
-            you want it to be (i.e 3*u.in == 3in)
+        Export file as STL.
 
         INPUT:-
             - file_name: The name you'd like the STL file
@@ -346,18 +348,45 @@ class GeoVar( object ):
         with open( file_name, 'w' ) as f:                           # Write STL to file
             f.write( stl.text )                                     # ...
 
+        self.export_stl( file_name )                                # Create MESH
+
+# --------------------------
+
+    def export_stl( self, file_name ):
+        '''
+        Create a MESH out of the STL file.
+
+        INPUT:-
+            - file_name: The name you'd like the MESH file
+                         to be given.
+        '''
+
         if( system()=='Linux' ):
-            cmd = "{}tetgen -pq1.2 -g -F -C -V -N -E -a0.1 {}".format( self.tet, file_name )
+            cmd = "{}tetgen -pq1.2 -g -F -C -V -N -E -I -a0.1 {}".format( self.tet, file_name )
         elif( system()=='Windows' ):
-            cmd = "{}tetgen.exe -pq1.2 -g -F -C -V -N -E -a0.1 {}".format( self.tet, file_name )
+            cmd = "{}tetgen.exe -pq1.2 -g -F -C -V -N -E -I -a0.1 {}".format( self.tet, file_name )
             
-        child = spawn(cmd, timeout=None)                            # Spawn child
+        child = spawn( cmd, timeout=None )                          # Spawn child
         
         for line in child:                                          # Read STDOUT ...
             out = line.decode('utf-8').strip('\r\n')                # ... of spawned child ...
             if( args.verbose ): print( out )                        # ... process and print.
         
         if( system()=='Linux' ): child.close()                      # Kill child process
+        
+# --------------------------
+
+    def reset_myPart( self ):
+        '''
+        Resets part to default values found at the
+        beginning of the script.
+        '''
+
+        print( "Reverting part to defaults", end='' )               # [INFO] ...
+        for i in range( 0, len(self.keys) ):                        # Loop over ALL features
+            self.myPart.params = { self.keys[i]:                    #   Set back to default
+                                   self.default[i]*u.mm }           #   ...
+        print( "...DONE!" )
 
 # ************************************************************************
 # =========================> MAKE IT ALL HAPPEN <=========================
@@ -379,4 +408,8 @@ arr = np.zeros( [len(prog.keys), int((UB-LB)/h)+1] )                # Dynamicall
 for i in range( 0, len(prog.keys) ):                                # depending on number of
     arr[i] = np.array( np.linspace(LB, UB, int((UB-LB)/h)+1) )      # varying features
 
-prog.mutate_part( arr )                                             # Do da tang!
+try:
+    prog.mutate_part( arr )                                         # Do da tang!
+except:
+    prog.reset_myPart()                                             # In case something goes wrong, reset!
+
