@@ -348,11 +348,11 @@ class GeoVar( object ):
         with open( file_name, 'w' ) as f:                           # Write STL to file
             f.write( stl.text )                                     # ...
 
-        self.export_stl( file_name )                                # Create MESH
+        self.mesh_file( file_name )                                 # Create MESH
 
 # --------------------------
 
-    def export_stl( self, file_name ):
+    def mesh_file( self, file_name ):
         '''
         Create a MESH out of the STL file.
 
