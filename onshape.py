@@ -12,38 +12,40 @@
 *   - MODIFIED: Adaptive width line printing.
 *
 *
-* VERSION: 1.2.5
+* VERSION: 1.2.7
 *   - ADDED   : Ability to check whether part failed to mutate or not!
 *   - FIXED   : Now fully compatible with Windows machines
 *   - FIXED   : Fixed check_default() method's logic. Now we only export
 *               parts that do NOT revert back to default value after mutation.
 *   - ADDED   : More beautiful formatting FTW!
+*   - ADDED   : Give user ability to define array bounds!
 *
 *
 * KNOWN ISSUES:
-*   - Non at the moment
+*   - If no value is entered when prompted for
+*     bounds/step size, program crashes.
 *
 *
 * AUTHOR                    :   Mohammad Odeh
 * DATE                      :   Dec. 10th, 2018 Year of Our Lord
-* LAST CONTRIBUTION DATE    :   Dec. 18th, 2018 Year of Our Lord
+* LAST CONTRIBUTION DATE    :   Dec. 19th, 2018 Year of Our Lord
 *
 '''
 
-from    onshapepy.play              import  *                       # Onshape API
-from    time                        import  sleep, time             # Timers/delays
-from    platform                    import  system                  # Running platform info
-from    datetime                    import  datetime                # Get date and time
+from    onshapepy.play              import  *                           # Onshape API
+from    time                        import  sleep, time                 # Timers/delays
+from    platform                    import  system                      # Running platform info
+from    datetime                    import  datetime                    # Get date and time
 
 try:
-    from    pexpect                 import  spawn                   # Call external programs (UNIX)
+    from    pexpect                 import  spawn                       # Call external programs (UNIX)
 except:
-    from    pexpect.popen_spawn     import  PopenSpawn as spawn     # Call external programs (Windows)
+    from    pexpect.popen_spawn     import  PopenSpawn as spawn         # Call external programs (Windows)
     
-from    argparse                    import  ArgumentParser          # Add input arguments to script
-from    itertools                   import  product                 # Apply product rule on combinations
-import  numpy                       as      np                      # Fast array creation
-import  os, re                                                      # Dir/path manipulation, extract numerics from strings
+from    argparse                    import  ArgumentParser              # Add input arguments to script
+from    itertools                   import  product                     # Apply product rule on combinations
+import  numpy                       as      np                          # Fast array creation
+import  os, re                                                          # Dir/path manipulation, extract numerics from strings
 
 # ************************************************************************
 # =====================> CONSTRUCT ARGUMENT PARSER <=====================*
@@ -99,16 +101,16 @@ if( args.dev_mode ):
 class GeoVar( object ):
 
     def __init__( self ):
-        if( args.tetgen_dir == "foo" ):                             # Make sure a directory for TetGen was given
-            raise NameError( "No TetGen directory sepcified" )      # ...
+        if( args.tetgen_dir == "foo" ):                                 # Make sure a directory for TetGen was given
+            raise NameError( "No TetGen directory sepcified" )          # ...
 
-        self.allow_export    = False                                # Flag to allow STL exports
-        self.valid_mutations = 0                                    # Counter for successful mutations
+        self.allow_export    = False                                    # Flag to allow STL exports
+        self.valid_mutations = 0                                        # Counter for successful mutations
         
-        self.setup_directories()                                    # Setup & define directories
-        self.connect_to_sketch()                                    # Instantiate Onshape client and connect
+        self.setup_directories()                                        # Setup & define directories
+        self.connect_to_sketch()                                        # Instantiate Onshape client and connect
 
-        self.get_values( initRun=True )                             # Get configurable part features and CURRENT default values
+        self.get_values( initRun=True )                                 # Get configurable part features and CURRENT default values
 
 # --------------------------
 
@@ -155,22 +157,22 @@ class GeoVar( object ):
         '''
 
         if( args.dev_mode ):
-            self.did = "04b732c124cfa152cf7c07f3"                   # ...
-            self.wid = "c4358308cbf0c97a44d8a71a"                   # Get features for document of interest
-            self.eid = "a23208c314d70c14da7071e6"                   # ...
+            self.did = "04b732c124cfa152cf7c07f3"                       # ...
+            self.wid = "c4358308cbf0c97a44d8a71a"                       # Get features for document of interest
+            self.eid = "a23208c314d70c14da7071e6"                       # ...
         else:
-            self.did = raw_input('Enter document  ID: ')            # ...
-            self.wid = raw_input('Enter workspace ID: ')            # ...
-            self.eid = raw_input('Enter element   ID: ')            # ...
+            self.did = raw_input('Enter document  ID: ')                # ...
+            self.wid = raw_input('Enter workspace ID: ')                # ...
+            self.eid = raw_input('Enter element   ID: ')                # ...
 
-        if( len(self.did) != 24 or                                  # Ensure inputted IDs are valid
-            len(self.wid) != 24 or                                  # ...
-            len(self.eid) != 24 ):                                  # ...
+        if( len(self.did) != 24 or                                      # Ensure inputted IDs are valid
+            len(self.wid) != 24 or                                      # ...
+            len(self.eid) != 24 ):                                      # ...
             raise ValueError( "Document, workspace, and element IDs must each be 24 characters in length" )
         else:
             part_URL    = "https://cad.onshape.com/documents/{}/w/{}/e/{}".format( self.did, self.wid, self.eid )
-            self.myPart = Part( part_URL )                          # Connect to part for modification
-            self.c      = Client()                                  # Create instance of the onshape client for exporting
+            self.myPart = Part( part_URL )                              # Connect to part for modification
+            self.c      = Client()                                      # Create instance of the onshape client for exporting
 
 # --------------------------
 
@@ -201,25 +203,25 @@ class GeoVar( object ):
         numeric_const_pattern = '[-+]? (?: (?: \d* \. \d+ ) | (?: \d+ \.? ) )(?: [Ee] [+-]? \d+ ) ?'
         rx = re.compile(numeric_const_pattern, re.VERBOSE)
 
-        if( initRun ):                                              # If this is the initial run, get defaults
-            self.keys       = list( self.myPart.params )            #   Cast dict as list to extract keys
-            self.default    = [None] * len( self.keys )             #   Create a list of length for values
+        if( initRun ):                                                  # If this is the initial run, get defaults
+            self.keys       = list( self.myPart.params )                #   Cast dict as list to extract keys
+            self.default    = [None] * len( self.keys )                 #   Create a list of length for values
 
             print( "Found {} configurable parts with defaults:-".format(len(self.keys)) )
-            for i in range( 0, len(self.keys) ):                    #   Loop over all dict entries
-                param = str( self.myPart.params[ self.keys[i] ] )   #       Get dict value as string
-                self.default[i] = float( rx.findall(param)[0] )     #       Extract value from string
+            for i in range( 0, len(self.keys) ):                        #   Loop over all dict entries
+                param = str( self.myPart.params[ self.keys[i] ] )       #       Get dict value as string
+                self.default[i] = float( rx.findall(param)[0] )         #       Extract value from string
                 print( "  {:3}. {:12}: {: >10.3f}".format(i+1, self.keys[i], self.default[i]) )
             print( '' )
             return( 0 )
 
         else:
-            current    = [None] * len( self.keys )                  #   Create a list of length for values
+            current    = [None] * len( self.keys )                      #   Create a list of length for values
             
             print( "{:8}:".format("CURRENT"), end='\t' )
-            for i in range( 0, len(self.keys) ):                    #   Loop over all dict entries
-                param = str( self.myPart.params[ self.keys[i] ] )   #       Get dict value as string
-                current[i] = float( rx.findall(param)[0] )          #       Extract value from string
+            for i in range( 0, len(self.keys) ):                        #   Loop over all dict entries
+                param = str( self.myPart.params[ self.keys[i] ] )       #       Get dict value as string
+                current[i] = float( rx.findall(param)[0] )              #       Extract value from string
                 print( "{:4.3f}".format(current[i]), end='\t\t' )
             print("//"); print( "-" * self.len_cte )
             return( current )
@@ -240,67 +242,67 @@ class GeoVar( object ):
             you want it to be (i.e 3*u.in == 3in)
         '''
         
-        ranges      = [range(arr.shape[1])] * arr.shape[0]          # Range we would like to go through
-        b           = np.array( list(product(*ranges)) )            # Create an array of indices of the products
+        ranges      = [range(arr.shape[1])] * arr.shape[0]              # Range we would like to go through
+        b           = np.array( list(product(*ranges)) )                # Create an array of indices of the products
 
-        param_prvs  = np.copy( arr.T[0] )                           # Previous unchanged value of the parameters
+        param_prvs  = np.copy( arr.T[0] )                               # Previous unchanged value of the parameters
         param_crnt  = np.zeros_like( param_prvs )
 
         fmt_str = str()
-        for name in self.keys:                                      # Build row with key names
-            fmt_str = "{}\t\t{}".format( fmt_str, name )            # for visual presentation
-        fmt_str = "{}\t\tt_regen".format( fmt_str )                 # ...
+        for name in self.keys:                                          # Build row with key names
+            fmt_str = "{}\t\t{}".format( fmt_str, name )                # for visual presentation
+        fmt_str = "{}\t\tt_regen".format( fmt_str )                     # ...
 
-        self.len_cte = len(fmt_str) * round(len(self.keys)/2)       # Format length constant
+        self.len_cte = len(fmt_str) * round(len(self.keys)/2)           # Format length constant
         
         # ------ Mutate  Part ------
         self.i = 0
-        for i in range( 0, b.shape[0] ):                            # Loop over ALL possible combinations
-            print( fmt_str )                                        #   [INFO] Print FORMATTED key names
-            print( "=" * self.len_cte )                             #   [INFO] Print adaptive width dashes
-            print( "{:8}:".format("SENT"), end='\t' )               #   [INFO] Print values
+        for i in range( 0, b.shape[0] ):                                # Loop over ALL possible combinations
+            print( fmt_str )                                            #   [INFO] Print FORMATTED key names
+            print( "=" * self.len_cte )                                 #   [INFO] Print adaptive width dashes
+            print( "{:8}:".format("SENT"), end='\t' )                   #   [INFO] Print values
 
-            temp    = str()                                         #   Temporary string to hold filename
-            start   = time()                                        #   Timer for regeneration time
+            temp    = str()                                             #   Temporary string to hold filename
+            start   = time()                                            #   Timer for regeneration time
             
-            for j in range( 0, arr.shape[0] ):                      #   Loop over ALL features
-                param_crnt[j] = arr.T[b[i][j]][j]                   #       Get current value to be passed
+            for j in range( 0, arr.shape[0] ):                          #   Loop over ALL features
+                param_crnt[j] = arr.T[b[i][j]][j]                       #       Get current value to be passed
                 
-                if( param_crnt[j] != param_prvs[j] ):               #       If current and previous parameters are different
-                    self.myPart.params = { self.keys[j]:            #           Pass new value (aka mutate part)
-                                           param_crnt[j]*u.mm }     #           ...
+                if( param_crnt[j] != param_prvs[j] ):                   #       If current and previous parameters are different
+                    self.myPart.params = { self.keys[j]:                #           Pass new value (aka mutate part)
+                                           param_crnt[j]*u.mm }         #           ...
 
-                    param_prvs[j] = param_crnt[j]                   #           Update previous parameter
+                    param_prvs[j] = param_crnt[j]                       #           Update previous parameter
                     self.i += 1
                     
-                else: pass                                          #       Otherwise don't do anything
+                else: pass                                              #       Otherwise don't do anything
                 
-                print( "{:4.3f}".format(param_crnt[j]), end='\t\t' )#       [INFO] Print value being sent to Onshape
+                print( "{:4.3f}".format(param_crnt[j]), end='\t\t' )    #       [INFO] Print value being sent to Onshape
 
-                temp = "{}{}{}__".format( temp, self.keys[j],       #       Build file name
-                                          param_crnt[j] )           #       ...
+                temp = "{}{}{}__".format( temp, self.keys[j],           #       Build file name
+                                          param_crnt[j] )               #       ...
                 
-            print( "{:4.3f}".format(time() - start) )               #       [INFO] Print regeneration time
-            print( "-" * self.len_cte )                             #       [INFO] Print break lines
+            print( "{:4.3f}".format(time() - start) )                   #       [INFO] Print regeneration time
+            print( "-" * self.len_cte )                                 #       [INFO] Print break lines
 
             # get the STL export
-            file = "{}{}.stl".format( self.dst, temp.rstrip('_') )  #       Build file name
+            file = "{}{}.stl".format( self.dst, temp.rstrip('_') )      #       Build file name
             
-            self.check_default( param_crnt )                        #       Check if part regenerated properly
+            self.check_default( param_crnt )                            #       Check if part regenerated properly
 
-            if( self.allow_export ):                                #       Export the STL file
-                self.export_stl( file )                             #       ...
+            if( self.allow_export ):                                    #       Export the STL file
+                self.export_stl( file )                                 #       ...
 
         # --- Revert to defaults ---
-        print( "*" * self.len_cte )                                 # [INFO] Print break lines
-        print( "RESULTS:-" )                                        # ...
-        print( "  {:5} mutations performed".format(b.shape[0]) )    # ...
+        print( "*" * self.len_cte )                                     # [INFO] Print break lines
+        print( "RESULTS:-" )                                            # ...
+        print( "  {:5} mutations performed".format(b.shape[0]) )        # ...
         print( "    {:5} successful mutations".format(self.valid_mutations))
         print( "    {:5} failed     mutations".format(b.shape[0]-self.valid_mutations))
         print( "  {:5} calls to Onshape".format(self.i) )
-        print( "*" * self.len_cte )                                 # [INFO] Print break lines
+        print( "*" * self.len_cte )                                     # [INFO] Print break lines
 
-        self.reset_myPart()                                         # Go back to defaults
+        self.reset_myPart()                                             # Go back to defaults
 
 # --------------------------
 
@@ -314,22 +316,22 @@ class GeoVar( object ):
             - passed_value : Value that was sent to Onshape.
         '''
 
-        print( "{:8}:".format("DEFAULT"), end='\t' )                # [INFO] Print DEFAULT values
-        for num in self.default:                                    # ...
-            print( "{:4.3f}".format(num), end='\t\t' )              # ...
-        print( "//" ); print( "-" * self.len_cte )                  # ...
+        print( "{:8}:".format("DEFAULT"), end='\t' )                    # [INFO] Print DEFAULT values
+        for num in self.default:                                        # ...
+            print( "{:4.3f}".format(num), end='\t\t' )                  # ...
+        print( "//" ); print( "-" * self.len_cte )                      # ...
 
-        current_value = self.get_values( )                          # Read CURRENT value from Onshape
+        current_value = self.get_values( )                              # Read CURRENT value from Onshape
         for i in range( 0, len(current_value) ):
                 
-            if( passed_value[i] != self.default[i] ):               # If passed value is different than the default
-                if( current_value[i] == self.default[i] ):          #   Current value is equal to the default
-                    self.allow_export = False                       #       File failed to regenerate, don't export!
+            if( passed_value[i] != self.default[i] ):                   # If passed value is different than the default
+                if( current_value[i] == self.default[i] ):              #   Current value is equal to the default
+                    self.allow_export = False                           #       File failed to regenerate, don't export!
                     print( "{:_^{width}}".format("FAILED MUTATION", width=self.len_cte), end='\n\n' )
                     return 0
 
-        self.allow_export = True                                    #       Allow exporting of STL
-        self.valid_mutations += 1                                   #       Increment counter
+        self.allow_export = True                                        #       Allow exporting of STL
+        self.valid_mutations += 1                                       #       Increment counter
         print( "{:_^{width}}".format("VALID  MUTATION", width=self.len_cte), end='\n\n' )
                 
 # --------------------------
@@ -343,12 +345,12 @@ class GeoVar( object ):
                          to be given.
         '''
 
-        stl = self.c.part_studio_stl( self.did, self.wid, self.eid )# Get the STL
+        stl = self.c.part_studio_stl( self.did, self.wid, self.eid )    # Get the STL
 
-        with open( file_name, 'w' ) as f:                           # Write STL to file
-            f.write( stl.text )                                     # ...
+        with open( file_name, 'w' ) as f:                               # Write STL to file
+            f.write( stl.text )                                         # ...
 
-        self.mesh_file( file_name )                                 # Create MESH
+        self.mesh_file( file_name )                                     # Create MESH
 
 # --------------------------
 
@@ -366,13 +368,13 @@ class GeoVar( object ):
         elif( system()=='Windows' ):
             cmd = "{}tetgen.exe -pq1.2 -g -F -C -V -N -E -I -a0.1 {}".format( self.tet, file_name )
             
-        child = spawn( cmd, timeout=None )                          # Spawn child
+        child = spawn( cmd, timeout=None )                              # Spawn child
         
-        for line in child:                                          # Read STDOUT ...
-            out = line.decode('utf-8').strip('\r\n')                # ... of spawned child ...
-            if( args.verbose ): print( out )                        # ... process and print.
+        for line in child:                                              # Read STDOUT ...
+            out = line.decode('utf-8').strip('\r\n')                    # ... of spawned child ...
+            if( args.verbose ): print( out )                            # ... process and print.
         
-        if( system()=='Linux' ): child.close()                      # Kill child process
+        if( system()=='Linux' ): child.close()                          # Kill child process
         
 # --------------------------
 
@@ -382,34 +384,85 @@ class GeoVar( object ):
         beginning of the script.
         '''
 
-        print( "Reverting part to defaults", end='' )               # [INFO] ...
-        for i in range( 0, len(self.keys) ):                        # Loop over ALL features
-            self.myPart.params = { self.keys[i]:                    #   Set back to default
-                                   self.default[i]*u.mm }           #   ...
+        print( "Reverting part to defaults", end='' )                   # [INFO] ...
+        for i in range( 0, len(self.keys) ):                            # Loop over ALL features
+            self.myPart.params = { self.keys[i]:                        #   Set back to default
+                                   self.default[i]*u.mm }               #   ...
         print( "...DONE!" )
 
 # ************************************************************************
 # =========================> MAKE IT ALL HAPPEN <=========================
 # ************************************************************************
 
-prog = GeoVar()                                                     # Startup and prepare program
+prog = GeoVar()                                                         # Startup and prepare program
 
 ''' CHANGE THESE GUYS AS YOU SEE FIT '''
-LB  = args.lower_bound                                              # Lower bound
-UB  = args.upper_bound                                              # Upper bound
-h   = args.step_size                                                # Step size
+a       = args.lower_bound                                              # Lower bound
+b       = args.upper_bound                                              # Upper bound
+h       = args.step_size                                                # Step size
+arr_len = int((b-a)/h)+1                                                # Array length
 
 '''
 NOTE THAT ALL THE ARRAYS CREATED ARE REPLICAS OF ONE ANOTHER.
 THIS WAS DONE FOR THE SAKE OF SIMPLICITY. EACH ARRAY CAN BE
 CONSTRUCTED ON ITS OWN MANUALLY IF THE USER WANTS TO DO SO.
 '''
-arr = np.zeros( [len(prog.keys), int((UB-LB)/h)+1] )                # Dynamically create array
-for i in range( 0, len(prog.keys) ):                                # depending on number of
-    arr[i] = np.array( np.linspace(LB, UB, int((UB-LB)/h)+1) )      # varying features
+print( "Detected {} feature(s)".format(len(prog.keys)) )                # Prompt user
+print( "Use same variation range for all features? (y/n)" )             # Read the text
+
+while( True ):
+    choice = (input( ">\ " )).lower(); print( '' )                      # Wait for user input
+
+    if( choice == 'y' ):
+        print( "Use bounds from argument parser? (y/n)" )               # Read the text
+        choice = (input( ">\ " )).lower(); print( '' )                  # Wait for user input
+        
+        if( choice == 'y' ):
+            pass
+        elif( choice == 'n' ):
+            print( "Feature: ALL" )
+            a       = float( input("  Choose lower bound  , a: " ) )    # ...
+            b       = float( input("  Choose upper bound  , b: " ) )    # ...
+            h       = float( input("  Choose step size    , h: " ) )    # ...
+            arr_len = int((b-a)/h)+1                                    # ...
+        else: print( "What is wrong with you?" )
+            
+        arr = np.zeros( [len(prog.keys), arr_len] )                     # Dynamically create array based on #features
+        for i in range( 0, len(prog.keys) ):                            # ...
+            arr[i] = np.array( np.linspace(a, b, arr_len) )             # ...
+        break                                                           # Exit loop and proceed
+
+    elif( choice == 'n' ):
+        print( "*** NOTE: arrays MUST be of the same length." )
+        a       = [None] * len(prog.keys)                               # Lower bound
+        b       = [None] * len(prog.keys)                               # Upper bound
+        h       = [None] * len(prog.keys)                               # Step size
+        arr_len = [None] * len(prog.keys)                               # Array length
+        for i in range( 0, len(prog.keys) ):                            # Collect data from user
+            print( "Feature: {}".format(prog.keys[i]) )
+            a[i]        = float( input("  Choose lower bound  , a: " ) )# ...
+            b[i]        = float( input("  Choose upper bound  , b: " ) )# ...
+            h[i]        = float( input("  Choose step size    , h: " ) )# ...
+            arr_len[i]  = int((b[i]-a[i])/h[i])+1                       # ...
+            print( "-----------------------------------------" )
+
+        if( all(arr_len[0] == length for length in arr_len) ):          # Check if array lengths are the same
+            pass                                                        #   If they are, good for you!
+        else:                                                           # If they are NOT the same length
+            print( "Arrays are NOT of equal length." )
+            print( "Auto adjusting based on longest array...", end='' )
+            for i in range( 0, len(arr_len) ):                          #   Make ALL lengths equal to the longest array
+                arr_len[i] = max(arr_len)                               #   This gives the highest resolution
+            print( "Done!" )
+
+        arr = np.zeros( [len(prog.keys), arr_len[0]] )                  # Create array of arrays
+        for i in range( 0, len(prog.keys) ):                            # Loop over all the arrays inside the array
+            arr[i] = np.array( np.linspace(a[i], b[i], arr_len[i]) )    #   Build the i-th array
+        break                                                           # Exit loop and proceed
+
+    else: print( "Invlaid choice." )
 
 try:
-    prog.mutate_part( arr )                                         # Do da tang!
+    prog.mutate_part( arr )                                             # Do da tang!
 except:
-    prog.reset_myPart()                                             # In case something goes wrong, reset!
-
+    prog.reset_myPart()                                                 # In case something goes wrong, reset!
