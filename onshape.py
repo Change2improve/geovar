@@ -76,7 +76,7 @@ ap.add_argument( "-v"   , "--verbose"   ,
                  action = 'store_true'  , default=False ,
                  help   = "{}".format(string)           )
 
-# Print out stuff to help debug
+# Quiet mode; create arrays of identical variation
 string = "Quiet mode; arrays have the same value"
 ap.add_argument( "-q"   , "--quiet"     ,
                  dest   = "quiet"       ,
