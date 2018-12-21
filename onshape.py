@@ -12,23 +12,26 @@
 *   - MODIFIED: Adaptive width line printing.
 *
 *
-* VERSION: 1.2.7
+* VERSION: 1.2.8
 *   - ADDED   : Ability to check whether part failed to mutate or not!
 *   - FIXED   : Now fully compatible with Windows machines
 *   - FIXED   : Fixed check_default() method's logic. Now we only export
 *               parts that do NOT revert back to default value after mutation.
 *   - ADDED   : More beautiful formatting FTW!
 *   - ADDED   : Give user ability to define array bounds!
+*   - ADDED   : Enforce correct math, you can call me the math police.
+*               (i.e. make sure lower bound can't be greater than upper bound)
+*   - MODIFIED: Simplify code to reduce clutter.
+*   - FIXED   : Doesn't break when user inputs invalid values (i.e str instead of float) 
 *
 *
 * KNOWN ISSUES:
-*   - If no value is entered when prompted for
-*     bounds/step size, program crashes.
+*   - Nada atm.
 *
 *
 * AUTHOR                    :   Mohammad Odeh
 * DATE                      :   Dec. 10th, 2018 Year of Our Lord
-* LAST CONTRIBUTION DATE    :   Dec. 19th, 2018 Year of Our Lord
+* LAST CONTRIBUTION DATE    :   Dec. 21st, 2018 Year of Our Lord
 *
 '''
 
@@ -54,42 +57,56 @@ import  os, re                                                          # Dir/pa
 ap = ArgumentParser()
 
 # Developer mode, makes life easy for me
+string = "Enter developer mode"
 ap.add_argument( "--dev-mode"           ,
                  dest   = "dev_mode"    ,
                  action = 'store_true'  , default=False ,
-                 help   = "Enter developer mode"        )
+                 help   = "{}".format(string)           )
 
 # Directory that points to COMPILED/EXECCUTABLE tetgen
+string = "Point to TetGen directory"
 ap.add_argument( "--tetgen-dir"         , type = str    ,
                  dest   = "tetgen_dir"  , default="foo" ,
-                 help   = "Point to TetGen directory"   )
+                 help   = "{}".format(string)           )
 
 # Print out stuff to help debug
-ap.add_argument( "-v", "--verbose"      ,
+string = "WARNING: Prints EVERYTHING!!"
+ap.add_argument( "-v"   , "--verbose"   ,
                  dest   = "verbose"     ,
                  action = 'store_true'  , default=False ,
-                 help   = "WARNING: Prints EVERYTHING!!")
+                 help   = "{}".format(string)           )
+
+# Print out stuff to help debug
+string = "Quiet mode; arrays have the same value"
+ap.add_argument( "-q"   , "--quiet"     ,
+                 dest   = "quiet"       ,
+                 action = 'store_true'  , default=False ,
+                 help   = "{}".format(string)           )
 
 # Lower bound for variations array
+string = "Minimum value desired"
 ap.add_argument( "-LB", "--lower-bound" , type = int    ,
-                 dest   = "lower_bound" , default = 50  ,
-                 help   = "Minimum value desired"       )
+                 dest   = "lower_bound" , default =  0  ,
+                 help   = "{}".format(string)           )
 
 # Upper bound for variations array
+string = "Maximum value desired"
 ap.add_argument( "-UB", "--upper-bound" , type = int    ,
-                 dest   = "upper_bound" , default = 51  ,
-                 help   = "Maximum value desired"       )
+                 dest   = "upper_bound" , default =  0  ,
+                 help   = "{}".format(string)           )
 
 # Step size for variations array
+string = "Variations step size"
 ap.add_argument( "-H", "--step-size"    , type = float  ,
-                 dest   = "upper_bound" , default = 0.1 ,
-                 help   = "Variations step size"        )
+                 dest   = "step_size" , default = 0.1 ,
+                 help   = "{}".format(string)           )
 
 args = ap.parse_args()
 
 args.dev_mode    = True
 if( args.dev_mode ):
     args.tetgen_dir     = '/home/moe/Desktop/geovar/tetgen1.5.1/'
+##    args.quiet          = True
 ##    args.verbose        = True
     args.lower_bound    = 9
     args.upper_bound    = 10
@@ -396,73 +413,73 @@ class GeoVar( object ):
 
 prog = GeoVar()                                                         # Startup and prepare program
 
-''' CHANGE THESE GUYS AS YOU SEE FIT '''
-a       = args.lower_bound                                              # Lower bound
-b       = args.upper_bound                                              # Upper bound
-h       = args.step_size                                                # Step size
-arr_len = int((b-a)/h)+1                                                # Array length
+print( "Detected {} feature(s)".format(len(prog.keys)) )                # [INFO] ...
 
 '''
-NOTE THAT ALL THE ARRAYS CREATED ARE REPLICAS OF ONE ANOTHER.
-THIS WAS DONE FOR THE SAKE OF SIMPLICITY. EACH ARRAY CAN BE
-CONSTRUCTED ON ITS OWN MANUALLY IF THE USER WANTS TO DO SO.
+IF QUIET FLAG IS TURNED ON, CONSTRUCT AN ARRAY
+OF ARRAYS OF EQUAL LENGTH AND VARIATION.
 '''
-print( "Detected {} feature(s)".format(len(prog.keys)) )                # Prompt user
-print( "Use same variation range for all features? (y/n)" )             # Read the text
+if( args.quiet ):
+    if( args.lower_bound > args.upper_bound ):                          # If LB > UB
+        err = "Lower bound (LB) greater than upper bound (UB).\n"       #   ...
+        err = "{}Make sure that UB > LB.".format(err)                   #   ...
+        raise ValueError( "{}".format(err) )                            #   Raise error
+    
+    elif( args.lower_bound==0 and args.upper_bound==0 ):                # If no values are specified
+        err = "No values for lower bound and upper bound given.\n"      #   ...
+        err = "{}Use -LB and -UB to specify values.".format(err)        #   ...
+        raise ValueError( "{}".format(err) )                            #   Raise error
 
-while( True ):
-    choice = (input( ">\ " )).lower(); print( '' )                      # Wait for user input
+    print( "Quiet mode on, auto constructing arrays", end='' )
+    a       = args.lower_bound                                          # Lower bound
+    b       = args.upper_bound                                          # Upper bound
+    h       = args.step_size                                            # Step size
+    arr_len = int((b-a)/h)+1                                            # Array length
 
-    if( choice == 'y' ):
-        print( "Use bounds from argument parser? (y/n)" )               # Read the text
-        choice = (input( ">\ " )).lower(); print( '' )                  # Wait for user input
+    arr = np.zeros( [len(prog.keys), arr_len] )                         # Dynamically create array based on #features
+    for i in range( 0, len(prog.keys) ):                                # ...
+        arr[i] = np.array( np.linspace(a, b, arr_len) )                 # ...
+    print( "...Done!" )
+
         
-        if( choice == 'y' ):
-            pass
-        elif( choice == 'n' ):
-            print( "Feature: ALL" )
-            a       = float( input("  Choose lower bound  , a: " ) )    # ...
-            b       = float( input("  Choose upper bound  , b: " ) )    # ...
-            h       = float( input("  Choose step size    , h: " ) )    # ...
-            arr_len = int((b-a)/h)+1                                    # ...
-        else: print( "What is wrong with you?" )
-            
-        arr = np.zeros( [len(prog.keys), arr_len] )                     # Dynamically create array based on #features
-        for i in range( 0, len(prog.keys) ):                            # ...
-            arr[i] = np.array( np.linspace(a, b, arr_len) )             # ...
-        break                                                           # Exit loop and proceed
+else:
+    print( "*** NOTE: arrays MUST be of the same length." )
+    a       = [None] * len(prog.keys)                                   # Lower bound
+    b       = [None] * len(prog.keys)                                   # Upper bound
+    h       = [None] * len(prog.keys)                                   # Step size
+    arr_len = [None] * len(prog.keys)                                   # Array length
+    
+    for i in range( 0, len(prog.keys) ):                                # Collect data from user
+        print( "Feature: {:_^{width}}".format(prog.keys[i], width=15) )
+        while( True ):                                                  # Make sure user inputs valid data types
+            try:                                                        #   Catch any errors
+                a[i]        = float( input("  Choose lower bound  , a: " ) )
+                b[i]        = float( input("  Choose upper bound  , b: " ) )
+                h[i]        = float( input("  Choose step size    , h: " ) )
+                arr_len[i]  = int((b[i]-a[i])/h[i])+1
+                break                                                   #       If no problems, break from loop and proceed
+            except ValueError:                                          #   If error is caught,
+                print( "Hermano, learn to type numbers!" )              #       Inform user and re-prompt
+        print( "-----------------------------------------" )
 
-    elif( choice == 'n' ):
-        print( "*** NOTE: arrays MUST be of the same length." )
-        a       = [None] * len(prog.keys)                               # Lower bound
-        b       = [None] * len(prog.keys)                               # Upper bound
-        h       = [None] * len(prog.keys)                               # Step size
-        arr_len = [None] * len(prog.keys)                               # Array length
-        for i in range( 0, len(prog.keys) ):                            # Collect data from user
-            print( "Feature: {}".format(prog.keys[i]) )
-            a[i]        = float( input("  Choose lower bound  , a: " ) )# ...
-            b[i]        = float( input("  Choose upper bound  , b: " ) )# ...
-            h[i]        = float( input("  Choose step size    , h: " ) )# ...
-            arr_len[i]  = int((b[i]-a[i])/h[i])+1                       # ...
-            print( "-----------------------------------------" )
+        if( a[i] > b[i] ): raise ValueError( "(a) > (b). Fix!" )        # If LB > UB, raise error
 
-        if( all(arr_len[0] == length for length in arr_len) ):          # Check if array lengths are the same
-            pass                                                        #   If they are, good for you!
-        else:                                                           # If they are NOT the same length
-            print( "Arrays are NOT of equal length." )
-            print( "Auto adjusting based on longest array...", end='' )
-            for i in range( 0, len(arr_len) ):                          #   Make ALL lengths equal to the longest array
-                arr_len[i] = max(arr_len)                               #   This gives the highest resolution
-            print( "Done!" )
+    if( all(arr_len[0] == length for length in arr_len) ):              # Check if array lengths are the same
+        pass                                                            #   If they are, good for you!
+    
+    else:                                                               # If they are NOT the same length
+        print( "Arrays are NOT of equal length." )
+        print( "Auto adjusting step size based on longest array...", end='' )
+        for i in range( 0, len(arr_len) ):                              #   Make ALL lengths equal to the longest array
+            arr_len[i] = max(arr_len)                                   #   This gives the highest resolution
+        print( "Done!" )
 
-        arr = np.zeros( [len(prog.keys), arr_len[0]] )                  # Create array of arrays
-        for i in range( 0, len(prog.keys) ):                            # Loop over all the arrays inside the array
-            arr[i] = np.array( np.linspace(a[i], b[i], arr_len[i]) )    #   Build the i-th array
-        break                                                           # Exit loop and proceed
-
-    else: print( "Invlaid choice." )
+    arr = np.zeros( [len(prog.keys), arr_len[0]] )                      # Create array of arrays
+    for i in range( 0, len(prog.keys) ):                                # Loop over all the arrays inside the array
+        arr[i] = np.array( np.linspace(a[i], b[i], arr_len[i]) )        #   Build the i-th array
 
 try:
     prog.mutate_part( arr )                                             # Do da tang!
 except:
     prog.reset_myPart()                                                 # In case something goes wrong, reset!
+
