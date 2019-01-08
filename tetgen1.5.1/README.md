@@ -31,9 +31,9 @@ GENERAL LICENSE TERMS AND CONDITIONS
 **IF** said version does not seem to operate properly, .dll files are missing, or a newer version is desired, follow these instructions;
 > **WARNING** The following instructions have been tested for: **TetGen 1.5.1, CMake 3.13.2, and Visual Studio 2017**
 
-0. **Download the latest version of TetGen's build files**
-   1.   [tetgen-WIAS](http://wias-berlin.de/software/index.jsp?id=TetGen&lang=1#Download)
-   2.   [tetgen-github](https://github.com/ufz/tetgen)
+0.  **Download the latest version of TetGen's build files**
+    1.   [tetgen-WIAS](http://wias-berlin.de/software/index.jsp?id=TetGen&lang=1#Download)
+    2.   [tetgen-github](https://github.com/ufz/tetgen)
 > **STEP 0 IS OPTIONAL** Rebuilding the libraries provided in the repo may resolve most execution issues, errors, etc.
 
 1.  **Download and install the following programs:**
@@ -41,6 +41,11 @@ GENERAL LICENSE TERMS AND CONDITIONS
         1.  _Add CMake to Windows PATH variable_
     2.  [Visual Studio](https://visualstudio.microsoft.com/vs/community/)
     
-
+2.  **Build TetGen using CMake and Visual Studio**
+    1.  From the start menu, execute/open the **Visual Studio Command Prompt**
+    ```
+    "C:\Program Files (x86)\Microsoft Visual Studio\2017\Community\VC\Auxiliary\Build\vcvars64.bat"
+    ```
+    
      
 ---
