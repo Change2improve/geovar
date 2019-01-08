@@ -1,5 +1,6 @@
 
 # About TetGen #
+---
 This is TetGen version 1.5.1 (released on August, 2018)
 
 Please see the documentation of TetGen for compiling and using TetGen.
@@ -21,3 +22,17 @@ For more information on this product, contact :
 BEFORE INTALLING OR USING TetGen(R) READ the 
 GENERAL LICENSE TERMS AND CONDITIONS
 
+---
+
+# Building TetGen on Windows #
+> The following instructions have been tested for:
+> * TetGen 1.5.1
+> * CMake 3.13.2
+> * Visual Studio 2017
+---
+
+To build TetGen on a Windows system;
+
+**1. Install the following programs:**
+
+    [CMake](https://cmake.org/download/)
