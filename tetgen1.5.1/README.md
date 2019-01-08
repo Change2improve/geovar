@@ -42,14 +42,22 @@ GENERAL LICENSE TERMS AND CONDITIONS
     2.  [Visual Studio](https://visualstudio.microsoft.com/vs/community/)
     
 2.  **Build TetGen using CMake and Visual Studio**
-    1.  From the start menu, execute/open the **Visual Studio Command Prompt**
+    1.  From the start menu, execute/open the **Visual Studio Command Prompt** as **administrator**
     ```
     Shorcut usually found in;
-    C:\ProgramData\Microsoft\Windows\Start Menu\Programs\Visual Studio 2017\Visual Studio Tools\VC\x64 Native Tools ...
+    C:\ProgramData\Microsoft\Windows\Start Menu\Programs\Visual Studio 2017\Visual Studio Tools\VC\x64 Native...
+    
     With target to;
     C:\Program Files (x86)\Microsoft Visual Studio\2017\Community\VC\Auxiliary\Build\vcvars64.bat
     ```
-    2.  UDJKNVA
+    2.  **Move to the TetGen directory within this repo**
+    ```
+    cd C:\...\...\PD3D\geovar\tetgen1.5.1
+    ```
+    3.  **Remove existing "build" directory**
+    ```
+    cd C:\...\...\PD3D\geovar\tetgen1.5.1
+    ```
     
      
 ---
