@@ -1,6 +1,5 @@
 
 # ABOUT TETGEN #
-==============================================================================================
 This is TetGen version 1.5.1 (released on August, 2018)
 
 Please see the documentation of TetGen for compiling and using TetGen.
@@ -22,4 +21,3 @@ For more information on this product, contact :
 BEFORE INTALLING OR USING TetGen(R) READ the 
 GENERAL LICENSE TERMS AND CONDITIONS
 
-==============================================================================================
