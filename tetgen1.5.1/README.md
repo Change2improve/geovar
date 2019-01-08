@@ -33,6 +33,6 @@ GENERAL LICENSE TERMS AND CONDITIONS
 
 To build TetGen on a Windows system;
 
-**1. Install the following programs:**
-
-    [CMake](https://cmake.org/download/)
+1.  Install the following programs:
+    1.  [CMake](https://cmake.org/download/)
+    2.  [Visual Studio](https://visualstudio.microsoft.com/vs/community/)
