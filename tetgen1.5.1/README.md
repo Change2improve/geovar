@@ -34,6 +34,7 @@ GENERAL LICENSE TERMS AND CONDITIONS
 0. **Download the latest version of TetGen's build files**
    1.   [tetgen-WIAS](http://wias-berlin.de/software/index.jsp?id=TetGen&lang=1#Download)
    2.   [tetgen-github](https://github.com/ufz/tetgen)
+> **STEP 0 IS OPTIONAL** Rebuilding the libraries provided in the repo may resolve most execution issues, errors, etc.
 
 1.  **Download and install the following programs:**
     1.  [CMake](https://cmake.org/download/)
