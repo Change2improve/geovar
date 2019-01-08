@@ -32,7 +32,6 @@ GENERAL LICENSE TERMS AND CONDITIONS
 > **WARNING** The following instructions have been tested for: **TetGen 1.5.1, CMake 3.13.2, and Visual Studio 2017**
 
 0. **Download the latest version of TetGen's build files**
-> **OPTIONAL** Rebuilding the libraries provided in the repo may resolve most execution issues, errors, etc.
    1.   [tetgen-WIAS](http://wias-berlin.de/software/index.jsp?id=TetGen&lang=1#Download)
    2.   [tetgen-github](https://github.com/ufz/tetgen)
 
