@@ -1,9 +1,11 @@
+
+# ABOUT TETGEN #
+==============================================================================================
 This is TetGen version 1.5.1 (released on August, 2018)
 
 Please see the documentation of TetGen for compiling and using TetGen.
 It is available at the following link:
-
-            http://www.tetgen.org
+http://www.tetgen.org
 
 For more information on this product, contact :
 
@@ -17,9 +19,7 @@ For more information on this product, contact :
  EMail: <si@wias-berlin.de>
  Web Site: http://www.wias-berlin.de/~si
 
-------------------- IMPORTANCE NOTICE -----------------------------
-
 BEFORE INTALLING OR USING TetGen(R) READ the 
 GENERAL LICENSE TERMS AND CONDITIONS
 
--------------------------------------------------------------------
+==============================================================================================
