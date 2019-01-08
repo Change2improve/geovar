@@ -44,7 +44,10 @@ GENERAL LICENSE TERMS AND CONDITIONS
 2.  **Build TetGen using CMake and Visual Studio**
     1.  From the start menu, execute/open the **Visual Studio Command Prompt**
     ```
-    "C:\Program Files (x86)\Microsoft Visual Studio\2017\Community\VC\Auxiliary\Build\vcvars64.bat"
+    Shorcut usually found in;
+    C:\ProgramData\Microsoft\Windows\Start Menu\Programs\Visual Studio 2017\Visual Studio Tools\VC\x64 Native Tools ...
+    With target to;
+    C:\Program Files (x86)\Microsoft Visual Studio\2017\Community\VC\Auxiliary\Build\vcvars64.bat
     ```
     2.  UDJKNVA
     
