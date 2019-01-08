@@ -24,16 +24,28 @@ GENERAL LICENSE TERMS AND CONDITIONS
 ---
 
 # Building TetGen on Windows #
+This repository already feature a pre-compiled version of **TetGen**.
+```
+geovar\tetgen1.5.1\build\Debug\tetgen.exe
+```
+
 > The following instructions have been tested for:
 > * TetGen 1.5.1
 > * CMake 3.13.2
 > * Visual Studio 2017
 
-To build TetGen on a Windows system;
+The following steps cover the process of **building** TetGen on a Windows system.
+
+**ONLY** 
+
+0. **Download the latest version of TetGen's build files**
+
 
 1.  **Download and install the following programs:**
     1.  [CMake](https://cmake.org/download/)
         1.  _Add CMake to Windows PATH variable_
     2.  [Visual Studio](https://visualstudio.microsoft.com/vs/community/)
+    
+
      
 ---
