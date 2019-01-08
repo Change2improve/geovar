@@ -24,12 +24,14 @@ GENERAL LICENSE TERMS AND CONDITIONS
 ---
 
 # Building TetGen on Windows #
-This repository already feature a pre-compiled version of **TetGen**.
-```
-geovar\tetgen1.5.1\build\Debug\tetgen.exe
-```
 
-> The following instructions have been tested for:
+**NOTE:** This repository already features a pre-compiled version of **TetGen** in;
+```
+\geovar\tetgen1.5.1\build\Debug\tetgen.exe
+```
+**IF** said version does not seem to operate properly, .dll files are missing, or a newer version is desired, follow these instructions;
+
+> **WARNING** The following instructions have been tested for:
 > * TetGen 1.5.1
 > * CMake 3.13.2
 > * Visual Studio 2017
