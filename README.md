@@ -11,7 +11,7 @@ Automatic generation of **all possible** _geometric variations_ from a _constrai
 
 ## Requirements
 
-GEOVAR currently relies on ![Onshape](https://www.onshape.com/) and Onshape's public ![repositories](https://github.com/onshape-public) for baseline design, constraint definitions, geometric variation generation, .STL exporting.
+GEOVAR currently relies on [Onshape](https://www.onshape.com/) and Onshape's public [repositories](https://github.com/onshape-public) for baseline design, constraint definitions, geometric variation generation, .STL exporting.
 
 ## Setup Instructions
 
