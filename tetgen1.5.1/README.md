@@ -54,10 +54,10 @@ GENERAL LICENSE TERMS AND CONDITIONS
         cd C:\...\...\PD3D\geovar\tetgen1.5.1
         ```
     3.  **Remove existing "build" directory**
+        > **NOTE** re-building may not overwrite old build directory, **deleting is essential**
         ```
         rmdir build /s
         ```
-        > **NOTE** re-building may not overwrite old build directory, **deleting is essential**
     4.  **Create and move into new "build" directory**
         ```
         mkdir build
@@ -76,12 +76,13 @@ GENERAL LICENSE TERMS AND CONDITIONS
       <p align="center"><img src="https://github.com/pd3d/geovar/blob/win2/tetgen1.5.1/media/fig_vs_solutions.png"></p>
     
     7.  **Build tetGen using Visual Studio**
-        1.  _Build solution through_ `Build>Build Solution (Ctrl+Shift+B)` _on **Visual Studios** toolbar_
+        1.  _Build solution through_ `Build > Build Solution (Ctrl+Shift+B)` _on **Visual Studios** toolbar_
       
       <p align="center"><img src="https://github.com/pd3d/geovar/blob/win2/tetgen1.5.1/media/fig_vs_build.PNG"></p>
       
     8.  **ENJOY!**
-        > **NOTE** Keep the path to the TetGen build handy! For the most part, the 
+        > **NOTE** Keep the path to the TetGen build handy! For the most part, the build will be found in;
+        > C:\...\...\PD3D\geovar\tetgen1.5.1\build\Debug\tetgen.exe
       
        
         
