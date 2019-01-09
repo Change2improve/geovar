@@ -39,19 +39,21 @@ GEOVAR currently relies on [Onshape](https://www.onshape.com/) and Onshape's pub
 ---
 
 ### Windows
-> **NOTE** The following steps only apply to users and/or application using/running on a **Windows OS**
-> **WARNING** The following tests have only been tested/validated on **Windows 7 and 10**
+>   **NOTE** The following steps only apply to users and/or application using/running on a **Windows OS**
+>   **WARNING** The following tests have only been tested/validated on **Windows 7 and 10**
 
 1.  **Install the latest version of [Python 3](https://www.python.org/downloads/windows/)**
-    > **NOTE** Make sure to add Python 3.x to the Windows **PATH** variable.
+    >   **NOTE** Make sure to add Python 3.x to the Windows **PATH** variable
+    
+    >   **RECOMMENDED** Check if Python 3.x was added to the **PATH** by executing `python` directly on the command prompt   
 
 <img align="center" src="https://github.com/pd3d/geovar/blob/win3/media/fig_python_install.png">
 
 2.  **Install the `onshapepy` module by typing the following in a command prompt**
-    > **NOTE** Remember to always run the command prompt as **administrator**
+    >   **NOTE** Remember to always run the command prompt as **administrator**
     ```
-    py -3 -m pip install --upgrade pip
-    py -3 -m pip install onshapepy
+    python -m pip install --upgrade pip
+    python -m pip install onshapepy
     ```
 3.  **Create a file using a text editor like Notepad**
     1.  Within the file, type the following information;
@@ -62,7 +64,7 @@ GEOVAR currently relies on [Onshape](https://www.onshape.com/) and Onshape's pub
         ```
     2.  Replace the `*******YOUR API KEY*******` and `*******YOUR API SECRET****` sections with the keys retrieved from Onshape's developer portal
     3.  Save file within the **user directory** `C:\Users\<USER_NAME>\`, using the **filename** `.onshapepy.`
-        > **NOTE** Both **periods** on the `.onshapepy.` name are necessary!
+        >   **NOTE** Both **periods** on the `.onshapepy.` name are necessary!
 
 4. No step 4, you are now ready!
 
