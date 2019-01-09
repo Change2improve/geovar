@@ -82,7 +82,7 @@ GENERAL LICENSE TERMS AND CONDITIONS
       
     8.  **ENJOY!**
         > **NOTE** Keep the path to the TetGen build handy! For the most part, the build will be found in;
-        > C:\...\PD3D\geovar\tetgen1.5.1\build\Debug\tetgen.exe
+        > \...\geovar\tetgen1.5.1\build\Debug\tetgen.exe
       
        
         
