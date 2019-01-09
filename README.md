@@ -32,8 +32,8 @@ GEOVAR currently relies on [Onshape](https://www.onshape.com/) and Onshape's pub
     2.  Select `Create new API key`
     3.  Select all the permissions required by your application
         > **GEOVAR** only requires permission to: **read your documents**, **write to your documents**, and **delete your documents and      workspaces**.
-    
-    
+
+<img align="center" src="https://github.com/pd3d/geovar/blob/win3/media/fig_keys.PNG">    
 
 ### Windows
 
