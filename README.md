@@ -62,7 +62,7 @@ py -3 -m pip install onshapepy
         ```
     2.  Replace the `*******YOUR API KEY*******` and `*******YOUR API SECRET****` sections with the keys retrieved from Onshape's developer portal
     3.  Save file within the **user directory** `C:\Users\<USER_NAME>\`, using the **filename** `.onshapepy.`
-    > **NOTE** Both **periods** on the `.onshapepy.` name are necessary. The last period will be dropped automaticall upon saving.
+    > **NOTE** Both **periods** on the `.onshapepy.` name are necessary!
 
 4. No step 4, you are now ready!
 
