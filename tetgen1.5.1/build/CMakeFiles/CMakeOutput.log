@@ -1,4 +1,4 @@
-The system is: Windows - 6.1.7601 - AMD64
+The system is: Windows - 10.0.17134 - AMD64
 Compiling the C compiler identification source file "CMakeCCompilerId.c" succeeded.
 Compiler:  
 Build flags: 
@@ -9,8 +9,8 @@ The output was:
 Microsoft (R) Build Engine version 15.9.21+g9802d43bc3 for .NET Framework
 Copyright (C) Microsoft Corporation. All rights reserved.
 
-Build started 1/8/2019 11:38:56 PM.
-Project "C:\Users\WOLF512\Documents\Gits\PD3D\geovar\tetgen1.5.1\build\CMakeFiles\3.13.2\CompilerIdC\CompilerIdC.vcxproj" on node 1 (default targets).
+Build started 1/9/2019 10:17:57 AM.
+Project "C:\Users\flobo\Documents\Gits\PD3D\geovar\tetgen1.5.1\build\CMakeFiles\3.13.2\CompilerIdC\CompilerIdC.vcxproj" on node 1 (default targets).
 PrepareForBuild:
   Creating directory "Debug\".
   Creating directory "Debug\CompilerIdC.tlog\".
@@ -21,7 +21,7 @@ ClCompile:
   CMakeCCompilerId.c
 Link:
   C:\Program Files (x86)\Microsoft Visual Studio\2017\Community\VC\Tools\MSVC\14.16.27023\bin\HostX86\x86\link.exe /ERRORREPORT:QUEUE /OUT:".\CompilerIdC.exe" /INCREMENTAL:NO /NOLOGO kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib odbc32.lib odbccp32.lib /MANIFEST /MANIFESTUAC:"level='asInvoker' uiAccess='false'" /manifest:embed /PDB:".\CompilerIdC.pdb" /SUBSYSTEM:CONSOLE /TLBID:1 /DYNAMICBASE /NXCOMPAT /IMPLIB:".\CompilerIdC.lib" /MACHINE:X86 /SAFESEH Debug\CMakeCCompilerId.obj
-  CompilerIdC.vcxproj -> C:\Users\WOLF512\Documents\Gits\PD3D\geovar\tetgen1.5.1\build\CMakeFiles\3.13.2\CompilerIdC\.\CompilerIdC.exe
+  CompilerIdC.vcxproj -> C:\Users\flobo\Documents\Gits\PD3D\geovar\tetgen1.5.1\build\CMakeFiles\3.13.2\CompilerIdC\.\CompilerIdC.exe
 PostBuildEvent:
   for %%i in (cl.exe) do @echo CMAKE_C_COMPILER=%%~$PATH:i
   :VCEnd
@@ -29,20 +29,20 @@ PostBuildEvent:
 FinalizeBuildStatus:
   Deleting file "Debug\CompilerIdC.tlog\unsuccessfulbuild".
   Touching "Debug\CompilerIdC.tlog\CompilerIdC.lastbuildstate".
-Done Building Project "C:\Users\WOLF512\Documents\Gits\PD3D\geovar\tetgen1.5.1\build\CMakeFiles\3.13.2\CompilerIdC\CompilerIdC.vcxproj" (default targets).
+Done Building Project "C:\Users\flobo\Documents\Gits\PD3D\geovar\tetgen1.5.1\build\CMakeFiles\3.13.2\CompilerIdC\CompilerIdC.vcxproj" (default targets).
 
 Build succeeded.
     0 Warning(s)
     0 Error(s)
 
-Time Elapsed 00:00:00.92
+Time Elapsed 00:00:02.38
 
 
 Compilation of the C compiler identification source "CMakeCCompilerId.c" produced "CompilerIdC.exe"
 
 Compilation of the C compiler identification source "CMakeCCompilerId.c" produced "CompilerIdC.vcxproj"
 
-The C compiler identification is MSVC, found in "C:/Users/WOLF512/Documents/Gits/PD3D/geovar/tetgen1.5.1/build/CMakeFiles/3.13.2/CompilerIdC/CompilerIdC.exe"
+The C compiler identification is MSVC, found in "C:/Users/flobo/Documents/Gits/PD3D/geovar/tetgen1.5.1/build/CMakeFiles/3.13.2/CompilerIdC/CompilerIdC.exe"
 
 Compiling the CXX compiler identification source file "CMakeCXXCompilerId.cpp" succeeded.
 Compiler:  
@@ -54,8 +54,8 @@ The output was:
 Microsoft (R) Build Engine version 15.9.21+g9802d43bc3 for .NET Framework
 Copyright (C) Microsoft Corporation. All rights reserved.
 
-Build started 1/8/2019 11:38:58 PM.
-Project "C:\Users\WOLF512\Documents\Gits\PD3D\geovar\tetgen1.5.1\build\CMakeFiles\3.13.2\CompilerIdCXX\CompilerIdCXX.vcxproj" on node 1 (default targets).
+Build started 1/9/2019 10:18:00 AM.
+Project "C:\Users\flobo\Documents\Gits\PD3D\geovar\tetgen1.5.1\build\CMakeFiles\3.13.2\CompilerIdCXX\CompilerIdCXX.vcxproj" on node 1 (default targets).
 PrepareForBuild:
   Creating directory "Debug\".
   Creating directory "Debug\CompilerIdCXX.tlog\".
@@ -66,7 +66,7 @@ ClCompile:
   CMakeCXXCompilerId.cpp
 Link:
   C:\Program Files (x86)\Microsoft Visual Studio\2017\Community\VC\Tools\MSVC\14.16.27023\bin\HostX86\x86\link.exe /ERRORREPORT:QUEUE /OUT:".\CompilerIdCXX.exe" /INCREMENTAL:NO /NOLOGO kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib odbc32.lib odbccp32.lib /MANIFEST /MANIFESTUAC:"level='asInvoker' uiAccess='false'" /manifest:embed /PDB:".\CompilerIdCXX.pdb" /SUBSYSTEM:CONSOLE /TLBID:1 /DYNAMICBASE /NXCOMPAT /IMPLIB:".\CompilerIdCXX.lib" /MACHINE:X86 /SAFESEH Debug\CMakeCXXCompilerId.obj
-  CompilerIdCXX.vcxproj -> C:\Users\WOLF512\Documents\Gits\PD3D\geovar\tetgen1.5.1\build\CMakeFiles\3.13.2\CompilerIdCXX\.\CompilerIdCXX.exe
+  CompilerIdCXX.vcxproj -> C:\Users\flobo\Documents\Gits\PD3D\geovar\tetgen1.5.1\build\CMakeFiles\3.13.2\CompilerIdCXX\.\CompilerIdCXX.exe
 PostBuildEvent:
   for %%i in (cl.exe) do @echo CMAKE_CXX_COMPILER=%%~$PATH:i
   :VCEnd
@@ -74,253 +74,253 @@ PostBuildEvent:
 FinalizeBuildStatus:
   Deleting file "Debug\CompilerIdCXX.tlog\unsuccessfulbuild".
   Touching "Debug\CompilerIdCXX.tlog\CompilerIdCXX.lastbuildstate".
-Done Building Project "C:\Users\WOLF512\Documents\Gits\PD3D\geovar\tetgen1.5.1\build\CMakeFiles\3.13.2\CompilerIdCXX\CompilerIdCXX.vcxproj" (default targets).
+Done Building Project "C:\Users\flobo\Documents\Gits\PD3D\geovar\tetgen1.5.1\build\CMakeFiles\3.13.2\CompilerIdCXX\CompilerIdCXX.vcxproj" (default targets).
 
 Build succeeded.
     0 Warning(s)
     0 Error(s)
 
-Time Elapsed 00:00:00.48
+Time Elapsed 00:00:01.98
 
 
 Compilation of the CXX compiler identification source "CMakeCXXCompilerId.cpp" produced "CompilerIdCXX.exe"
 
 Compilation of the CXX compiler identification source "CMakeCXXCompilerId.cpp" produced "CompilerIdCXX.vcxproj"
 
-The CXX compiler identification is MSVC, found in "C:/Users/WOLF512/Documents/Gits/PD3D/geovar/tetgen1.5.1/build/CMakeFiles/3.13.2/CompilerIdCXX/CompilerIdCXX.exe"
+The CXX compiler identification is MSVC, found in "C:/Users/flobo/Documents/Gits/PD3D/geovar/tetgen1.5.1/build/CMakeFiles/3.13.2/CompilerIdCXX/CompilerIdCXX.exe"
 
 Determining if the C compiler works passed with the following output:
-Change Dir: C:/Users/WOLF512/Documents/Gits/PD3D/geovar/tetgen1.5.1/build/CMakeFiles/CMakeTmp
+Change Dir: C:/Users/flobo/Documents/Gits/PD3D/geovar/tetgen1.5.1/build/CMakeFiles/CMakeTmp
 
-Run Build Command:"C:/Program Files (x86)/Microsoft Visual Studio/2017/Community/MSBuild/15.0/Bin/MSBuild.exe" "cmTC_e7375.vcxproj" "/p:Configuration=Debug" "/p:Platform=Win32" "/p:VisualStudioVersion=15.0"
+Run Build Command:"C:/Program Files (x86)/Microsoft Visual Studio/2017/Community/MSBuild/15.0/Bin/MSBuild.exe" "cmTC_205f6.vcxproj" "/p:Configuration=Debug" "/p:Platform=Win32" "/p:VisualStudioVersion=15.0"
 Microsoft (R) Build Engine version 15.9.21+g9802d43bc3 for .NET Framework
 Copyright (C) Microsoft Corporation. All rights reserved.
 
-Build started 1/8/2019 11:38:58 PM.
-Project "C:\Users\WOLF512\Documents\Gits\PD3D\geovar\tetgen1.5.1\build\CMakeFiles\CMakeTmp\cmTC_e7375.vcxproj" on node 1 (default targets).
+Build started 1/9/2019 10:18:02 AM.
+Project "C:\Users\flobo\Documents\Gits\PD3D\geovar\tetgen1.5.1\build\CMakeFiles\CMakeTmp\cmTC_205f6.vcxproj" on node 1 (default targets).
 PrepareForBuild:
-  Creating directory "cmTC_e7375.dir\Debug\".
-  Creating directory "C:\Users\WOLF512\Documents\Gits\PD3D\geovar\tetgen1.5.1\build\CMakeFiles\CMakeTmp\Debug\".
-  Creating directory "cmTC_e7375.dir\Debug\cmTC_e7375.tlog\".
+  Creating directory "cmTC_205f6.dir\Debug\".
+  Creating directory "C:\Users\flobo\Documents\Gits\PD3D\geovar\tetgen1.5.1\build\CMakeFiles\CMakeTmp\Debug\".
+  Creating directory "cmTC_205f6.dir\Debug\cmTC_205f6.tlog\".
 InitializeBuildStatus:
-  Creating "cmTC_e7375.dir\Debug\cmTC_e7375.tlog\unsuccessfulbuild" because "AlwaysCreate" was specified.
+  Creating "cmTC_205f6.dir\Debug\cmTC_205f6.tlog\unsuccessfulbuild" because "AlwaysCreate" was specified.
 ClCompile:
-  C:\Program Files (x86)\Microsoft Visual Studio\2017\Community\VC\Tools\MSVC\14.16.27023\bin\HostX86\x86\CL.exe /c /Zi /W3 /WX- /diagnostics:classic /Od /Ob0 /Oy- /D WIN32 /D _WINDOWS /D "CMAKE_INTDIR=\"Debug\"" /D _MBCS /Gm- /RTC1 /MDd /GS /fp:precise /Zc:wchar_t /Zc:forScope /Zc:inline /Fo"cmTC_e7375.dir\Debug\\" /Fd"cmTC_e7375.dir\Debug\vc141.pdb" /Gd /TC /analyze- /errorReport:queue C:\Users\WOLF512\Documents\Gits\PD3D\geovar\tetgen1.5.1\build\CMakeFiles\CMakeTmp\testCCompiler.c
-  Microsoft (R) C/C++ Optimizing Compiler Version 19.16.27026.1 for x86
+  C:\Program Files (x86)\Microsoft Visual Studio\2017\Community\VC\Tools\MSVC\14.16.27023\bin\HostX86\x86\CL.exe /c /Zi /W3 /WX- /diagnostics:classic /Od /Ob0 /Oy- /D WIN32 /D _WINDOWS /D "CMAKE_INTDIR=\"Debug\"" /D _MBCS /Gm- /RTC1 /MDd /GS /fp:precise /Zc:wchar_t /Zc:forScope /Zc:inline /Fo"cmTC_205f6.dir\Debug\\" /Fd"cmTC_205f6.dir\Debug\vc141.pdb" /Gd /TC /analyze- /errorReport:queue C:\Users\flobo\Documents\Gits\PD3D\geovar\tetgen1.5.1\build\CMakeFiles\CMakeTmp\testCCompiler.c
+  Microsoft (R) C/C++ Optimizing Compiler Version 19.16.27025.1 for x86
   Copyright (C) Microsoft Corporation.  All rights reserved.
   
-  cl /c /Zi /W3 /WX- /diagnostics:classic /Od /Ob0 /Oy- /D WIN32 /D _WINDOWS /D "CMAKE_INTDIR=\"Debug\"" /D _MBCS /Gm- /RTC1 /MDd /GS /fp:precise /Zc:wchar_t /Zc:forScope /Zc:inline /Fo"cmTC_e7375.dir\Debug\\" /Fd"cmTC_e7375.dir\Debug\vc141.pdb" /Gd /TC /analyze- /errorReport:queue C:\Users\WOLF512\Documents\Gits\PD3D\geovar\tetgen1.5.1\build\CMakeFiles\CMakeTmp\testCCompiler.c
-  testCCompiler.c
+  cl /c /Zi /W3 /WX- /diagnostics:classic /Od /Ob0 /Oy- /D WIN32 /D _WINDOWS /D "CMAKE_INTDIR=\"Debug\"" /D _MBCS /Gm- /RTC1 /MDd /GS /fp:precise /Zc:wchar_t /Zc:forScope /Zc:inline /Fo"cmTC_205f6.dir\Debug\\" /Fd"cmTC_205f6.dir\Debug\vc141.pdb" /Gd /TC /analyze- /errorReport:queue C:\Users\flobo\Documents\Gits\PD3D\geovar\tetgen1.5.1\build\CMakeFiles\CMakeTmp\testCCompiler.c
   
+  testCCompiler.c
 Link:
-  C:\Program Files (x86)\Microsoft Visual Studio\2017\Community\VC\Tools\MSVC\14.16.27023\bin\HostX86\x86\link.exe /ERRORREPORT:QUEUE /OUT:"C:\Users\WOLF512\Documents\Gits\PD3D\geovar\tetgen1.5.1\build\CMakeFiles\CMakeTmp\Debug\cmTC_e7375.exe" /INCREMENTAL /NOLOGO kernel32.lib user32.lib gdi32.lib winspool.lib shell32.lib ole32.lib oleaut32.lib uuid.lib comdlg32.lib advapi32.lib /MANIFEST /MANIFESTUAC:"level='asInvoker' uiAccess='false'" /manifest:embed /DEBUG /PDB:"C:/Users/WOLF512/Documents/Gits/PD3D/geovar/tetgen1.5.1/build/CMakeFiles/CMakeTmp/Debug/cmTC_e7375.pdb" /SUBSYSTEM:CONSOLE /TLBID:1 /DYNAMICBASE /NXCOMPAT /IMPLIB:"C:/Users/WOLF512/Documents/Gits/PD3D/geovar/tetgen1.5.1/build/CMakeFiles/CMakeTmp/Debug/cmTC_e7375.lib" /MACHINE:X86 /SAFESEH  /machine:X86 cmTC_e7375.dir\Debug\testCCompiler.obj
-  cmTC_e7375.vcxproj -> C:\Users\WOLF512\Documents\Gits\PD3D\geovar\tetgen1.5.1\build\CMakeFiles\CMakeTmp\Debug\cmTC_e7375.exe
+  C:\Program Files (x86)\Microsoft Visual Studio\2017\Community\VC\Tools\MSVC\14.16.27023\bin\HostX86\x86\link.exe /ERRORREPORT:QUEUE /OUT:"C:\Users\flobo\Documents\Gits\PD3D\geovar\tetgen1.5.1\build\CMakeFiles\CMakeTmp\Debug\cmTC_205f6.exe" /INCREMENTAL /NOLOGO kernel32.lib user32.lib gdi32.lib winspool.lib shell32.lib ole32.lib oleaut32.lib uuid.lib comdlg32.lib advapi32.lib /MANIFEST /MANIFESTUAC:"level='asInvoker' uiAccess='false'" /manifest:embed /DEBUG /PDB:"C:/Users/flobo/Documents/Gits/PD3D/geovar/tetgen1.5.1/build/CMakeFiles/CMakeTmp/Debug/cmTC_205f6.pdb" /SUBSYSTEM:CONSOLE /TLBID:1 /DYNAMICBASE /NXCOMPAT /IMPLIB:"C:/Users/flobo/Documents/Gits/PD3D/geovar/tetgen1.5.1/build/CMakeFiles/CMakeTmp/Debug/cmTC_205f6.lib" /MACHINE:X86 /SAFESEH  /machine:X86 cmTC_205f6.dir\Debug\testCCompiler.obj
+  cmTC_205f6.vcxproj -> C:\Users\flobo\Documents\Gits\PD3D\geovar\tetgen1.5.1\build\CMakeFiles\CMakeTmp\Debug\cmTC_205f6.exe
 FinalizeBuildStatus:
-  Deleting file "cmTC_e7375.dir\Debug\cmTC_e7375.tlog\unsuccessfulbuild".
-  Touching "cmTC_e7375.dir\Debug\cmTC_e7375.tlog\cmTC_e7375.lastbuildstate".
-Done Building Project "C:\Users\WOLF512\Documents\Gits\PD3D\geovar\tetgen1.5.1\build\CMakeFiles\CMakeTmp\cmTC_e7375.vcxproj" (default targets).
+  Deleting file "cmTC_205f6.dir\Debug\cmTC_205f6.tlog\unsuccessfulbuild".
+  Touching "cmTC_205f6.dir\Debug\cmTC_205f6.tlog\cmTC_205f6.lastbuildstate".
+Done Building Project "C:\Users\flobo\Documents\Gits\PD3D\geovar\tetgen1.5.1\build\CMakeFiles\CMakeTmp\cmTC_205f6.vcxproj" (default targets).
 
 Build succeeded.
     0 Warning(s)
     0 Error(s)
 
-Time Elapsed 00:00:00.76
+Time Elapsed 00:00:02.16
 
 
 Detecting C compiler ABI info compiled with the following output:
-Change Dir: C:/Users/WOLF512/Documents/Gits/PD3D/geovar/tetgen1.5.1/build/CMakeFiles/CMakeTmp
+Change Dir: C:/Users/flobo/Documents/Gits/PD3D/geovar/tetgen1.5.1/build/CMakeFiles/CMakeTmp
 
-Run Build Command:"C:/Program Files (x86)/Microsoft Visual Studio/2017/Community/MSBuild/15.0/Bin/MSBuild.exe" "cmTC_1ed22.vcxproj" "/p:Configuration=Debug" "/p:Platform=Win32" "/p:VisualStudioVersion=15.0"
+Run Build Command:"C:/Program Files (x86)/Microsoft Visual Studio/2017/Community/MSBuild/15.0/Bin/MSBuild.exe" "cmTC_59408.vcxproj" "/p:Configuration=Debug" "/p:Platform=Win32" "/p:VisualStudioVersion=15.0"
 Microsoft (R) Build Engine version 15.9.21+g9802d43bc3 for .NET Framework
 Copyright (C) Microsoft Corporation. All rights reserved.
 
-Build started 1/8/2019 11:38:59 PM.
-Project "C:\Users\WOLF512\Documents\Gits\PD3D\geovar\tetgen1.5.1\build\CMakeFiles\CMakeTmp\cmTC_1ed22.vcxproj" on node 1 (default targets).
+Build started 1/9/2019 10:18:05 AM.
+Project "C:\Users\flobo\Documents\Gits\PD3D\geovar\tetgen1.5.1\build\CMakeFiles\CMakeTmp\cmTC_59408.vcxproj" on node 1 (default targets).
 PrepareForBuild:
-  Creating directory "cmTC_1ed22.dir\Debug\".
-  Creating directory "C:\Users\WOLF512\Documents\Gits\PD3D\geovar\tetgen1.5.1\build\CMakeFiles\CMakeTmp\Debug\".
-  Creating directory "cmTC_1ed22.dir\Debug\cmTC_1ed22.tlog\".
+  Creating directory "cmTC_59408.dir\Debug\".
+  Creating directory "C:\Users\flobo\Documents\Gits\PD3D\geovar\tetgen1.5.1\build\CMakeFiles\CMakeTmp\Debug\".
+  Creating directory "cmTC_59408.dir\Debug\cmTC_59408.tlog\".
 InitializeBuildStatus:
-  Creating "cmTC_1ed22.dir\Debug\cmTC_1ed22.tlog\unsuccessfulbuild" because "AlwaysCreate" was specified.
+  Creating "cmTC_59408.dir\Debug\cmTC_59408.tlog\unsuccessfulbuild" because "AlwaysCreate" was specified.
 ClCompile:
-  C:\Program Files (x86)\Microsoft Visual Studio\2017\Community\VC\Tools\MSVC\14.16.27023\bin\HostX86\x86\CL.exe /c /Zi /W3 /WX- /diagnostics:classic /Od /Ob0 /Oy- /D WIN32 /D _WINDOWS /D "CMAKE_INTDIR=\"Debug\"" /D _MBCS /Gm- /RTC1 /MDd /GS /fp:precise /Zc:wchar_t /Zc:forScope /Zc:inline /Fo"cmTC_1ed22.dir\Debug\\" /Fd"cmTC_1ed22.dir\Debug\vc141.pdb" /Gd /TC /analyze- /errorReport:queue "C:\Program Files\CMake\share\cmake-3.13\Modules\CMakeCCompilerABI.c"
-  Microsoft (R) C/C++ Optimizing Compiler Version 19.16.27026.1 for x86
+  C:\Program Files (x86)\Microsoft Visual Studio\2017\Community\VC\Tools\MSVC\14.16.27023\bin\HostX86\x86\CL.exe /c /Zi /W3 /WX- /diagnostics:classic /Od /Ob0 /Oy- /D WIN32 /D _WINDOWS /D "CMAKE_INTDIR=\"Debug\"" /D _MBCS /Gm- /RTC1 /MDd /GS /fp:precise /Zc:wchar_t /Zc:forScope /Zc:inline /Fo"cmTC_59408.dir\Debug\\" /Fd"cmTC_59408.dir\Debug\vc141.pdb" /Gd /TC /analyze- /errorReport:queue "C:\Program Files\CMake\share\cmake-3.13\Modules\CMakeCCompilerABI.c"
+  Microsoft (R) C/C++ Optimizing Compiler Version 19.16.27025.1 for x86
   Copyright (C) Microsoft Corporation.  All rights reserved.
   
-  cl /c /Zi /W3 /WX- /diagnostics:classic /Od /Ob0 /Oy- /D WIN32 /D _WINDOWS /D "CMAKE_INTDIR=\"Debug\"" /D _MBCS /Gm- /RTC1 /MDd /GS /fp:precise /Zc:wchar_t /Zc:forScope /Zc:inline /Fo"cmTC_1ed22.dir\Debug\\" /Fd"cmTC_1ed22.dir\Debug\vc141.pdb" /Gd /TC /analyze- /errorReport:queue "C:\Program Files\CMake\share\cmake-3.13\Modules\CMakeCCompilerABI.c"
   CMakeCCompilerABI.c
+  cl /c /Zi /W3 /WX- /diagnostics:classic /Od /Ob0 /Oy- /D WIN32 /D _WINDOWS /D "CMAKE_INTDIR=\"Debug\"" /D _MBCS /Gm- /RTC1 /MDd /GS /fp:precise /Zc:wchar_t /Zc:forScope /Zc:inline /Fo"cmTC_59408.dir\Debug\\" /Fd"cmTC_59408.dir\Debug\vc141.pdb" /Gd /TC /analyze- /errorReport:queue "C:\Program Files\CMake\share\cmake-3.13\Modules\CMakeCCompilerABI.c"
   
 Link:
-  C:\Program Files (x86)\Microsoft Visual Studio\2017\Community\VC\Tools\MSVC\14.16.27023\bin\HostX86\x86\link.exe /ERRORREPORT:QUEUE /OUT:"C:\Users\WOLF512\Documents\Gits\PD3D\geovar\tetgen1.5.1\build\CMakeFiles\CMakeTmp\Debug\cmTC_1ed22.exe" /INCREMENTAL /NOLOGO kernel32.lib user32.lib gdi32.lib winspool.lib shell32.lib ole32.lib oleaut32.lib uuid.lib comdlg32.lib advapi32.lib /MANIFEST /MANIFESTUAC:"level='asInvoker' uiAccess='false'" /manifest:embed /DEBUG /PDB:"C:/Users/WOLF512/Documents/Gits/PD3D/geovar/tetgen1.5.1/build/CMakeFiles/CMakeTmp/Debug/cmTC_1ed22.pdb" /SUBSYSTEM:CONSOLE /TLBID:1 /DYNAMICBASE /NXCOMPAT /IMPLIB:"C:/Users/WOLF512/Documents/Gits/PD3D/geovar/tetgen1.5.1/build/CMakeFiles/CMakeTmp/Debug/cmTC_1ed22.lib" /MACHINE:X86 /SAFESEH  /machine:X86 cmTC_1ed22.dir\Debug\CMakeCCompilerABI.obj
-  cmTC_1ed22.vcxproj -> C:\Users\WOLF512\Documents\Gits\PD3D\geovar\tetgen1.5.1\build\CMakeFiles\CMakeTmp\Debug\cmTC_1ed22.exe
+  C:\Program Files (x86)\Microsoft Visual Studio\2017\Community\VC\Tools\MSVC\14.16.27023\bin\HostX86\x86\link.exe /ERRORREPORT:QUEUE /OUT:"C:\Users\flobo\Documents\Gits\PD3D\geovar\tetgen1.5.1\build\CMakeFiles\CMakeTmp\Debug\cmTC_59408.exe" /INCREMENTAL /NOLOGO kernel32.lib user32.lib gdi32.lib winspool.lib shell32.lib ole32.lib oleaut32.lib uuid.lib comdlg32.lib advapi32.lib /MANIFEST /MANIFESTUAC:"level='asInvoker' uiAccess='false'" /manifest:embed /DEBUG /PDB:"C:/Users/flobo/Documents/Gits/PD3D/geovar/tetgen1.5.1/build/CMakeFiles/CMakeTmp/Debug/cmTC_59408.pdb" /SUBSYSTEM:CONSOLE /TLBID:1 /DYNAMICBASE /NXCOMPAT /IMPLIB:"C:/Users/flobo/Documents/Gits/PD3D/geovar/tetgen1.5.1/build/CMakeFiles/CMakeTmp/Debug/cmTC_59408.lib" /MACHINE:X86 /SAFESEH  /machine:X86 cmTC_59408.dir\Debug\CMakeCCompilerABI.obj
+  cmTC_59408.vcxproj -> C:\Users\flobo\Documents\Gits\PD3D\geovar\tetgen1.5.1\build\CMakeFiles\CMakeTmp\Debug\cmTC_59408.exe
 FinalizeBuildStatus:
-  Deleting file "cmTC_1ed22.dir\Debug\cmTC_1ed22.tlog\unsuccessfulbuild".
-  Touching "cmTC_1ed22.dir\Debug\cmTC_1ed22.tlog\cmTC_1ed22.lastbuildstate".
-Done Building Project "C:\Users\WOLF512\Documents\Gits\PD3D\geovar\tetgen1.5.1\build\CMakeFiles\CMakeTmp\cmTC_1ed22.vcxproj" (default targets).
+  Deleting file "cmTC_59408.dir\Debug\cmTC_59408.tlog\unsuccessfulbuild".
+  Touching "cmTC_59408.dir\Debug\cmTC_59408.tlog\cmTC_59408.lastbuildstate".
+Done Building Project "C:\Users\flobo\Documents\Gits\PD3D\geovar\tetgen1.5.1\build\CMakeFiles\CMakeTmp\cmTC_59408.vcxproj" (default targets).
 
 Build succeeded.
     0 Warning(s)
     0 Error(s)
 
-Time Elapsed 00:00:00.50
+Time Elapsed 00:00:01.85
 
 
 
 
 Detecting C [] compiler features compiled with the following output:
-Change Dir: C:/Users/WOLF512/Documents/Gits/PD3D/geovar/tetgen1.5.1/build/CMakeFiles/CMakeTmp
+Change Dir: C:/Users/flobo/Documents/Gits/PD3D/geovar/tetgen1.5.1/build/CMakeFiles/CMakeTmp
 
-Run Build Command:"C:/Program Files (x86)/Microsoft Visual Studio/2017/Community/MSBuild/15.0/Bin/MSBuild.exe" "cmTC_f5044.vcxproj" "/p:Configuration=Debug" "/p:Platform=Win32" "/p:VisualStudioVersion=15.0"
+Run Build Command:"C:/Program Files (x86)/Microsoft Visual Studio/2017/Community/MSBuild/15.0/Bin/MSBuild.exe" "cmTC_f97d1.vcxproj" "/p:Configuration=Debug" "/p:Platform=Win32" "/p:VisualStudioVersion=15.0"
 Microsoft (R) Build Engine version 15.9.21+g9802d43bc3 for .NET Framework
 Copyright (C) Microsoft Corporation. All rights reserved.
 
-Build started 1/8/2019 11:39:00 PM.
-Project "C:\Users\WOLF512\Documents\Gits\PD3D\geovar\tetgen1.5.1\build\CMakeFiles\CMakeTmp\cmTC_f5044.vcxproj" on node 1 (default targets).
+Build started 1/9/2019 10:18:07 AM.
+Project "C:\Users\flobo\Documents\Gits\PD3D\geovar\tetgen1.5.1\build\CMakeFiles\CMakeTmp\cmTC_f97d1.vcxproj" on node 1 (default targets).
 PrepareForBuild:
-  Creating directory "cmTC_f5044.dir\Debug\".
-  Creating directory "C:\Users\WOLF512\Documents\Gits\PD3D\geovar\tetgen1.5.1\build\CMakeFiles\CMakeTmp\Debug\".
-  Creating directory "cmTC_f5044.dir\Debug\cmTC_f5044.tlog\".
+  Creating directory "cmTC_f97d1.dir\Debug\".
+  Creating directory "C:\Users\flobo\Documents\Gits\PD3D\geovar\tetgen1.5.1\build\CMakeFiles\CMakeTmp\Debug\".
+  Creating directory "cmTC_f97d1.dir\Debug\cmTC_f97d1.tlog\".
 InitializeBuildStatus:
-  Creating "cmTC_f5044.dir\Debug\cmTC_f5044.tlog\unsuccessfulbuild" because "AlwaysCreate" was specified.
+  Creating "cmTC_f97d1.dir\Debug\cmTC_f97d1.tlog\unsuccessfulbuild" because "AlwaysCreate" was specified.
 ClCompile:
-  C:\Program Files (x86)\Microsoft Visual Studio\2017\Community\VC\Tools\MSVC\14.16.27023\bin\HostX86\x86\CL.exe /c /Zi /W3 /WX- /diagnostics:classic /Od /Ob0 /Oy- /D WIN32 /D _WINDOWS /D "CMAKE_INTDIR=\"Debug\"" /D _MBCS /Gm- /RTC1 /MDd /GS /fp:precise /Zc:wchar_t /Zc:forScope /Zc:inline /Fo"cmTC_f5044.dir\Debug\\" /Fd"cmTC_f5044.dir\Debug\vc141.pdb" /Gd /TC /analyze- /errorReport:queue C:\Users\WOLF512\Documents\Gits\PD3D\geovar\tetgen1.5.1\build\CMakeFiles\feature_tests.c
-  Microsoft (R) C/C++ Optimizing Compiler Version 19.16.27026.1 for x86
+  C:\Program Files (x86)\Microsoft Visual Studio\2017\Community\VC\Tools\MSVC\14.16.27023\bin\HostX86\x86\CL.exe /c /Zi /W3 /WX- /diagnostics:classic /Od /Ob0 /Oy- /D WIN32 /D _WINDOWS /D "CMAKE_INTDIR=\"Debug\"" /D _MBCS /Gm- /RTC1 /MDd /GS /fp:precise /Zc:wchar_t /Zc:forScope /Zc:inline /Fo"cmTC_f97d1.dir\Debug\\" /Fd"cmTC_f97d1.dir\Debug\vc141.pdb" /Gd /TC /analyze- /errorReport:queue C:\Users\flobo\Documents\Gits\PD3D\geovar\tetgen1.5.1\build\CMakeFiles\feature_tests.c
+  Microsoft (R) C/C++ Optimizing Compiler Version 19.16.27025.1 for x86
   Copyright (C) Microsoft Corporation.  All rights reserved.
   
-  cl /c /Zi /W3 /WX- /diagnostics:classic /Od /Ob0 /Oy- /D WIN32 /D _WINDOWS /D "CMAKE_INTDIR=\"Debug\"" /D _MBCS /Gm- /RTC1 /MDd /GS /fp:precise /Zc:wchar_t /Zc:forScope /Zc:inline /Fo"cmTC_f5044.dir\Debug\\" /Fd"cmTC_f5044.dir\Debug\vc141.pdb" /Gd /TC /analyze- /errorReport:queue C:\Users\WOLF512\Documents\Gits\PD3D\geovar\tetgen1.5.1\build\CMakeFiles\feature_tests.c
-  feature_tests.c
+  cl /c /Zi /W3 /WX- /diagnostics:classic /Od /Ob0 /Oy- /D WIN32 /D _WINDOWS /D "CMAKE_INTDIR=\"Debug\"" /D _MBCS /Gm- /RTC1 /MDd /GS /fp:precise /Zc:wchar_t /Zc:forScope /Zc:inline /Fo"cmTC_f97d1.dir\Debug\\" /Fd"cmTC_f97d1.dir\Debug\vc141.pdb" /Gd /TC /analyze- /errorReport:queue C:\Users\flobo\Documents\Gits\PD3D\geovar\tetgen1.5.1\build\CMakeFiles\feature_tests.c
   
+  feature_tests.c
 Link:
-  C:\Program Files (x86)\Microsoft Visual Studio\2017\Community\VC\Tools\MSVC\14.16.27023\bin\HostX86\x86\link.exe /ERRORREPORT:QUEUE /OUT:"C:\Users\WOLF512\Documents\Gits\PD3D\geovar\tetgen1.5.1\build\CMakeFiles\CMakeTmp\Debug\cmTC_f5044.exe" /INCREMENTAL /NOLOGO kernel32.lib user32.lib gdi32.lib winspool.lib shell32.lib ole32.lib oleaut32.lib uuid.lib comdlg32.lib advapi32.lib /MANIFEST /MANIFESTUAC:"level='asInvoker' uiAccess='false'" /manifest:embed /DEBUG /PDB:"C:/Users/WOLF512/Documents/Gits/PD3D/geovar/tetgen1.5.1/build/CMakeFiles/CMakeTmp/Debug/cmTC_f5044.pdb" /SUBSYSTEM:CONSOLE /TLBID:1 /DYNAMICBASE /NXCOMPAT /IMPLIB:"C:/Users/WOLF512/Documents/Gits/PD3D/geovar/tetgen1.5.1/build/CMakeFiles/CMakeTmp/Debug/cmTC_f5044.lib" /MACHINE:X86 /SAFESEH  /machine:X86 cmTC_f5044.dir\Debug\feature_tests.obj
-  cmTC_f5044.vcxproj -> C:\Users\WOLF512\Documents\Gits\PD3D\geovar\tetgen1.5.1\build\CMakeFiles\CMakeTmp\Debug\cmTC_f5044.exe
+  C:\Program Files (x86)\Microsoft Visual Studio\2017\Community\VC\Tools\MSVC\14.16.27023\bin\HostX86\x86\link.exe /ERRORREPORT:QUEUE /OUT:"C:\Users\flobo\Documents\Gits\PD3D\geovar\tetgen1.5.1\build\CMakeFiles\CMakeTmp\Debug\cmTC_f97d1.exe" /INCREMENTAL /NOLOGO kernel32.lib user32.lib gdi32.lib winspool.lib shell32.lib ole32.lib oleaut32.lib uuid.lib comdlg32.lib advapi32.lib /MANIFEST /MANIFESTUAC:"level='asInvoker' uiAccess='false'" /manifest:embed /DEBUG /PDB:"C:/Users/flobo/Documents/Gits/PD3D/geovar/tetgen1.5.1/build/CMakeFiles/CMakeTmp/Debug/cmTC_f97d1.pdb" /SUBSYSTEM:CONSOLE /TLBID:1 /DYNAMICBASE /NXCOMPAT /IMPLIB:"C:/Users/flobo/Documents/Gits/PD3D/geovar/tetgen1.5.1/build/CMakeFiles/CMakeTmp/Debug/cmTC_f97d1.lib" /MACHINE:X86 /SAFESEH  /machine:X86 cmTC_f97d1.dir\Debug\feature_tests.obj
+  cmTC_f97d1.vcxproj -> C:\Users\flobo\Documents\Gits\PD3D\geovar\tetgen1.5.1\build\CMakeFiles\CMakeTmp\Debug\cmTC_f97d1.exe
 FinalizeBuildStatus:
-  Deleting file "cmTC_f5044.dir\Debug\cmTC_f5044.tlog\unsuccessfulbuild".
-  Touching "cmTC_f5044.dir\Debug\cmTC_f5044.tlog\cmTC_f5044.lastbuildstate".
-Done Building Project "C:\Users\WOLF512\Documents\Gits\PD3D\geovar\tetgen1.5.1\build\CMakeFiles\CMakeTmp\cmTC_f5044.vcxproj" (default targets).
+  Deleting file "cmTC_f97d1.dir\Debug\cmTC_f97d1.tlog\unsuccessfulbuild".
+  Touching "cmTC_f97d1.dir\Debug\cmTC_f97d1.tlog\cmTC_f97d1.lastbuildstate".
+Done Building Project "C:\Users\flobo\Documents\Gits\PD3D\geovar\tetgen1.5.1\build\CMakeFiles\CMakeTmp\cmTC_f97d1.vcxproj" (default targets).
 
 Build succeeded.
     0 Warning(s)
     0 Error(s)
 
-Time Elapsed 00:00:00.48
+Time Elapsed 00:00:01.85
 
 
     Feature record: C_FEATURE:1c_function_prototypes
     Feature record: C_FEATURE:1c_variadic_macros
 Determining if the CXX compiler works passed with the following output:
-Change Dir: C:/Users/WOLF512/Documents/Gits/PD3D/geovar/tetgen1.5.1/build/CMakeFiles/CMakeTmp
+Change Dir: C:/Users/flobo/Documents/Gits/PD3D/geovar/tetgen1.5.1/build/CMakeFiles/CMakeTmp
 
-Run Build Command:"C:/Program Files (x86)/Microsoft Visual Studio/2017/Community/MSBuild/15.0/Bin/MSBuild.exe" "cmTC_a4a87.vcxproj" "/p:Configuration=Debug" "/p:Platform=Win32" "/p:VisualStudioVersion=15.0"
+Run Build Command:"C:/Program Files (x86)/Microsoft Visual Studio/2017/Community/MSBuild/15.0/Bin/MSBuild.exe" "cmTC_29696.vcxproj" "/p:Configuration=Debug" "/p:Platform=Win32" "/p:VisualStudioVersion=15.0"
 Microsoft (R) Build Engine version 15.9.21+g9802d43bc3 for .NET Framework
 Copyright (C) Microsoft Corporation. All rights reserved.
 
-Build started 1/8/2019 11:39:00 PM.
-Project "C:\Users\WOLF512\Documents\Gits\PD3D\geovar\tetgen1.5.1\build\CMakeFiles\CMakeTmp\cmTC_a4a87.vcxproj" on node 1 (default targets).
+Build started 1/9/2019 10:18:10 AM.
+Project "C:\Users\flobo\Documents\Gits\PD3D\geovar\tetgen1.5.1\build\CMakeFiles\CMakeTmp\cmTC_29696.vcxproj" on node 1 (default targets).
 PrepareForBuild:
-  Creating directory "cmTC_a4a87.dir\Debug\".
-  Creating directory "C:\Users\WOLF512\Documents\Gits\PD3D\geovar\tetgen1.5.1\build\CMakeFiles\CMakeTmp\Debug\".
-  Creating directory "cmTC_a4a87.dir\Debug\cmTC_a4a87.tlog\".
+  Creating directory "cmTC_29696.dir\Debug\".
+  Creating directory "C:\Users\flobo\Documents\Gits\PD3D\geovar\tetgen1.5.1\build\CMakeFiles\CMakeTmp\Debug\".
+  Creating directory "cmTC_29696.dir\Debug\cmTC_29696.tlog\".
 InitializeBuildStatus:
-  Creating "cmTC_a4a87.dir\Debug\cmTC_a4a87.tlog\unsuccessfulbuild" because "AlwaysCreate" was specified.
+  Creating "cmTC_29696.dir\Debug\cmTC_29696.tlog\unsuccessfulbuild" because "AlwaysCreate" was specified.
 ClCompile:
-  C:\Program Files (x86)\Microsoft Visual Studio\2017\Community\VC\Tools\MSVC\14.16.27023\bin\HostX86\x86\CL.exe /c /Zi /W3 /WX- /diagnostics:classic /Od /Ob0 /Oy- /D WIN32 /D _WINDOWS /D "CMAKE_INTDIR=\"Debug\"" /D _MBCS /Gm- /EHsc /RTC1 /MDd /GS /fp:precise /Zc:wchar_t /Zc:forScope /Zc:inline /GR /Fo"cmTC_a4a87.dir\Debug\\" /Fd"cmTC_a4a87.dir\Debug\vc141.pdb" /Gd /TP /analyze- /errorReport:queue C:\Users\WOLF512\Documents\Gits\PD3D\geovar\tetgen1.5.1\build\CMakeFiles\CMakeTmp\testCXXCompiler.cxx
-  Microsoft (R) C/C++ Optimizing Compiler Version 19.16.27026.1 for x86
+  C:\Program Files (x86)\Microsoft Visual Studio\2017\Community\VC\Tools\MSVC\14.16.27023\bin\HostX86\x86\CL.exe /c /Zi /W3 /WX- /diagnostics:classic /Od /Ob0 /Oy- /D WIN32 /D _WINDOWS /D "CMAKE_INTDIR=\"Debug\"" /D _MBCS /Gm- /EHsc /RTC1 /MDd /GS /fp:precise /Zc:wchar_t /Zc:forScope /Zc:inline /GR /Fo"cmTC_29696.dir\Debug\\" /Fd"cmTC_29696.dir\Debug\vc141.pdb" /Gd /TP /analyze- /errorReport:queue C:\Users\flobo\Documents\Gits\PD3D\geovar\tetgen1.5.1\build\CMakeFiles\CMakeTmp\testCXXCompiler.cxx
+  Microsoft (R) C/C++ Optimizing Compiler Version 19.16.27025.1 for x86
   Copyright (C) Microsoft Corporation.  All rights reserved.
   
-  cl /c /Zi /W3 /WX- /diagnostics:classic /Od /Ob0 /Oy- /D WIN32 /D _WINDOWS /D "CMAKE_INTDIR=\"Debug\"" /D _MBCS /Gm- /EHsc /RTC1 /MDd /GS /fp:precise /Zc:wchar_t /Zc:forScope /Zc:inline /GR /Fo"cmTC_a4a87.dir\Debug\\" /Fd"cmTC_a4a87.dir\Debug\vc141.pdb" /Gd /TP /analyze- /errorReport:queue C:\Users\WOLF512\Documents\Gits\PD3D\geovar\tetgen1.5.1\build\CMakeFiles\CMakeTmp\testCXXCompiler.cxx
+  cl /c /Zi /W3 /WX- /diagnostics:classic /Od /Ob0 /Oy- /D WIN32 /D _WINDOWS /D "CMAKE_INTDIR=\"Debug\"" /D _MBCS /Gm- /EHsc /RTC1 /MDd /GS /fp:precise /Zc:wchar_t /Zc:forScope /Zc:inline /GR /Fo"cmTC_29696.dir\Debug\\" /Fd"cmTC_29696.dir\Debug\vc141.pdb" /Gd /TP /analyze- /errorReport:queue C:\Users\flobo\Documents\Gits\PD3D\geovar\tetgen1.5.1\build\CMakeFiles\CMakeTmp\testCXXCompiler.cxx
   testCXXCompiler.cxx
   
 Link:
-  C:\Program Files (x86)\Microsoft Visual Studio\2017\Community\VC\Tools\MSVC\14.16.27023\bin\HostX86\x86\link.exe /ERRORREPORT:QUEUE /OUT:"C:\Users\WOLF512\Documents\Gits\PD3D\geovar\tetgen1.5.1\build\CMakeFiles\CMakeTmp\Debug\cmTC_a4a87.exe" /INCREMENTAL /NOLOGO kernel32.lib user32.lib gdi32.lib winspool.lib shell32.lib ole32.lib oleaut32.lib uuid.lib comdlg32.lib advapi32.lib /MANIFEST /MANIFESTUAC:"level='asInvoker' uiAccess='false'" /manifest:embed /DEBUG /PDB:"C:/Users/WOLF512/Documents/Gits/PD3D/geovar/tetgen1.5.1/build/CMakeFiles/CMakeTmp/Debug/cmTC_a4a87.pdb" /SUBSYSTEM:CONSOLE /TLBID:1 /DYNAMICBASE /NXCOMPAT /IMPLIB:"C:/Users/WOLF512/Documents/Gits/PD3D/geovar/tetgen1.5.1/build/CMakeFiles/CMakeTmp/Debug/cmTC_a4a87.lib" /MACHINE:X86 /SAFESEH  /machine:X86 cmTC_a4a87.dir\Debug\testCXXCompiler.obj
-  cmTC_a4a87.vcxproj -> C:\Users\WOLF512\Documents\Gits\PD3D\geovar\tetgen1.5.1\build\CMakeFiles\CMakeTmp\Debug\cmTC_a4a87.exe
+  C:\Program Files (x86)\Microsoft Visual Studio\2017\Community\VC\Tools\MSVC\14.16.27023\bin\HostX86\x86\link.exe /ERRORREPORT:QUEUE /OUT:"C:\Users\flobo\Documents\Gits\PD3D\geovar\tetgen1.5.1\build\CMakeFiles\CMakeTmp\Debug\cmTC_29696.exe" /INCREMENTAL /NOLOGO kernel32.lib user32.lib gdi32.lib winspool.lib shell32.lib ole32.lib oleaut32.lib uuid.lib comdlg32.lib advapi32.lib /MANIFEST /MANIFESTUAC:"level='asInvoker' uiAccess='false'" /manifest:embed /DEBUG /PDB:"C:/Users/flobo/Documents/Gits/PD3D/geovar/tetgen1.5.1/build/CMakeFiles/CMakeTmp/Debug/cmTC_29696.pdb" /SUBSYSTEM:CONSOLE /TLBID:1 /DYNAMICBASE /NXCOMPAT /IMPLIB:"C:/Users/flobo/Documents/Gits/PD3D/geovar/tetgen1.5.1/build/CMakeFiles/CMakeTmp/Debug/cmTC_29696.lib" /MACHINE:X86 /SAFESEH  /machine:X86 cmTC_29696.dir\Debug\testCXXCompiler.obj
+  cmTC_29696.vcxproj -> C:\Users\flobo\Documents\Gits\PD3D\geovar\tetgen1.5.1\build\CMakeFiles\CMakeTmp\Debug\cmTC_29696.exe
 FinalizeBuildStatus:
-  Deleting file "cmTC_a4a87.dir\Debug\cmTC_a4a87.tlog\unsuccessfulbuild".
-  Touching "cmTC_a4a87.dir\Debug\cmTC_a4a87.tlog\cmTC_a4a87.lastbuildstate".
-Done Building Project "C:\Users\WOLF512\Documents\Gits\PD3D\geovar\tetgen1.5.1\build\CMakeFiles\CMakeTmp\cmTC_a4a87.vcxproj" (default targets).
+  Deleting file "cmTC_29696.dir\Debug\cmTC_29696.tlog\unsuccessfulbuild".
+  Touching "cmTC_29696.dir\Debug\cmTC_29696.tlog\cmTC_29696.lastbuildstate".
+Done Building Project "C:\Users\flobo\Documents\Gits\PD3D\geovar\tetgen1.5.1\build\CMakeFiles\CMakeTmp\cmTC_29696.vcxproj" (default targets).
 
 Build succeeded.
     0 Warning(s)
     0 Error(s)
 
-Time Elapsed 00:00:00.49
+Time Elapsed 00:00:01.88
 
 
 Detecting CXX compiler ABI info compiled with the following output:
-Change Dir: C:/Users/WOLF512/Documents/Gits/PD3D/geovar/tetgen1.5.1/build/CMakeFiles/CMakeTmp
+Change Dir: C:/Users/flobo/Documents/Gits/PD3D/geovar/tetgen1.5.1/build/CMakeFiles/CMakeTmp
 
-Run Build Command:"C:/Program Files (x86)/Microsoft Visual Studio/2017/Community/MSBuild/15.0/Bin/MSBuild.exe" "cmTC_b942f.vcxproj" "/p:Configuration=Debug" "/p:Platform=Win32" "/p:VisualStudioVersion=15.0"
+Run Build Command:"C:/Program Files (x86)/Microsoft Visual Studio/2017/Community/MSBuild/15.0/Bin/MSBuild.exe" "cmTC_507f7.vcxproj" "/p:Configuration=Debug" "/p:Platform=Win32" "/p:VisualStudioVersion=15.0"
 Microsoft (R) Build Engine version 15.9.21+g9802d43bc3 for .NET Framework
 Copyright (C) Microsoft Corporation. All rights reserved.
 
-Build started 1/8/2019 11:39:01 PM.
-Project "C:\Users\WOLF512\Documents\Gits\PD3D\geovar\tetgen1.5.1\build\CMakeFiles\CMakeTmp\cmTC_b942f.vcxproj" on node 1 (default targets).
+Build started 1/9/2019 10:18:12 AM.
+Project "C:\Users\flobo\Documents\Gits\PD3D\geovar\tetgen1.5.1\build\CMakeFiles\CMakeTmp\cmTC_507f7.vcxproj" on node 1 (default targets).
 PrepareForBuild:
-  Creating directory "cmTC_b942f.dir\Debug\".
-  Creating directory "C:\Users\WOLF512\Documents\Gits\PD3D\geovar\tetgen1.5.1\build\CMakeFiles\CMakeTmp\Debug\".
-  Creating directory "cmTC_b942f.dir\Debug\cmTC_b942f.tlog\".
+  Creating directory "cmTC_507f7.dir\Debug\".
+  Creating directory "C:\Users\flobo\Documents\Gits\PD3D\geovar\tetgen1.5.1\build\CMakeFiles\CMakeTmp\Debug\".
+  Creating directory "cmTC_507f7.dir\Debug\cmTC_507f7.tlog\".
 InitializeBuildStatus:
-  Creating "cmTC_b942f.dir\Debug\cmTC_b942f.tlog\unsuccessfulbuild" because "AlwaysCreate" was specified.
+  Creating "cmTC_507f7.dir\Debug\cmTC_507f7.tlog\unsuccessfulbuild" because "AlwaysCreate" was specified.
 ClCompile:
-  C:\Program Files (x86)\Microsoft Visual Studio\2017\Community\VC\Tools\MSVC\14.16.27023\bin\HostX86\x86\CL.exe /c /Zi /W3 /WX- /diagnostics:classic /Od /Ob0 /Oy- /D WIN32 /D _WINDOWS /D "CMAKE_INTDIR=\"Debug\"" /D _MBCS /Gm- /EHsc /RTC1 /MDd /GS /fp:precise /Zc:wchar_t /Zc:forScope /Zc:inline /GR /Fo"cmTC_b942f.dir\Debug\\" /Fd"cmTC_b942f.dir\Debug\vc141.pdb" /Gd /TP /analyze- /errorReport:queue "C:\Program Files\CMake\share\cmake-3.13\Modules\CMakeCXXCompilerABI.cpp"
-  Microsoft (R) C/C++ Optimizing Compiler Version 19.16.27026.1 for x86
+  C:\Program Files (x86)\Microsoft Visual Studio\2017\Community\VC\Tools\MSVC\14.16.27023\bin\HostX86\x86\CL.exe /c /Zi /W3 /WX- /diagnostics:classic /Od /Ob0 /Oy- /D WIN32 /D _WINDOWS /D "CMAKE_INTDIR=\"Debug\"" /D _MBCS /Gm- /EHsc /RTC1 /MDd /GS /fp:precise /Zc:wchar_t /Zc:forScope /Zc:inline /GR /Fo"cmTC_507f7.dir\Debug\\" /Fd"cmTC_507f7.dir\Debug\vc141.pdb" /Gd /TP /analyze- /errorReport:queue "C:\Program Files\CMake\share\cmake-3.13\Modules\CMakeCXXCompilerABI.cpp"
+  Microsoft (R) C/C++ Optimizing Compiler Version 19.16.27025.1 for x86
   Copyright (C) Microsoft Corporation.  All rights reserved.
   
-  cl /c /Zi /W3 /WX- /diagnostics:classic /Od /Ob0 /Oy- /D WIN32 /D _WINDOWS /D "CMAKE_INTDIR=\"Debug\"" /D _MBCS /Gm- /EHsc /RTC1 /MDd /GS /fp:precise /Zc:wchar_t /Zc:forScope /Zc:inline /GR /Fo"cmTC_b942f.dir\Debug\\" /Fd"cmTC_b942f.dir\Debug\vc141.pdb" /Gd /TP /analyze- /errorReport:queue "C:\Program Files\CMake\share\cmake-3.13\Modules\CMakeCXXCompilerABI.cpp"
-  CMakeCXXCompilerABI.cpp
+  cl /c /Zi /W3 /WX- /diagnostics:classic /Od /Ob0 /Oy- /D WIN32 /D _WINDOWS /D "CMAKE_INTDIR=\"Debug\"" /D _MBCS /Gm- /EHsc /RTC1 /MDd /GS /fp:precise /Zc:wchar_t /Zc:forScope /Zc:inline /GR /Fo"cmTC_507f7.dir\Debug\\" /Fd"cmTC_507f7.dir\Debug\vc141.pdb" /Gd /TP /analyze- /errorReport:queue "C:\Program Files\CMake\share\cmake-3.13\Modules\CMakeCXXCompilerABI.cpp"
   
+  CMakeCXXCompilerABI.cpp
 Link:
-  C:\Program Files (x86)\Microsoft Visual Studio\2017\Community\VC\Tools\MSVC\14.16.27023\bin\HostX86\x86\link.exe /ERRORREPORT:QUEUE /OUT:"C:\Users\WOLF512\Documents\Gits\PD3D\geovar\tetgen1.5.1\build\CMakeFiles\CMakeTmp\Debug\cmTC_b942f.exe" /INCREMENTAL /NOLOGO kernel32.lib user32.lib gdi32.lib winspool.lib shell32.lib ole32.lib oleaut32.lib uuid.lib comdlg32.lib advapi32.lib /MANIFEST /MANIFESTUAC:"level='asInvoker' uiAccess='false'" /manifest:embed /DEBUG /PDB:"C:/Users/WOLF512/Documents/Gits/PD3D/geovar/tetgen1.5.1/build/CMakeFiles/CMakeTmp/Debug/cmTC_b942f.pdb" /SUBSYSTEM:CONSOLE /TLBID:1 /DYNAMICBASE /NXCOMPAT /IMPLIB:"C:/Users/WOLF512/Documents/Gits/PD3D/geovar/tetgen1.5.1/build/CMakeFiles/CMakeTmp/Debug/cmTC_b942f.lib" /MACHINE:X86 /SAFESEH  /machine:X86 cmTC_b942f.dir\Debug\CMakeCXXCompilerABI.obj
-  cmTC_b942f.vcxproj -> C:\Users\WOLF512\Documents\Gits\PD3D\geovar\tetgen1.5.1\build\CMakeFiles\CMakeTmp\Debug\cmTC_b942f.exe
+  C:\Program Files (x86)\Microsoft Visual Studio\2017\Community\VC\Tools\MSVC\14.16.27023\bin\HostX86\x86\link.exe /ERRORREPORT:QUEUE /OUT:"C:\Users\flobo\Documents\Gits\PD3D\geovar\tetgen1.5.1\build\CMakeFiles\CMakeTmp\Debug\cmTC_507f7.exe" /INCREMENTAL /NOLOGO kernel32.lib user32.lib gdi32.lib winspool.lib shell32.lib ole32.lib oleaut32.lib uuid.lib comdlg32.lib advapi32.lib /MANIFEST /MANIFESTUAC:"level='asInvoker' uiAccess='false'" /manifest:embed /DEBUG /PDB:"C:/Users/flobo/Documents/Gits/PD3D/geovar/tetgen1.5.1/build/CMakeFiles/CMakeTmp/Debug/cmTC_507f7.pdb" /SUBSYSTEM:CONSOLE /TLBID:1 /DYNAMICBASE /NXCOMPAT /IMPLIB:"C:/Users/flobo/Documents/Gits/PD3D/geovar/tetgen1.5.1/build/CMakeFiles/CMakeTmp/Debug/cmTC_507f7.lib" /MACHINE:X86 /SAFESEH  /machine:X86 cmTC_507f7.dir\Debug\CMakeCXXCompilerABI.obj
+  cmTC_507f7.vcxproj -> C:\Users\flobo\Documents\Gits\PD3D\geovar\tetgen1.5.1\build\CMakeFiles\CMakeTmp\Debug\cmTC_507f7.exe
 FinalizeBuildStatus:
-  Deleting file "cmTC_b942f.dir\Debug\cmTC_b942f.tlog\unsuccessfulbuild".
-  Touching "cmTC_b942f.dir\Debug\cmTC_b942f.tlog\cmTC_b942f.lastbuildstate".
-Done Building Project "C:\Users\WOLF512\Documents\Gits\PD3D\geovar\tetgen1.5.1\build\CMakeFiles\CMakeTmp\cmTC_b942f.vcxproj" (default targets).
+  Deleting file "cmTC_507f7.dir\Debug\cmTC_507f7.tlog\unsuccessfulbuild".
+  Touching "cmTC_507f7.dir\Debug\cmTC_507f7.tlog\cmTC_507f7.lastbuildstate".
+Done Building Project "C:\Users\flobo\Documents\Gits\PD3D\geovar\tetgen1.5.1\build\CMakeFiles\CMakeTmp\cmTC_507f7.vcxproj" (default targets).
 
 Build succeeded.
     0 Warning(s)
     0 Error(s)
 
-Time Elapsed 00:00:00.49
+Time Elapsed 00:00:01.85
 
 
 
 
 Detecting CXX [] compiler features compiled with the following output:
-Change Dir: C:/Users/WOLF512/Documents/Gits/PD3D/geovar/tetgen1.5.1/build/CMakeFiles/CMakeTmp
+Change Dir: C:/Users/flobo/Documents/Gits/PD3D/geovar/tetgen1.5.1/build/CMakeFiles/CMakeTmp
 
-Run Build Command:"C:/Program Files (x86)/Microsoft Visual Studio/2017/Community/MSBuild/15.0/Bin/MSBuild.exe" "cmTC_a70f1.vcxproj" "/p:Configuration=Debug" "/p:Platform=Win32" "/p:VisualStudioVersion=15.0"
+Run Build Command:"C:/Program Files (x86)/Microsoft Visual Studio/2017/Community/MSBuild/15.0/Bin/MSBuild.exe" "cmTC_024fc.vcxproj" "/p:Configuration=Debug" "/p:Platform=Win32" "/p:VisualStudioVersion=15.0"
 Microsoft (R) Build Engine version 15.9.21+g9802d43bc3 for .NET Framework
 Copyright (C) Microsoft Corporation. All rights reserved.
 
-Build started 1/8/2019 11:39:02 PM.
-Project "C:\Users\WOLF512\Documents\Gits\PD3D\geovar\tetgen1.5.1\build\CMakeFiles\CMakeTmp\cmTC_a70f1.vcxproj" on node 1 (default targets).
+Build started 1/9/2019 10:18:15 AM.
+Project "C:\Users\flobo\Documents\Gits\PD3D\geovar\tetgen1.5.1\build\CMakeFiles\CMakeTmp\cmTC_024fc.vcxproj" on node 1 (default targets).
 PrepareForBuild:
-  Creating directory "cmTC_a70f1.dir\Debug\".
-  Creating directory "C:\Users\WOLF512\Documents\Gits\PD3D\geovar\tetgen1.5.1\build\CMakeFiles\CMakeTmp\Debug\".
-  Creating directory "cmTC_a70f1.dir\Debug\cmTC_a70f1.tlog\".
+  Creating directory "cmTC_024fc.dir\Debug\".
+  Creating directory "C:\Users\flobo\Documents\Gits\PD3D\geovar\tetgen1.5.1\build\CMakeFiles\CMakeTmp\Debug\".
+  Creating directory "cmTC_024fc.dir\Debug\cmTC_024fc.tlog\".
 InitializeBuildStatus:
-  Creating "cmTC_a70f1.dir\Debug\cmTC_a70f1.tlog\unsuccessfulbuild" because "AlwaysCreate" was specified.
+  Creating "cmTC_024fc.dir\Debug\cmTC_024fc.tlog\unsuccessfulbuild" because "AlwaysCreate" was specified.
 ClCompile:
-  C:\Program Files (x86)\Microsoft Visual Studio\2017\Community\VC\Tools\MSVC\14.16.27023\bin\HostX86\x86\CL.exe /c /Zi /W3 /WX- /diagnostics:classic /Od /Ob0 /Oy- /D WIN32 /D _WINDOWS /D "CMAKE_INTDIR=\"Debug\"" /D _MBCS /Gm- /EHsc /RTC1 /MDd /GS /fp:precise /Zc:wchar_t /Zc:forScope /Zc:inline /GR /Fo"cmTC_a70f1.dir\Debug\\" /Fd"cmTC_a70f1.dir\Debug\vc141.pdb" /Gd /TP /analyze- /errorReport:queue C:\Users\WOLF512\Documents\Gits\PD3D\geovar\tetgen1.5.1\build\CMakeFiles\feature_tests.cxx
-  Microsoft (R) C/C++ Optimizing Compiler Version 19.16.27026.1 for x86
+  C:\Program Files (x86)\Microsoft Visual Studio\2017\Community\VC\Tools\MSVC\14.16.27023\bin\HostX86\x86\CL.exe /c /Zi /W3 /WX- /diagnostics:classic /Od /Ob0 /Oy- /D WIN32 /D _WINDOWS /D "CMAKE_INTDIR=\"Debug\"" /D _MBCS /Gm- /EHsc /RTC1 /MDd /GS /fp:precise /Zc:wchar_t /Zc:forScope /Zc:inline /GR /Fo"cmTC_024fc.dir\Debug\\" /Fd"cmTC_024fc.dir\Debug\vc141.pdb" /Gd /TP /analyze- /errorReport:queue C:\Users\flobo\Documents\Gits\PD3D\geovar\tetgen1.5.1\build\CMakeFiles\feature_tests.cxx
+  Microsoft (R) C/C++ Optimizing Compiler Version 19.16.27025.1 for x86
   Copyright (C) Microsoft Corporation.  All rights reserved.
   
-  cl /c /Zi /W3 /WX- /diagnostics:classic /Od /Ob0 /Oy- /D WIN32 /D _WINDOWS /D "CMAKE_INTDIR=\"Debug\"" /D _MBCS /Gm- /EHsc /RTC1 /MDd /GS /fp:precise /Zc:wchar_t /Zc:forScope /Zc:inline /GR /Fo"cmTC_a70f1.dir\Debug\\" /Fd"cmTC_a70f1.dir\Debug\vc141.pdb" /Gd /TP /analyze- /errorReport:queue C:\Users\WOLF512\Documents\Gits\PD3D\geovar\tetgen1.5.1\build\CMakeFiles\feature_tests.cxx
+  cl /c /Zi /W3 /WX- /diagnostics:classic /Od /Ob0 /Oy- /D WIN32 /D _WINDOWS /D "CMAKE_INTDIR=\"Debug\"" /D _MBCS /Gm- /EHsc /RTC1 /MDd /GS /fp:precise /Zc:wchar_t /Zc:forScope /Zc:inline /GR /Fo"cmTC_024fc.dir\Debug\\" /Fd"cmTC_024fc.dir\Debug\vc141.pdb" /Gd /TP /analyze- /errorReport:queue C:\Users\flobo\Documents\Gits\PD3D\geovar\tetgen1.5.1\build\CMakeFiles\feature_tests.cxx
   feature_tests.cxx
   
 Link:
-  C:\Program Files (x86)\Microsoft Visual Studio\2017\Community\VC\Tools\MSVC\14.16.27023\bin\HostX86\x86\link.exe /ERRORREPORT:QUEUE /OUT:"C:\Users\WOLF512\Documents\Gits\PD3D\geovar\tetgen1.5.1\build\CMakeFiles\CMakeTmp\Debug\cmTC_a70f1.exe" /INCREMENTAL /NOLOGO kernel32.lib user32.lib gdi32.lib winspool.lib shell32.lib ole32.lib oleaut32.lib uuid.lib comdlg32.lib advapi32.lib /MANIFEST /MANIFESTUAC:"level='asInvoker' uiAccess='false'" /manifest:embed /DEBUG /PDB:"C:/Users/WOLF512/Documents/Gits/PD3D/geovar/tetgen1.5.1/build/CMakeFiles/CMakeTmp/Debug/cmTC_a70f1.pdb" /SUBSYSTEM:CONSOLE /TLBID:1 /DYNAMICBASE /NXCOMPAT /IMPLIB:"C:/Users/WOLF512/Documents/Gits/PD3D/geovar/tetgen1.5.1/build/CMakeFiles/CMakeTmp/Debug/cmTC_a70f1.lib" /MACHINE:X86 /SAFESEH  /machine:X86 cmTC_a70f1.dir\Debug\feature_tests.obj
-  cmTC_a70f1.vcxproj -> C:\Users\WOLF512\Documents\Gits\PD3D\geovar\tetgen1.5.1\build\CMakeFiles\CMakeTmp\Debug\cmTC_a70f1.exe
+  C:\Program Files (x86)\Microsoft Visual Studio\2017\Community\VC\Tools\MSVC\14.16.27023\bin\HostX86\x86\link.exe /ERRORREPORT:QUEUE /OUT:"C:\Users\flobo\Documents\Gits\PD3D\geovar\tetgen1.5.1\build\CMakeFiles\CMakeTmp\Debug\cmTC_024fc.exe" /INCREMENTAL /NOLOGO kernel32.lib user32.lib gdi32.lib winspool.lib shell32.lib ole32.lib oleaut32.lib uuid.lib comdlg32.lib advapi32.lib /MANIFEST /MANIFESTUAC:"level='asInvoker' uiAccess='false'" /manifest:embed /DEBUG /PDB:"C:/Users/flobo/Documents/Gits/PD3D/geovar/tetgen1.5.1/build/CMakeFiles/CMakeTmp/Debug/cmTC_024fc.pdb" /SUBSYSTEM:CONSOLE /TLBID:1 /DYNAMICBASE /NXCOMPAT /IMPLIB:"C:/Users/flobo/Documents/Gits/PD3D/geovar/tetgen1.5.1/build/CMakeFiles/CMakeTmp/Debug/cmTC_024fc.lib" /MACHINE:X86 /SAFESEH  /machine:X86 cmTC_024fc.dir\Debug\feature_tests.obj
+  cmTC_024fc.vcxproj -> C:\Users\flobo\Documents\Gits\PD3D\geovar\tetgen1.5.1\build\CMakeFiles\CMakeTmp\Debug\cmTC_024fc.exe
 FinalizeBuildStatus:
-  Deleting file "cmTC_a70f1.dir\Debug\cmTC_a70f1.tlog\unsuccessfulbuild".
-  Touching "cmTC_a70f1.dir\Debug\cmTC_a70f1.tlog\cmTC_a70f1.lastbuildstate".
-Done Building Project "C:\Users\WOLF512\Documents\Gits\PD3D\geovar\tetgen1.5.1\build\CMakeFiles\CMakeTmp\cmTC_a70f1.vcxproj" (default targets).
+  Deleting file "cmTC_024fc.dir\Debug\cmTC_024fc.tlog\unsuccessfulbuild".
+  Touching "cmTC_024fc.dir\Debug\cmTC_024fc.tlog\cmTC_024fc.lastbuildstate".
+Done Building Project "C:\Users\flobo\Documents\Gits\PD3D\geovar\tetgen1.5.1\build\CMakeFiles\CMakeTmp\cmTC_024fc.vcxproj" (default targets).
 
 Build succeeded.
     0 Warning(s)
     0 Error(s)
 
-Time Elapsed 00:00:00.49
+Time Elapsed 00:00:01.88
 
 
     Feature record: CXX_FEATURE:1cxx_aggregate_default_initializers

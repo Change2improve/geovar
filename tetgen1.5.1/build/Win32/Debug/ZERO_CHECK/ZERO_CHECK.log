@@ -1,1 +1,2 @@
-﻿C:\Program Files (x86)\Microsoft Visual Studio\2017\Community\Common7\IDE\VC\VCTargets\Microsoft.CppBuild.targets(1017,5): error MSB3191: Unable to create directory "C:\Users\WOLF512\Documents\Gits\PD3D\geovar\tetgen1.5.1\build\CMakeFiles\". Access to the path 'C:\Users\WOLF512\Documents\Gits\PD3D\geovar\tetgen1.5.1\build\CMakeFiles\' is denied.
+﻿  Checking Build System
+  CMake does not need to re-run because C:/Users/flobo/Documents/Gits/PD3D/geovar/tetgen1.5.1/build/CMakeFiles/generate.stamp is up-to-date.
