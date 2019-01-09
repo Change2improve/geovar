@@ -71,7 +71,7 @@ GENERAL LICENSE TERMS AND CONDITIONS
     6.  **Open Visual Studio Solution**
     
         The execution of **CMake** results in the creation of "Project" and "Solution" files readable by **Visual Studio**
-        <p align="center">![vs_solutions](https://github.com/pd3d/geovar/blob/win2/tetgen1.5.1/vs_solutions.png)</p>
+        <p align="center"><img src="https://github.com/pd3d/geovar/blob/win2/tetgen1.5.1/vs_solutions.png"></p>
     
      
 ---
