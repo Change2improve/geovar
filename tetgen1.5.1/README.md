@@ -43,15 +43,15 @@ GENERAL LICENSE TERMS AND CONDITIONS
     
 2.  **Build TetGen using CMake and Visual Studio**
     1.  From the start menu, execute/open the **Visual Studio Command Prompt** as **administrator**
-    ```
-    Either of the following prompts work;
-    C:\Program Files (x86)\Microsoft Visual Studio\2017\Community\Common7\Tools\VsDevCmd.bat
-    C:\Program Files (x86)\Microsoft Visual Studio\2017\Community\VC\Auxiliary\Build\vcvars64.bat
-    ```
+      ```
+      Either of the following prompts work;
+      C:\Program Files (x86)\Microsoft Visual Studio\2017\Community\Common7\Tools\VsDevCmd.bat
+      C:\Program Files (x86)\Microsoft Visual Studio\2017\Community\VC\Auxiliary\Build\vcvars64.bat
+      ```
     2.  **Move to the TetGen directory within this repo**
-    ```
-    cd C:\...\...\PD3D\geovar\tetgen1.5.1
-    ```
+      ```
+      cd C:\...\...\PD3D\geovar\tetgen1.5.1
+      ```
     3.  **Remove existing "build" directory**
       ```
       rmdir build /s
@@ -69,6 +69,7 @@ GENERAL LICENSE TERMS AND CONDITIONS
       ![cmake_results](https://github.com/pd3d/geovar/blob/win2/tetgen1.5.1/cmake_results.PNG)
     
     6.  **Open Visual Studio Solution**
+    
       The execution of **CMake** results in the creation of "Project" and "Solution" files readable by **Visual Studio**
     
      
