@@ -27,18 +27,24 @@ GEOVAR currently relies on [Onshape](https://www.onshape.com/) and Onshape's pub
     
 <img align="center" src="https://github.com/pd3d/geovar/blob/win3/media/fig_onshape_permute.PNG">
 
-
+2.  **Generate Onshape API Access and Secret keys**
+    1.  Log into Onshape's [developer portal](https://dev-portal.onshape.com/keys)
+    2.  Select `Create new API key`
+    3.  Select all the permissions required by your application
+        > **GEOVAR** only requires permission to: **read your documents**, **write to your documents**, and **delete your documents and      workspaces**.
+    
+    
 
 ### Windows
 
-1.  Install the latest version of [Python 3](https://www.python.org/downloads/windows/)
+1.  **Install the latest version of [Python 3](https://www.python.org/downloads/windows/)**
     > **NOTE** Make sure to add Python 3.x to the Windows **PATH** variable.
 <img align="center" src="https://github.com/pd3d/geovar/blob/win3/media/fig_python_install.png">
 
-2. After Python has been installed, install the _```onshapepy```_ module by typing the following in a command prompt
+2. **Install the `onshapepy` module by typing the following in a command prompt**
 ```
-py -3 -m pip3 install --upgrade pip
-py -3 -m pip3 install onshapepy
+py -3 -m pip install --upgrade pip
+py -3 -m pip install onshapepy
 ```
 
 3. Now that the module is installed and ready, create a file named _```onshapepy```_ in your home directory ```C:\Users\<USER_NAME>\```, where ```<USER_NAME>``` is to be replaced with the user name for the desktop machine. Within _```onshapepy```_ file, specify your credentials as follows:
@@ -47,7 +53,7 @@ creds:
     access_key: *******YOUR API KEY*******
     secret_key: *******YOUR API SECRET****
 ```
-If you haven't generated your access and secrets keys yet, do so [here](https://dev-portal.onshape.com/keys). Lastly, right click _```onshapepy```_ and rename it _```.onshapepy.```_, the last dot will be dropped automatically and you'll have _```.onshapepy```_
+Lastly, right click _```onshapepy```_ and rename it _```.onshapepy.```_, the last dot will be dropped automatically and you'll have _```.onshapepy```_
 
 4. No step 4, you are now ready!
 
