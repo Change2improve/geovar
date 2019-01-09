@@ -66,7 +66,7 @@ GENERAL LICENSE TERMS AND CONDITIONS
       ```
       cmake ..
       ```
-      ![cmake_results](https://github.com/pd3d/geovar/blob/win2/tetgen1.5.1/cmake_results.PNG)
+      <p align="center"><img src="https://github.com/pd3d/geovar/blob/win2/tetgen1.5.1/cmake_results.PNG"></p>
     
     6.  **Open Visual Studio Solution**
     
