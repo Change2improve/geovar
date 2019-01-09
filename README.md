@@ -23,7 +23,7 @@ GEOVAR currently relies on [Onshape](https://www.onshape.com/) and Onshape's pub
     
     To learn how to implement **configurations**, follow this Onshape [tutorial](https://www.onshape.com/videos/introducing-onshape-configurations).
     
-    <img align="center" src="">
+<img align="center" src="https://github.com/pd3d/geovar/blob/win3/media/fig_onshape_permute.PNG">
 
 
 
