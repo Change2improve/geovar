@@ -56,6 +56,7 @@ GENERAL LICENSE TERMS AND CONDITIONS
     ```
     rmdir build /s
     ```
+    > **NOTE** re-building may not overwrite old build directory, **deleting is essential**
     4.  **Create and move into new "build" directory**
     ```
     mkdir build
