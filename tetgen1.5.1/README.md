@@ -53,15 +53,15 @@ GENERAL LICENSE TERMS AND CONDITIONS
     cd C:\...\...\PD3D\geovar\tetgen1.5.1
     ```
     3.  **Remove existing "build" directory**
-    ```
-    rmdir build /s
-    ```
-    > **NOTE** re-building may not overwrite old build directory, **deleting is essential**
+      ```
+      rmdir build /s
+      ```
+      > **NOTE** re-building may not overwrite old build directory, **deleting is essential**
     4.  **Create and move into new "build" directory**
-    ```
-    mkdir build
-    cd build
-    ```
+      ```
+      mkdir build
+      cd build
+      ```
     5.  **Execute CMake**
       ```
       cmake ..
