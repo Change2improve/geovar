@@ -69,10 +69,18 @@ GENERAL LICENSE TERMS AND CONDITIONS
       <p align="center"><img src="https://github.com/pd3d/geovar/blob/win2/tetgen1.5.1/cmake_results.PNG"></p>
     
     6.  **Open Visual Studio Solution**
+        1.  _The execution of **CMake** results in the creation of "Project" and "Solution" files readable by **Visual Studio**_
+        2.  _Open **Project.sln**_
+      
+      <p align="center"><img src="https://github.com/pd3d/geovar/blob/win2/tetgen1.5.1/vs_solutions.png"></p>
     
-        The execution of **CMake** results in the creation of "Project" and "Solution" files readable by **Visual Studio**
-        <p align="center"><img src="https://github.com/pd3d/geovar/blob/win2/tetgen1.5.1/vs_solutions.png"></p>
-        1. _Open **Project.sln**_
+    7.  **Build tetGen using Visual Studio**
+        1.  _Build solution through_ `Build>Build Solution (Ctrl+Shift+B)` _on **Visual Studios** toolbar_
+      
+      <p align="center"><img src="https://github.com/pd3d/geovar/blob/win2/tetgen1.5.1/vs_solutions.png"></p>
+      
+       
+        
     
      
 ---
