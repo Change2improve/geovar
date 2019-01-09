@@ -56,6 +56,14 @@ GENERAL LICENSE TERMS AND CONDITIONS
     ```
     rmdir build /s
     ```
-    
+    4.  **Create and move into new "build" directory**
+    ```
+    mkdir build
+    cd build
+    ```
+    5.  **Execute CMake**
+    ```
+    cmake ..
+    ```
      
 ---
