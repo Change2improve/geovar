@@ -48,11 +48,11 @@ GEOVAR currently relies on [Onshape](https://www.onshape.com/) and Onshape's pub
 <img align="center" src="https://github.com/pd3d/geovar/blob/win3/media/fig_python_install.png">
 
 2.  **Install the `onshapepy` module by typing the following in a command prompt**
-> **NOTE** Remember to always run the command prompt as **administrator**
-```
-py -3 -m pip install --upgrade pip
-py -3 -m pip install onshapepy
-```
+    > **NOTE** Remember to always run the command prompt as **administrator**
+    ```
+    py -3 -m pip install --upgrade pip
+    py -3 -m pip install onshapepy
+    ```
 3.  **Create a file using a text editor like Notepad**
     1.  Within the file, type the following information;
         ```
@@ -62,7 +62,7 @@ py -3 -m pip install onshapepy
         ```
     2.  Replace the `*******YOUR API KEY*******` and `*******YOUR API SECRET****` sections with the keys retrieved from Onshape's developer portal
     3.  Save file within the **user directory** `C:\Users\<USER_NAME>\`, using the **filename** `.onshapepy.`
-    > **NOTE** Both **periods** on the `.onshapepy.` name are necessary!
+        > **NOTE** Both **periods** on the `.onshapepy.` name are necessary!
 
 4. No step 4, you are now ready!
 
