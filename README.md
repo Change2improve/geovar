@@ -16,6 +16,7 @@ GEOVAR currently relies on [Onshape](https://www.onshape.com/) and Onshape's pub
 ---
 
 ## Implementation
+> **NOTE** The following steps apply to all operating systems and applications
 
 1.  **Create a _constrained part_ using Onshape's configurations**
     
@@ -35,7 +36,11 @@ GEOVAR currently relies on [Onshape](https://www.onshape.com/) and Onshape's pub
 
 <img align="center" src="https://github.com/pd3d/geovar/blob/win3/media/fig_keys.PNG">    
 
+---
+
 ### Windows
+> **NOTE** The following steps only apply to users and/or application using/running on a **Windows OS**
+> **WARNING** The following tests have only been tested/validated on **Windows 7 and 10**
 
 1.  **Install the latest version of [Python 3](https://www.python.org/downloads/windows/)**
     > **NOTE** Make sure to add Python 3.x to the Windows **PATH** variable.
