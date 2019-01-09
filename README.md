@@ -32,9 +32,7 @@ GEOVAR currently relies on [Onshape](https://www.onshape.com/) and Onshape's pub
 ### Windows
 
 1.  Install the latest version of [Python 3](https://www.python.org/downloads/windows/)
-
-    **NOTE** Make sure to add Python 3.x to the Windows **PATH** variable.
-    
+    > **NOTE** Make sure to add Python 3.x to the Windows **PATH** variable.
 <img align="center" src="https://github.com/pd3d/geovar/blob/win3/media/fig_python_install.png">
 
 2. After Python has been installed, install the _```onshapepy```_ module by typing the following in a command prompt
