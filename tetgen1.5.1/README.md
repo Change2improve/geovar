@@ -72,6 +72,7 @@ GENERAL LICENSE TERMS AND CONDITIONS
     
         The execution of **CMake** results in the creation of "Project" and "Solution" files readable by **Visual Studio**
         <p align="center"><img src="https://github.com/pd3d/geovar/blob/win2/tetgen1.5.1/vs_solutions.png"></p>
+        1. _Open **Project.sln**_
     
      
 ---
