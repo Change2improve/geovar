@@ -13,9 +13,19 @@ Automatic generation of **all possible** _geometric variations_ from a _constrai
 
 GEOVAR currently relies on [Onshape](https://www.onshape.com/) and Onshape's public [repositories](https://github.com/onshape-public) for baseline design, constraint definitions, geometric variation generation, .STL exporting.
 
-## Setup Instructions
+---
 
-Prior to installing anything, you must make sure that you have read/write access (you are the owner) to the sketch you are trying to modify. You must also add configuration parameters to the features you are trying to mutate. For more information on how to do so, follow this [link](https://www.onshape.com/videos/introducing-onshape-configurations).
+## Implementation
+
+1.  **Create a _constrained part_ using Onshape's configurations**
+    
+    > **NOTE** Constraints can be imposed to an **Onshape** document through **variables** or **configurations**. Here we recommend the       use of **configurations** as these feature _default_, _minimum_, and _maximum_ value parameters.
+    
+    To learn how to implement **configurations**, follow this Onshape [tutorial](https://www.onshape.com/videos/introducing-onshape-configurations).
+    
+    <img align="center" src="">
+
+
 
 ### Windows
 
