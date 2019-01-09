@@ -70,7 +70,7 @@ GENERAL LICENSE TERMS AND CONDITIONS
     
     6.  **Open Visual Studio Solution**
     
-      The execution of **CMake** results in the creation of "Project" and "Solution" files readable by **Visual Studio**
+        The execution of **CMake** results in the creation of "Project" and "Solution" files readable by **Visual Studio**
     
      
 ---
