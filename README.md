@@ -7,6 +7,12 @@ Automatic generation of **all possible** _geometric variations_ from a _constrai
 
 > _**all possible** refers to the number of permutations dependent on the original object's number of constraints (Nvars) and the range of possible values for ech constraint (Nvals)_
 
+---
+
+## Requirements
+
+GEOVAR currently relies on ![Onshape](https://www.onshape.com/) and Onshape's public ![repositories](https://github.com/onshape-public) for baseline design, constraint definitions, geometric variation generation, .STL exporting.
+
 ## Setup Instructions
 
 Prior to installing anything, you must make sure that you have read/write access (you are the owner) to the sketch you are trying to modify. You must also add configuration parameters to the features you are trying to mutate. For more information on how to do so, follow this [link](https://www.onshape.com/videos/introducing-onshape-configurations).
