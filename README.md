@@ -44,21 +44,25 @@ GEOVAR currently relies on [Onshape](https://www.onshape.com/) and Onshape's pub
 
 1.  **Install the latest version of [Python 3](https://www.python.org/downloads/windows/)**
     > **NOTE** Make sure to add Python 3.x to the Windows **PATH** variable.
+
 <img align="center" src="https://github.com/pd3d/geovar/blob/win3/media/fig_python_install.png">
 
-2. **Install the `onshapepy` module by typing the following in a command prompt**
+2.  **Install the `onshapepy` module by typing the following in a command prompt**
+> **NOTE** Remember to always run the command prompt as **administrator**
 ```
 py -3 -m pip install --upgrade pip
 py -3 -m pip install onshapepy
 ```
-
-3. Now that the module is installed and ready, create a file named _```onshapepy```_ in your home directory ```C:\Users\<USER_NAME>\```, where ```<USER_NAME>``` is to be replaced with the user name for the desktop machine. Within _```onshapepy```_ file, specify your credentials as follows:
-```
-creds:
-    access_key: *******YOUR API KEY*******
-    secret_key: *******YOUR API SECRET****
-```
-Lastly, right click _```onshapepy```_ and rename it _```.onshapepy.```_, the last dot will be dropped automatically and you'll have _```.onshapepy```_
+3.  **Create a file using a text editor like Notepad**
+    1.  Within the file, type the following information;
+        ```
+        creds:
+            access_key: *******YOUR API KEY*******
+            secret_key: *******YOUR API SECRET****
+        ```
+    2.  Replace the `*******YOUR API KEY*******` and `*******YOUR API SECRET****` sections with the keys retrieved from Onshape's developer portal
+    3.  Save file within the **user directory** `C:\Users\<USER_NAME>\`, using the **filename** `.onshapepy.`
+    > **NOTE** Both **periods** on the `.onshapepy.` name are necessary. The last period will be dropped automaticall upon saving.
 
 4. No step 4, you are now ready!
 
