@@ -66,7 +66,7 @@ GENERAL LICENSE TERMS AND CONDITIONS
     ```
     cmake ..
     ```
-    ![cmake_results](https://github.com/pd3d/geovar/blob/win2/tetgen1.5.1/cmake_results.PNG)
+        ![cmake_results](https://github.com/pd3d/geovar/blob/win2/tetgen1.5.1/cmake_results.PNG)
     6.  **Open Visual Studio Solution**
     The execution of **CMake** results in the creation of "Project" and "Solution" files readable by **Visual Studio**
     
