@@ -40,7 +40,10 @@ GEOVAR currently relies on [Onshape](https://www.onshape.com/) and Onshape's pub
 
 ### Windows
 >   **NOTE** The following steps only apply to users and/or application using/running on a **Windows OS**
+
 >   **WARNING** The following tests have only been tested/validated on **Windows 7 and 10**
+
+>   **RECOMMENDED** Windows users may install Python through software suites like Anaconda, ultimately affecting path variables by prioritizing the suite's directoy during installation. To achieve best results, we recommend the removal of Anaconda from **PATH** or **remove the suite entirely**.
 
 1.  **Install the latest version of [Python 3](https://www.python.org/downloads/windows/)**
     >   **NOTE** Make sure to add Python 3.x to the Windows **PATH** variable
@@ -55,7 +58,17 @@ GEOVAR currently relies on [Onshape](https://www.onshape.com/) and Onshape's pub
     python -m pip install --upgrade pip
     python -m pip install onshapepy
     ```
-3.  **Create a file using a text editor like Notepad**
+3.  **Install additional requirements using the command prompt**
+
+    The following required packages are usually missing on the baseline Python 3.x installation;
+    ```
+    python -m pip install pexpect
+    python -m pip install numpy
+    ```
+    >   **IF** Any additional **modules** are missing `ModuleNorFoundError: No module named '<module_name>'`, try installing said module in the command prompt `python -m pip install <module_name>`
+    >   **NOTE** Missing modules `ModuleNorFoundError: No module named '<module_name>'` will be identified by IDLE
+    
+4.  **Create a file using a text editor like Notepad**
     1.  Within the file, type the following information;
         ```
         creds:
@@ -66,7 +79,7 @@ GEOVAR currently relies on [Onshape](https://www.onshape.com/) and Onshape's pub
     3.  Save file within the **user directory** `C:\Users\<USER_NAME>\`, using the **filename** `.onshapepy.`
         >   **NOTE** Both **periods** on the `.onshapepy.` name are necessary!
 
-4. No step 4, you are now ready!
+5. **ENJOY!**
 
 ### UNIX (i.e Ubuntu)
 
