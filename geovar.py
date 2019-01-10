@@ -177,7 +177,7 @@ class geovar( object ):
                         break
 
             current_dir = os.getcwd()
-            tetgen_dir = current_dir + '\\' + dir_list[match_index] + '\\build\\Debug'
+            tetgen_dir = current_dir + '\\' + dir_list[match_index] + '\\build\\Debug\\'
             print( "CURRENT DIR: " + current_dir )
             print( "TETGEN DIR: " + tetgen_dir )
 
@@ -409,7 +409,10 @@ class geovar( object ):
         if( system()=='Linux' ):
             cmd = "{}tetgen -pq1.2 -g -F -C -V -N -E -I -a0.1 {}".format( self.tet, file_name )
         elif( system()=='Windows' ):
+            print( self.tet )
+            print( file_name )
             cmd = "{}tetgen.exe -pq1.2 -g -F -C -V -N -E -I -a0.1 {}".format( self.tet, file_name )
+            print( cmd )
             
         child = spawn( cmd, timeout=None )                              # Spawn child
         
