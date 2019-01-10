@@ -106,7 +106,7 @@ args = ap.parse_args()
 args.dev_mode    = True
 if( args.dev_mode ):
     args.tetgen_dir     = '/home/moe/Desktop/geovar/tetgen1.5.1/'
-##    args.quiet          = True
+    args.quiet          = True
 ##    args.verbose        = True
     args.lower_bound    = 9
     args.upper_bound    = 10
