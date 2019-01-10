@@ -81,6 +81,8 @@ GEOVAR currently relies on [Onshape](https://www.onshape.com/) and Onshape's pub
 
 5. **ENJOY!**
 
+---
+
 ### UNIX (i.e Ubuntu)
 
 1. Install Python 3 by issuing the following commands in a terminal,
