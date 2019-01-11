@@ -131,7 +131,7 @@ class geovar( object ):
         self.allow_export    = False                                    # Flag to allow STL exports
         self.valid_mutations = 0                                        # Counter for successful mutations
         
-        self.setup_directories()                                        # Setup & define directories
+        self.setup()                                        # Setup & define directories
         
         self.connect_to_sketch()                                        # Instantiate Onshape client and connect
 
