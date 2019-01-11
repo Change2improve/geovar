@@ -55,7 +55,7 @@ import  numpy                       as      np                          # Fast a
 import  os, re                                                          # Dir/path manipulation, extract numerics from strings
 
 
-from    _setup                      import  *
+import  _setup
 
 # ************************************************************************
 # =====================> CONSTRUCT ARGUMENT PARSER <=====================*
@@ -131,14 +131,16 @@ class geovar( object ):
         self.allow_export    = False                                    # Flag to allow STL exports
         self.valid_mutations = 0                                        # Counter for successful mutations
         
-        setup_directories( self )                                        # Setup & define directories
-        print( self.tet )
+        self.setup_directories()                                        # Setup & define directories
         
         self.connect_to_sketch()                                        # Instantiate Onshape client and connect
 
         self.get_values( initRun=True )                                 # Get configurable part features and CURRENT default values
 
 # --------------------------
+
+    def setup( self ):
+        _setup.setup_directories( self )
 ##
 ##    def setup_directories( self ):
 ##        '''
