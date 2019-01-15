@@ -54,6 +54,10 @@ from    itertools                   import  product                     # Apply 
 import  numpy                       as      np                          # Fast array creation
 import  os, re                                                          # Dir/path manipulation, extract numerics from strings
 
+
+import  _setup
+import  _onshape
+
 # ************************************************************************
 # =====================> CONSTRUCT ARGUMENT PARSER <=====================*
 # ************************************************************************
@@ -111,7 +115,7 @@ args.dev_mode           = True
 if( args.dev_mode ):
     args.tetgen_dir     = '/home/moe/Desktop/geovar/tetgen1.5.1/'
     args.quiet          = True
-##    args.verbose        = True
+    args.verbose        = True
     args.lower_bound    = 9
     args.upper_bound    = 10
     args.step_size      = 1
@@ -128,69 +132,22 @@ class geovar( object ):
         self.allow_export    = False                                    # Flag to allow STL exports
         self.valid_mutations = 0                                        # Counter for successful mutations
         
-        self.setup_directories()                                        # Setup & define directories
+        self.setup()                                        # Setup & define directories
+
+        _onshape.read_doc( self )
+        
         self.connect_to_sketch()                                        # Instantiate Onshape client and connect
 
         self.get_values( initRun=True )                                 # Get configurable part features and CURRENT default values
 
 # --------------------------
 
-    def setup_directories( self ):
+    def setup( self ):
         '''
-        Create output folder and point to
-        location of compiled TetGen program
+        SETUP
+            - Locating/Defining/Modifying Directories
         '''
-
-        # ------ UNIX systems ------
-        if( system()=='Linux' ):
-            src      = os.getcwd()
-            self.dst = "{}/output/{}/".format( src, datetime.now().strftime("%Y-%m-%d__%H_%M_%S") )
-            self.tet = args.tetgen_dir
-
-            try:
-                os.makedirs( self.dst )
-            except OSError:
-                print( "FAILED to create directory. Check permissions" )
-                quit()
-            else:
-                print( "Created {}".format(self.dst) )
-
-        # ----- Windows system -----
-        elif( system()=='Windows' ):
-            # Define useful paths
-            src      = os.getcwd()
-            self.dst = "{}\\output\\{}\\".format( src, datetime.now().strftime("%Y-%m-%d__%H_%M_%S") )
-            
-##            self.tet = args.tetgen_dir                                                  # Manual directory identification
-
-            # ------ Automated localization of tetgen directory ------ #
-            print( "BEGAN Automated localization of tetgen directory" )
-            dir_list = os.listdir()                                                     # List elements within current directory
-            dir_len  = len(dir_list)
-            test_string = 'tetgen'
-            test_string_len = len(test_string)
-            for i in range( 0, dir_len ):
-                if len( dir_list[i] ) > test_string_len:
-                    if dir_list[i][0:test_string_len] == test_string:
-                        print( "FOUND tetgen directory ...geovar\\" + dir_list[i] )
-                        match_index = i
-                        break
-
-            current_dir = os.getcwd()
-            tetgen_dir = current_dir + '\\' + dir_list[match_index] + '\\build\\Debug\\'
-            print( "CURRENT DIR: " + current_dir )
-            print( "TETGEN DIR: " + tetgen_dir )
-
-            self.tet = tetgen_dir                                                       # Passing tetgen path to the .self structure
-                
-
-            try:
-                os.makedirs( self.dst )
-            except WindowsError:
-                print( "FAILED to create directory. Check permissions" )
-                quit()
-            else:
-                print( "Created {}".format(self.dst) )
+        _setup.setup_directories( self )
 
 # --------------------------
 
