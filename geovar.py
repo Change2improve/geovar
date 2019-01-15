@@ -114,7 +114,7 @@ args.dev_mode           = True
 if( args.dev_mode ):
     args.tetgen_dir     = '/home/moe/Desktop/geovar/tetgen1.5.1/'
     args.quiet          = True
-##    args.verbose        = True
+    args.verbose        = True
     args.lower_bound    = 9
     args.upper_bound    = 10
     args.step_size      = 1
@@ -140,6 +140,10 @@ class geovar( object ):
 # --------------------------
 
     def setup( self ):
+        '''
+        SETUP
+            - Locating/Defining/Modifying Directories
+        '''
         _setup.setup_directories( self )
 
 # --------------------------
