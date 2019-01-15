@@ -16,9 +16,9 @@
 *
 '''
 
-from    platform                    import  system                                  # Running platform info
-import  os, re                                                                      # Dir/path manipulation, extract numerics from strings
-from    datetime                    import  datetime                                # Get date and time
+from    platform                    import  system                                                  # Running platform info
+import  os, re                                                                                      # Dir/path manipulation, extract numerics from strings
+from    datetime                    import  datetime                                                # Get date and time
 
 
 # ************************************************************************
@@ -32,7 +32,7 @@ def setup_tetgen_directory( self ):
         - On a Windows OS
     '''
     print( "SETUP TETGEN DIR..." )
-    dir_list = os.listdir()                                                         # List elements within current directory
+    dir_list = os.listdir()                                                                         # List elements within current directory
     dir_len  = len(dir_list)
     test_string = 'tetgen'
     test_string_len = len(test_string)
@@ -48,7 +48,7 @@ def setup_tetgen_directory( self ):
     print( ">> CURRENT DIR: " + current_dir )
     print( ">> TETGEN DIR: " + tetgen_dir )
 
-    self.tet = tetgen_dir                                                           # Passing tetgen path to the .self structure
+    self.tet = tetgen_dir                                                                           # Passing tetgen path to the .self structure
            
 # ------------------------------------------------------------------------
 
@@ -61,8 +61,9 @@ def setup_directories( self ):
     # ------ UNIX systems ------
     if( system()=='Linux' ):
         src      = os.getcwd()
-        self.dst = "{}/output/{}/".format( src, datetime.now().strftime("%Y-%m-%d__%H_%M_%S") )
-        self.tet = args.tetgen_dir
+        self.dst = "{}/output/{}/".format( src,
+                                           datetime.now().strftime("%Y-%m-%d__%H_%M_%S") )
+        self.tet = args.tetgen_dir                                                                  # Setup tetgen directory
 
         try:
             os.makedirs( self.dst )
@@ -76,32 +77,10 @@ def setup_directories( self ):
     elif( system()=='Windows' ):
         # Define useful paths
         src      = os.getcwd()
-        self.dst = "{}\\output\\{}\\".format( src, datetime.now().strftime("%Y-%m-%d__%H_%M_%S") )
+        self.dst = "{}\\output\\{}\\".format( src,
+                                              datetime.now().strftime("%Y-%m-%d__%H_%M_%S") )
         
-        setup_tetgen_directory( self )
-        
-##            self.tet = args.tetgen_dir                                                  # Manual directory identification
-
-##        # ------ Automated localization of tetgen directory ------ #
-##        print( "BEGAN Automated localization of tetgen directory" )
-##        dir_list = os.listdir()                                                     # List elements within current directory
-##        dir_len  = len(dir_list)
-##        test_string = 'tetgen'
-##        test_string_len = len(test_string)
-##        for i in range( 0, dir_len ):
-##            if len( dir_list[i] ) > test_string_len:
-##                if dir_list[i][0:test_string_len] == test_string:
-##                    print( "FOUND tetgen directory ...geovar\\" + dir_list[i] )
-##                    match_index = i
-##                    break
-##
-##        current_dir = os.getcwd()
-##        tetgen_dir = current_dir + '\\' + dir_list[match_index] + '\\build\\Debug\\'
-##        print( "CURRENT DIR: " + current_dir )
-##        print( "TETGEN DIR: " + tetgen_dir )
-##
-##        self.tet = tetgen_dir                                                       # Passing tetgen path to the .self structure
-            
+        setup_tetgen_directory( self )                                                                  
 
         try:
             os.makedirs( self.dst )
