@@ -76,8 +76,9 @@ def setup_directories( self ):
     # ----- Windows system -----
     elif( system()=='Windows' ):
         # Define useful paths
-        src      = os.getcwd()
-        self.dst = "{}\\output\\{}\\".format( src,
+        src         = os.getcwd()
+        self.input  = "{}\\input\\".format( src )                                                    # Setup input directory 
+        self.dst    = "{}\\output\\{}\\".format( src,
                                               datetime.now().strftime("%Y-%m-%d__%H_%M_%S") )
         
         setup_tetgen_directory( self )                                                                  

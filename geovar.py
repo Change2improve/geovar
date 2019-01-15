@@ -56,6 +56,7 @@ import  os, re                                                          # Dir/pa
 
 
 import  _setup
+import  _onshape
 
 # ************************************************************************
 # =====================> CONSTRUCT ARGUMENT PARSER <=====================*
@@ -132,6 +133,8 @@ class geovar( object ):
         self.valid_mutations = 0                                        # Counter for successful mutations
         
         self.setup()                                        # Setup & define directories
+
+        _onshape.read_doc( self )
         
         self.connect_to_sketch()                                        # Instantiate Onshape client and connect
 
