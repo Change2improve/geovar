@@ -34,7 +34,16 @@ def read_doc( self ):
     filename = self.input + 'doc_def.txt'
     _doc = open( filename, 'r' )
     for line in _doc:
-        print( line )
+        if line[0] == '>':
+            address = line
+            self.address = address[1:]                                                              # Store the url/web address of the onshape part/document
+            break
+
+    address = address.split("/")
+    for i in range( 0, len( address ) ):
+        if address[i] == 'documents':
+            self.did = address[i+1]                                                                 # Store the 
+        elif address[i] == 'w'
 
     _doc.close()
     
