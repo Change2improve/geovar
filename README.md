@@ -25,8 +25,10 @@ GEOVAR currently relies on [Onshape](https://www.onshape.com/) and Onshape's pub
     To learn how to implement **configurations**, follow this Onshape [tutorial](https://www.onshape.com/videos/introducing-onshape-configurations).
     
     **permute** is the example Onshape part available to test the implementation of **GEOVAR**. Search for **permute** within Onshape's public domain and create a copy for testing and validation
+
 <br></br>
 <img align="center" src="https://github.com/pd3d/geovar/blob/win3/media/fig_onshape_permute.PNG">
+_**Figure. Onshape Document Permute**_
 <br></br>
 
 2.  **Generate Onshape API Access and Secret keys**
