@@ -31,7 +31,7 @@ def read_doc( self, filename = 'doc_def.txt' ):
         Function responsible for reading and extracting information from
         the "doc" input file
     '''
-    print( '\n' )
+    print( '' )
     print( "READ DOC FILE..." )
     filepath = self.input + filename
     _doc = open( filepath, 'r' )
@@ -58,17 +58,17 @@ def read_doc( self, filename = 'doc_def.txt' ):
     
 # ------------------------------------------------------------------------
 
-def read_vars( self ):
+def read_vars( self, filename = 'vars_def.txt' ):
     '''
-    READ DOC FILE
+    READ VARS FILE
         Function responsible for reading and extracting information from
-        the "doc" input file
+        the "vars" input file
     '''
-    print( '\n' )
-    print( "READ DOC FILE..." )
-    filename = self.input + 'doc_def.txt'
-    _doc = open( filename, 'r' )
-    for line in _doc:
+    print( '' )
+    print( "READ VARS FILE..." )
+    filepath = self.input + filename
+    _vars = open( filepath, 'r' )
+    for line in _vars:
         if line[0] == '>':
             address = line
             self.address = address[1:]                                                              # Store the url/web address of the onshape part/document

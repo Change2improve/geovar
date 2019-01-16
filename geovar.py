@@ -465,6 +465,7 @@ else:
         arr[i] = np.array( np.linspace(a[i], b[i], arr_len[i]) )        #   Build the i-th array
 
 try:
+    print( arr )
     prog.mutate_part( arr )                                             # Do da tang!
 except:
     prog.reset_myPart()                                                 # In case something goes wrong, reset!
