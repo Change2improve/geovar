@@ -31,6 +31,8 @@ def read_doc( self ):
         Function responsible for reading and extracting information from
         the "doc" input file
     '''
+    print( '\n' )
+    print( "READ DOC FILE..." )
     filename = self.input + 'doc_def.txt'
     _doc = open( filename, 'r' )
     for line in _doc:
@@ -42,8 +44,15 @@ def read_doc( self ):
     address = address.split("/")
     for i in range( 0, len( address ) ):
         if address[i] == 'documents':
-            self.did = address[i+1]                                                                 # Store the 
-        elif address[i] == 'w'
+            self.did = address[i+1]                                                                 # Store the document id
+        elif address[i] == 'w':
+            self.wid = address[i+1]                                                                 # Store the workspace id
+        elif address[i] == 'e':
+            self.eid = address[i+1]                                                                 # Store the element id
+
+    print( ">> DOCUMENT" + '\t' + "ID: " + self.did )
+    print( ">> WORKSPACE" + '\t' + "ID: " + self.wid )
+    print( ">> ELEMENT" + '\t' + "ID: " + self.eid )
 
     _doc.close()
     

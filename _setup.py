@@ -31,6 +31,7 @@ def setup_tetgen_directory( self ):
         - The repository structure
         - On a Windows OS
     '''
+    print( '\n' )
     print( "SETUP TETGEN DIR..." )
     dir_list = os.listdir()                                                                         # List elements within current directory
     dir_len  = len(dir_list)
@@ -39,14 +40,14 @@ def setup_tetgen_directory( self ):
     for i in range( 0, dir_len ):
         if len( dir_list[i] ) > test_string_len:
             if dir_list[i][0:test_string_len] == test_string:
-                print( ">> FOUND tetgen directory ...geovar\\" + dir_list[i] )
+                print( ">> FOUND" + '\t' + "DIR ...geovar\\" + dir_list[i] )
                 match_index = i
                 break
 
     current_dir = os.getcwd()
     tetgen_dir = current_dir + '\\' + dir_list[match_index] + '\\build\\Debug\\'
-    print( ">> CURRENT DIR: " + current_dir )
-    print( ">> TETGEN DIR: " + tetgen_dir )
+    print( ">> CURRENT" + '\t' + "DIR: " + current_dir )
+    print( ">> TETGEN" + '\t' + "DIR: " + tetgen_dir )
 
     self.tet = tetgen_dir                                                                           # Passing tetgen path to the .self structure
            
@@ -88,5 +89,5 @@ def setup_directories( self ):
         except WindowsError:
             print( "FAILED to create directory. Check permissions" )
             quit()
-        else:
-            print( "Created {}".format(self.dst) )
+##        else:
+##            print( "Created {}".format(self.dst) )
