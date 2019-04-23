@@ -84,6 +84,11 @@ ap.add_argument( "-v"   , "--verbose"   ,
                  action = 'store_true'  , default=False ,
                  help   = "{}".format(string)           )
 
+# Input File
+string = ""
+ap.add_argument( "-i"   , "--input" )
+
+
 # Quiet mode; create arrays of identical variation
 string = "Quiet mode; arrays have the same value"
 ap.add_argument( "-q"   , "--quiet"     ,
@@ -132,7 +137,7 @@ class geovar( object ):
         self.allow_export    = False                                    # Flag to allow STL exports
         self.valid_mutations = 0                                        # Counter for successful mutations
         
-        self.setup()                                        # Setup & define directories
+        self.setup()                                                    # Setup & define directories
 
         _onshape.read_doc( self )
         
@@ -145,9 +150,12 @@ class geovar( object ):
     def setup( self ):
         '''
         SETUP
-            - Locating/Defining/Modifying Directories
+            - Locating and defining directories
+            - Gathering document information (did, wid, eid)
+            - Gathering document variables
         '''
-        _setup.setup_directories( self )
+        _setup.setup_directories( self )                                # retrieve document information
+        _setup.read_doc( self, filename )
 
 # --------------------------
 
