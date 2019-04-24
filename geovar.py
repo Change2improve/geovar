@@ -64,18 +64,15 @@ import  _onshape
 
 ap = ArgumentParser()
 
-# Developer mode, makes life easy for me
-string = "Enter developer mode"
-ap.add_argument( "--dev-mode"           ,
-                 dest   = "dev_mode"    ,
+# Operation Modalities ------------------------------------------------- #
+
+# Demo. Mode
+#   Demonstrates use of the geovar() program 
+string = "Demo. or Example Mode --uses 'permute' document"
+ap.add_argument( "-dem" , "--demo_mode" ,
+                 dest   = "demo_mode"    ,
                  action = 'store_true'  , default=False ,
                  help   = "{}".format(string)           )
-
-### Directory that points to COMPILED/EXECCUTABLE tetgen
-##string = "Point to TetGen directory"
-##ap.add_argument( "--tetgen-dir"         , type = str    ,
-##                 dest   = "tetgen_dir"  , default="foo" ,
-##                 help   = "{}".format(string)           )
 
 # Print out stuff to help debug
 string = "WARNING: Prints EVERYTHING!!"
@@ -84,46 +81,48 @@ ap.add_argument( "-v"   , "--verbose"   ,
                  action = 'store_true'  , default=False ,
                  help   = "{}".format(string)           )
 
+### Quiet mode; create arrays of identical variation
+##string = "Quiet mode; arrays have the same value"
+##ap.add_argument( "-q"   , "--quiet"     ,
+##                 dest   = "quiet"       ,
+##                 action = 'store_true'  , default=False ,
+##                 help   = "{}".format(string)           )
+
+# Operation Inputs ---------------------------------------------------- #
 # Input File
-string = ""
-ap.add_argument( "-i"   , "--input" )
+string = "Input file containing onshape document IDs, variable information"
+ap.add_argument( "-i"   , "--input_file"     , type = str       ,
+                 dest   = "input_file"       , default = "foo"  ,
+                 help   = "{}".format(string)                   )
 
-
-# Quiet mode; create arrays of identical variation
-string = "Quiet mode; arrays have the same value"
-ap.add_argument( "-q"   , "--quiet"     ,
-                 dest   = "quiet"       ,
-                 action = 'store_true'  , default=False ,
-                 help   = "{}".format(string)           )
-
-# Lower bound for variations array
-string = "Minimum value desired"
-ap.add_argument( "-LB", "--lower-bound" , type = int    ,
-                 dest   = "lower_bound" , default =  0  ,
-                 help   = "{}".format(string)           )
-
-# Upper bound for variations array
-string = "Maximum value desired"
-ap.add_argument( "-UB", "--upper-bound" , type = int    ,
-                 dest   = "upper_bound" , default =  0  ,
-                 help   = "{}".format(string)           )
-
-# Step size for variations array
-string = "Variations step size"
-ap.add_argument( "-H", "--step-size"    , type = float  ,
-                 dest   = "step_size" , default = 0.1 ,
-                 help   = "{}".format(string)           )
+### Lower bound for variations array
+##string = "Minimum value desired"
+##ap.add_argument( "-LB", "--lower-bound" , type = int    ,
+##                 dest   = "lower_bound" , default =  0  ,
+##                 help   = "{}".format(string)           )
+##
+### Upper bound for variations array
+##string = "Maximum value desired"
+##ap.add_argument( "-UB", "--upper-bound" , type = int    ,
+##                 dest   = "upper_bound" , default =  0  ,
+##                 help   = "{}".format(string)           )
+##
+### Step size for variations array
+##string = "Variations step size"
+##ap.add_argument( "-H", "--step-size"    , type = float  ,
+##                 dest   = "step_size" , default = 0.1 ,
+##                 help   = "{}".format(string)           )
 
 args = ap.parse_args()
 
-args.dev_mode           = True
-if( args.dev_mode ):
-    args.tetgen_dir     = '/home/moe/Desktop/geovar/tetgen1.5.1/'
-    args.quiet          = True
-    args.verbose        = True
-    args.lower_bound    = 9
-    args.upper_bound    = 10
-    args.step_size      = 1
+##if( args.dev_mode ):
+##    args.tetgen_dir     = '/home/moe/Desktop/geovar/tetgen1.5.1/'
+##    args.quiet          = True
+##    args.verbose        = True
+##    args.lower_bound    = 9
+##    args.upper_bound    = 10
+##    args.step_size      = 1
+
 # ************************************************************************
 # ===========================> PROGRAM  SETUP <==========================*
 # ************************************************************************
@@ -131,15 +130,13 @@ if( args.dev_mode ):
 class geovar( object ):
 
     def __init__( self ):
-        if( args.tetgen_dir == "foo" ):                                 # Make sure a directory for TetGen was given
-            raise NameError( "No TetGen directory sepcified" )          # ...
+##        if( args.tetgen_dir == "foo" ):                                 # Make sure a directory for TetGen was given
+##            raise NameError( "No TetGen directory sepcified" )          # ...
 
         self.allow_export    = False                                    # Flag to allow STL exports
         self.valid_mutations = 0                                        # Counter for successful mutations
         
         self.setup()                                                    # Setup & define directories
-
-        _onshape.read_doc( self )
         
         self.connect_to_sketch()                                        # Instantiate Onshape client and connect
 
@@ -154,8 +151,9 @@ class geovar( object ):
             - Gathering document information (did, wid, eid)
             - Gathering document variables
         '''
-        _setup.setup_directories( self )                                # retrieve document information
-        _setup.read_doc( self, filename )
+        _setup.setup_directories( self )                                # retrieve directory information
+        _setup.read_doc( self, args.input_file )                        # retrieve document information
+        _setup.read_vars( self, args.input_file )
 
 # --------------------------
 
@@ -164,14 +162,10 @@ class geovar( object ):
         Connect to Onshape and access desired sketch
         '''
 
-        if( args.dev_mode ):
+        if( args.demo_mode ):
             self.did = "04b732c124cfa152cf7c07f3"                       # ...
             self.wid = "c4358308cbf0c97a44d8a71a"                       # Get features for document of interest
             self.eid = "a23208c314d70c14da7071e6"                       # ...
-        else:
-            self.did = raw_input('Enter document  ID: ')                # ...
-            self.wid = raw_input('Enter workspace ID: ')                # ...
-            self.eid = raw_input('Enter element   ID: ')                # ...
 
         if( len(self.did) != 24 or                                      # Ensure inputted IDs are valid
             len(self.wid) != 24 or                                      # ...

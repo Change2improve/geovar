@@ -16,9 +16,10 @@
 *
 '''
 
-from    platform                    import  system                                                  # Running platform info
 import  os, re                                                                                      # Dir/path manipulation, extract numerics from strings
+from    platform                    import  system                                                  # Running platform info
 from    datetime                    import  datetime                                                # Get date and time
+from    lxml                        import  etree
 
 
 # ************************************************************************
@@ -124,35 +125,68 @@ def setup_directories( self ):
 
 # ------------------------------------------------------------------------
 
-def read_doc( self, filename = 'doc_def.txt' ):
+def read_doc( self, filename = 'doc_def.xml' ):
     '''
     READ DOC FILE
         Function responsible for reading and extracting information from
         the "doc" input file
+            doc_def contains the identification of the target document within the onshape platform
     '''
-    print( '' )
+    print( '\n' )
     print( "READ DOC FILE..." )
-    filepath = self.input + filename
-    _doc = open( filepath, 'r' )
-    for line in _doc:
-        if line[0] == '>':
-            address = line
-            self.address = address[1:]                                                              # Store the url/web address of the onshape part/document
-            break
+    file = self.input + filename
 
-    address = address.split("/")
-    for i in range( 0, len( address ) ):
-        if address[i] == 'documents':
-            self.did = address[i+1]                                                                 # Store the document id
-        elif address[i] == 'w':
-            self.wid = address[i+1]                                                                 # Store the workspace id
-        elif address[i] == 'e':
-            self.eid = address[i+1]                                                                 # Store the element id
-
+    _doc = etree.parse( file )
+    _doc_address_ele = _doc.find('address')
+    _doc_address_text = _doc_address_ele.text
+    _doc_address_text = _doc_address_text.split("/")
+    for i in range( 0, len( _doc_address_text ) ):
+        if _doc_address_text[i] == 'documents':
+            self.did = _doc_address_text[i+1]                                                           # Store the document id
+        elif _doc_address_text[i] == 'w':
+            self.wid = _doc_address_text[i+1]                                                           # Store the workspace id
+        elif _doc_address_text[i] == 'e':
+            self.eid = _doc_address_text[i+1]                                                           # Store the element id
+            
     print( ">> DOCUMENT" + '\t' + "ID: " + self.did )
     print( ">> WORKSPACE" + '\t' + "ID: " + self.wid )
     print( ">> ELEMENT" + '\t' + "ID: " + self.eid )
+    
+# ------------------------------------------------------------------------
 
-    _doc.close()
+def read_vars( self, filename = 'doc_def.xml' ):
+    '''
+    READ DOC FILE
+        Function responsible for reading and extracting information from
+        the "doc" input file
+            doc_def contains the identification of the target document within the onshape platform
+    '''
+    print( '\n' )
+    print( "READ DOC FILE..." )
+    file = self.input + filename
+
+    _doc = etree.parse( file )
+    _doc_vars_ele = _doc.find('variables')
+
+    var_name    = []                                                                                    # list of variable names
+    var_start   = []                                                                                    # ... ... start points
+    var_stop    = []                                                                                    # ... ... stop points
+    var_np      = []                                                                                    # ... ... number of points
+    var_ep      = []                                                                                    # ... ... end point constraint
+    for i in range(0, len(_doc_vars_ele) ):
+        var_name.append(    _doc_vars_ele[i].get("name")    )
+        var_start.append(   _doc_vars_ele[i].get("start")   )
+        var_stop.append(    _doc_vars_ele[i].get("stop")    )
+        var_np.append(      _doc_vars_ele[i].get("np")      )
+        var_ep.append(      _doc_vars_ele[i].get("ep")      )
+
+    print( var_name, var_start, var_stop, var_np, var_ep )
+        
+    self.var_name   = var_name
+    self.var_start  = var_start
+    self.var_stop   = var_stop
+    self.var_np     = var_np
+    self.var_ep     = var_ep
+    
     
 # ------------------------------------------------------------------------

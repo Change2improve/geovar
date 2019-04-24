@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- Geovar Input Ref. Document
+		
+		To Do:
+			- Multiple attributes (e.g. units)
+		
+		
+		Definitions:
+			name 	- 	variable name
+			start	-	starting value for variable array
+			stop	-	stopping value for variable array
+			np		-	number of point in variable array
+			ep		-	end-point preservation constraint
+		
+		Author: Fluvio Lobo Fenoglietto
+		Date: 04/24/2019
+
+-->
+<document>
+	<address>https://cad.onshape.com/documents/04b732c124cfa152cf7c07f3/w/c4358308cbf0c97a44d8a71a/e/a23208c314d70c14da7071e6</address>
+	<variables>
+		<var name="r_inner" start="50" stop="75" np="6" ep="1"></var>
+		<var name="r_outer" start="50" stop="75" np="6" ep="1"></var>
+	</variables>
+</document>
