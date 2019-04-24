@@ -239,6 +239,7 @@ class geovar( object ):
         2. verify consistency between input file variable and configuration (future function called check_values())
         '''
 
+        # interpolating morphing values based on user input
         print( '\n' )
         print( "PREPARING MORPHING ARRAY:" )
 
@@ -258,6 +259,7 @@ class geovar( object ):
 
         self.var = var
 
+        # determining list of morphing states...
         
         
 
