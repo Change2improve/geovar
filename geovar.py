@@ -230,6 +230,37 @@ class geovar( object ):
         
 # --------------------------
 
+    def mutate_array( self ):
+        '''
+        Generates Array of Combinations, based on the variables input arrays
+
+        things to do here:
+        1. generate variable arrays
+        2. verify consistency between input file variable and configuration (future function called check_values())
+        '''
+
+        print( self.keys, self.default )
+
+        var     = self.var
+
+        for i in range(0, var['nvar']):
+            _name               = var['names'][i]
+            _start              = var[_name]['start']
+            _stop               = var[_name]['stop']
+            _np                 = var[_name]['np']
+            _ep                 = var[_name]['ep']
+            var[_name]['vals']  = []
+            var[_name]['vals']  = np.linspace( _start, _stop, _np, _ep )
+            
+        print( var )
+
+        self.var = var
+
+        
+        
+
+# --------------------------
+
     def mutate_part( self, arr ):
         '''
         Apply product rule on part to get as many
@@ -401,13 +432,15 @@ class geovar( object ):
 
 prog = geovar()                                                         # Startup and prepare program
 
-print( "Detected {} feature(s)".format(len(prog.keys)) )                # [INFO] ...
+
+prog.mutate_array()
+
 
 '''
 IF QUIET FLAG IS TURNED ON, CONSTRUCT AN ARRAY
 OF ARRAYS OF EQUAL LENGTH AND VARIATION.
-'''
-if( args.quiet ):
+
+if( True ):
     if( args.lower_bound > args.upper_bound ):                          # If LB > UB
         err = "Lower bound (LB) greater than upper bound (UB).\n"       #   ...
         err = "{}Make sure that UB > LB.".format(err)                   #   ...
@@ -466,6 +499,7 @@ else:
     for i in range( 0, len(prog.keys) ):                                # Loop over all the arrays inside the array
         arr[i] = np.array( np.linspace(a[i], b[i], arr_len[i]) )        #   Build the i-th array
 
+'''
 try:
     print( arr )
     prog.mutate_part( arr )                                             # Do da tang!

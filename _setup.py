@@ -168,25 +168,23 @@ def read_vars( self, filename = 'doc_def.xml' ):
     _doc = etree.parse( file )
     _doc_vars_ele = _doc.find('variables')
 
-    var_name    = []                                                                                    # list of variable names
-    var_start   = []                                                                                    # ... ... start points
-    var_stop    = []                                                                                    # ... ... stop points
-    var_np      = []                                                                                    # ... ... number of points
-    var_ep      = []                                                                                    # ... ... end point constraint
-    for i in range(0, len(_doc_vars_ele) ):
-        var_name.append(    _doc_vars_ele[i].get("name")    )
-        var_start.append(   _doc_vars_ele[i].get("start")   )
-        var_stop.append(    _doc_vars_ele[i].get("stop")    )
-        var_np.append(      _doc_vars_ele[i].get("np")      )
-        var_ep.append(      _doc_vars_ele[i].get("ep")      )
+    var                 = {}
+    var['nvar']         = len(_doc_vars_ele)
+    var['names']        = []
 
-    print( var_name, var_start, var_stop, var_np, var_ep )
-        
-    self.var_name   = var_name
-    self.var_start  = var_start
-    self.var_stop   = var_stop
-    self.var_np     = var_np
-    self.var_ep     = var_ep
+    for i in range(0, len(_doc_vars_ele) ):
+        var_name                = _doc_vars_ele[i].get("name")
+        var['names'].append( _doc_vars_ele[i].get("name") )
+        var[var_name]           = {}
+        var[var_name]['start']  = float( _doc_vars_ele[i].get("start") )
+        var[var_name]['stop']   = float( _doc_vars_ele[i].get("stop") )
+        var[var_name]['np']     = int( _doc_vars_ele[i].get("np") )
+        var[var_name]['ep']     = int( _doc_vars_ele[i].get("ep") )
+
+    print( var )
+
+    # storing updated variables into self structure  
+    self.var            = var
     
     
 # ------------------------------------------------------------------------
