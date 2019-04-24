@@ -67,6 +67,7 @@ _**Figure. Onshape Document Permute**_
     ```
     python -m pip install pexpect
     python -m pip install numpy
+    python -m pip install lxml
     ```
     >   **IF** Any additional **modules** are missing `ModuleNorFoundError: No module named '<module_name>'`, try installing said module in the command prompt `python -m pip install <module_name>`
     >   **NOTE** Missing modules `ModuleNorFoundError: No module named '<module_name>'` will be identified by IDLE
