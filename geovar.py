@@ -239,7 +239,8 @@ class geovar( object ):
         2. verify consistency between input file variable and configuration (future function called check_values())
         '''
 
-        print( self.keys, self.default )
+        print( '\n' )
+        print( "PREPARING MORPHING ARRAY:" )
 
         var     = self.var
 
@@ -251,8 +252,9 @@ class geovar( object ):
             _ep                 = var[_name]['ep']
             var[_name]['vals']  = []
             var[_name]['vals']  = np.linspace( _start, _stop, _np, _ep )
-            
-        print( var )
+
+            # reporting results
+            print( ">> " + _name + '\t' + "vals: " + str( var[_name]['vals'] ) )
 
         self.var = var
 
