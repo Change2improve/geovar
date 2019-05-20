@@ -183,7 +183,7 @@ class geovar( object ):
 
 # --------------------------
 
-    def mutate_part( self, arr ):
+    def morph_geometry( self ):
         '''
         Apply product rule on part to get as many
         geometric variations as needed
@@ -196,7 +196,10 @@ class geovar( object ):
             You MUST multiply the value with whatever unit
             you want it to be (i.e 3*u.in == 3in)
         '''
+
+        _onshape.morph_geometry( self ) 
         
+        '''
         ranges      = [range(arr.shape[1])] * arr.shape[0]              # Range we would like to go through
         b           = np.array( list(product(*ranges)) )                # Create an array of indices of the products
 
@@ -258,7 +261,8 @@ class geovar( object ):
         print( "*" * self.len_cte )                                     # [INFO] Print break lines
 
         self.reset_myPart()                                             # Go back to defaults
-
+        '''
+        
 # --------------------------
 
     def check_default( self, passed_value ):
