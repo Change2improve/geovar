@@ -137,11 +137,12 @@ class geovar( object ):
         self.valid_mutations = 0                                        # Counter for successful mutations
         
         self.setup()                                                    # Setup & define directories
-        
+
         self.connect_to_sketch()                                        # Instantiate Onshape client and connect
 
         self.get_values( initRun=True )                                 # Get configurable part features and CURRENT default values
-
+        # will use the get values function to check if the user input matches...
+        
 # --------------------------
 
     def setup( self ):
@@ -150,10 +151,13 @@ class geovar( object ):
             - Locating and defining directories
             - Gathering document information (did, wid, eid)
             - Gathering document variables
+            - Generating the morphing array
         '''
         _setup.setup_directories( self )                                # retrieve directory information
         _setup.read_doc( self, args.input_file )                        # retrieve document information
         _setup.read_vars( self, args.input_file )                       # retrieve variable information
+        _setup.generate_morphing_array( self )
+
 
 # --------------------------
 
@@ -227,40 +231,6 @@ class geovar( object ):
                 print( "{:4.3f}".format(current[i]), end='\t\t' )
             print("//"); print( "-" * self.len_cte )
             return( current )
-        
-# --------------------------
-
-    def mutate_array( self ):
-        '''
-        Generates Array of Combinations, based on the variables input arrays
-
-        things to do here:
-        1. generate variable arrays
-        2. verify consistency between input file variable and configuration (future function called check_values())
-        '''
-
-        # interpolating morphing values based on user input
-        print( '\n' )
-        print( "PREPARING MORPHING ARRAY:" )
-
-        var     = self.var
-
-        for i in range(0, var['nvar']):
-            _name               = var['names'][i]
-            _start              = var[_name]['start']
-            _stop               = var[_name]['stop']
-            _np                 = var[_name]['np']
-            _ep                 = var[_name]['ep']
-            var[_name]['vals']  = []
-            var[_name]['vals']  = np.linspace( _start, _stop, _np, _ep )
-
-            # reporting results
-            print( ">> " + _name + '\t' + "vals: " + str( var[_name]['vals'] ) )
-
-        self.var = var
-
-        # determining list of morphing states...
-        
         
 
 # --------------------------
@@ -437,7 +407,7 @@ class geovar( object ):
 prog = geovar()                                                         # Startup and prepare program
 
 
-prog.mutate_array()
+#prog.mutate_array()
 
 
 '''

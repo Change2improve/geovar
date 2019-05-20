@@ -17,6 +17,7 @@
 '''
 
 import  os, re                                                                                      # Dir/path manipulation, extract numerics from strings
+import  numpy                       as      np
 from    platform                    import  system                                                  # Running platform info
 from    datetime                    import  datetime                                                # Get date and time
 from    lxml                        import  etree
@@ -188,6 +189,37 @@ def read_vars( self, filename ):
     # storing updated variables into self structure  
     self.var            = var
 
-    
-    
+
 # ------------------------------------------------------------------------
+
+def generate_morphing_array( self ):
+    '''
+    Generates Array of Combinations, based on the variables input arrays
+
+    things to do here:
+    1. generate variable arrays
+    2. verify consistency between input file variable and configuration (future function called check_values())
+    '''
+
+    # interpolating morphing values based on user input
+    print( '\n' )
+    print( "PREPARING MORPHING ARRAY..." )
+    var     = self.var
+
+    for i in range(0, var['nvar']):
+        _name               = var['names'][i]
+        _start              = var[_name]['start']
+        _stop               = var[_name]['stop']
+        _np                 = var[_name]['np']
+        _ep                 = var[_name]['ep']
+        var[_name]['vals']  = []
+        var[_name]['vals']  = np.linspace( _start, _stop, _np, _ep )
+
+        # reporting results
+        print( ">> " + _name + '\t' + "vals: " + str( var[_name]['vals'] ) )
+
+    self.var = var
+
+    print( var )
+
+    # determining list of morphing states...
