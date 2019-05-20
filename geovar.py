@@ -56,7 +56,7 @@ import  os, re                                                          # Dir/pa
 
 
 import  _setup
-import  _onshape
+import  _morph
 
 # ************************************************************************
 # =====================> CONSTRUCT ARGUMENT PARSER <=====================*
@@ -165,7 +165,7 @@ class geovar( object ):
         '''
         Connect to Onshape and access desired sketch
         '''
-        _onshape.connect_to_sketch( self, args )                        # connect to the onshape document
+        _morph.connect_to_sketch( self, args )                        # connect to the onshape document
 
 # --------------------------
 
@@ -178,7 +178,7 @@ class geovar( object ):
 
         '''
 
-        _onshape.get_values( self, initRun )
+        _morph.get_values( self, initRun )
         
 
 # --------------------------
@@ -197,7 +197,7 @@ class geovar( object ):
             you want it to be (i.e 3*u.in == 3in)
         '''
 
-        _onshape.morph_geometry( self ) 
+        _morph.morph_geometry( self ) 
         
         '''
         ranges      = [range(arr.shape[1])] * arr.shape[0]              # Range we would like to go through
@@ -359,7 +359,7 @@ class geovar( object ):
 prog = geovar()                                                         # Startup and prepare program
 
 
-#prog.mutate_array()
+prog.morph_geometry()
 
 
 '''
