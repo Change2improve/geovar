@@ -91,9 +91,9 @@ ap.add_argument( "-v"   , "--verbose"   ,
 # Operation Inputs ---------------------------------------------------- #
 # Input File
 string = "Input file containing onshape document IDs, variable information"
-ap.add_argument( "-i"   , "--input_file"     , type = str       ,
-                 dest   = "input_file"       , default = "foo"  ,
-                 help   = "{}".format(string)                   )
+ap.add_argument( "-i"   , "--input_file"     , type = str           ,
+                 dest   = "input_file"       , default = "doc.xml"  ,
+                 help   = "{}".format(string)                       )
 
 ### Lower bound for variations array
 ##string = "Minimum value desired"
@@ -153,7 +153,7 @@ class geovar( object ):
         '''
         _setup.setup_directories( self )                                # retrieve directory information
         _setup.read_doc( self, args.input_file )                        # retrieve document information
-        _setup.read_vars( self, args.input_file )
+        _setup.read_vars( self, args.input_file )                       # retrieve variable information
 
 # --------------------------
 

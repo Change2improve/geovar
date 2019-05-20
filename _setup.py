@@ -125,15 +125,15 @@ def setup_directories( self ):
 
 # ------------------------------------------------------------------------
 
-def read_doc( self, filename = 'doc_def.xml' ):
+def read_doc( self, filename ):
     '''
-    READ DOC FILE
+    READ DOC INFO
         Function responsible for reading and extracting information from
         the "doc" input file
             doc_def contains the identification of the target document within the onshape platform
     '''
     print( '\n' )
-    print( "READ DOC FILE..." )
+    print( "READ DOC INFO..." )
     file = self.input + filename
 
     _doc = etree.parse( file )
@@ -154,15 +154,15 @@ def read_doc( self, filename = 'doc_def.xml' ):
     
 # ------------------------------------------------------------------------
 
-def read_vars( self, filename = 'doc_def.xml' ):
+def read_vars( self, filename ):
     '''
-    READ DOC FILE
+    READ VAR INFO
         Function responsible for reading and extracting information from
         the "doc" input file
             doc_def contains the identification of the target document within the onshape platform
     '''
     print( '\n' )
-    print( "READ DOC FILE..." )
+    print( "READ VAR INFO..." )
     file = self.input + filename
 
     _doc = etree.parse( file )
@@ -171,6 +171,7 @@ def read_vars( self, filename = 'doc_def.xml' ):
     var                 = {}
     var['nvar']         = len(_doc_vars_ele)
     var['names']        = []
+    print( ">> NUMBER OF VARIABLES" + '\t' + str(var['nvar']) )
 
     for i in range(0, len(_doc_vars_ele) ):
         var_name                = _doc_vars_ele[i].get("name")
@@ -180,11 +181,13 @@ def read_vars( self, filename = 'doc_def.xml' ):
         var[var_name]['stop']   = float( _doc_vars_ele[i].get("stop") )
         var[var_name]['np']     = int( _doc_vars_ele[i].get("np") )
         var[var_name]['ep']     = int( _doc_vars_ele[i].get("ep") )
+        print( ">> " + str(var_name) + '\t' + str(var[var_name]['start']) + '\t' + str(var[var_name]['stop']) + '\t' + str(var[var_name]['np']) + '\t' + str(var[var_name]['ep']) )
 
-    print( var )
+    #print( var )
 
     # storing updated variables into self structure  
     self.var            = var
+
     
     
 # ------------------------------------------------------------------------
