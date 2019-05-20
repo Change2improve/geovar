@@ -204,8 +204,9 @@ def generate_morphing_array( self ):
     # interpolating morphing values based on user input
     print( '\n' )
     print( "PREPARING MORPHING ARRAY..." )
+    
     var     = self.var
-
+    arr     = []
     for i in range(0, var['nvar']):
         _name               = var['names'][i]
         _start              = var[_name]['start']
@@ -214,10 +215,13 @@ def generate_morphing_array( self ):
         _ep                 = var[_name]['ep']
         var[_name]['vals']  = []
         var[_name]['vals']  = np.linspace( _start, _stop, _np, _ep )
+        arr.append( var[_name]['vals'] )
 
         # reporting results
         print( ">> " + _name + '\t' + "vals: " + str( var[_name]['vals'] ) )
 
     self.var = var
+    arr = np.array(arr)
+    self.arr = arr
 
     # determining list of morphing states...
