@@ -220,6 +220,4 @@ def generate_morphing_array( self ):
 
     self.var = var
 
-    print( var )
-
     # determining list of morphing states...

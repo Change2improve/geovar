@@ -16,75 +16,80 @@
 *
 '''
 
-from    platform                    import  system                                                  # Running platform info
-import  os, re                                                                                      # Dir/path manipulation, extract numerics from strings
-from    datetime                    import  datetime                                                # Get date and time
-
+from    onshapepy.play              import  *                           # Onshape API
+import  re
 
 # ************************************************************************
 # FUNCTIONS =============================================================*
 # ************************************************************************
 
-def read_doc( self, filename = 'doc_def.txt' ):
+def connect_to_sketch( self, args ):
     '''
-    READ DOC FILE
-        Function responsible for reading and extracting information from
-        the "doc" input file
+    Connect to Onshape and access desired sketch
     '''
-    print( '' )
-    print( "READ DOC FILE..." )
-    filepath = self.input + filename
-    _doc = open( filepath, 'r' )
-    for line in _doc:
-        if line[0] == '>':
-            address = line
-            self.address = address[1:]                                                              # Store the url/web address of the onshape part/document
-            break
 
-    address = address.split("/")
-    for i in range( 0, len( address ) ):
-        if address[i] == 'documents':
-            self.did = address[i+1]                                                                 # Store the document id
-        elif address[i] == 'w':
-            self.wid = address[i+1]                                                                 # Store the workspace id
-        elif address[i] == 'e':
-            self.eid = address[i+1]                                                                 # Store the element id
+    if( args.demo_mode ):
+        self.did = "04b732c124cfa152cf7c07f3"                       # ...
+        self.wid = "c4358308cbf0c97a44d8a71a"                       # Get features for document of interest
+        self.eid = "a23208c314d70c14da7071e6"                       # ...
 
-    print( ">> DOCUMENT" + '\t' + "ID: " + self.did )
-    print( ">> WORKSPACE" + '\t' + "ID: " + self.wid )
-    print( ">> ELEMENT" + '\t' + "ID: " + self.eid )
-
-    _doc.close()
+    if( len(self.did) != 24 or                                      # Ensure inputted IDs are valid
+        len(self.wid) != 24 or                                      # ...
+        len(self.eid) != 24 ):                                      # ...
+        raise ValueError( "Document, workspace, and element IDs must each be 24 characters in length" )
+    else:
+        part_URL    = "https://cad.onshape.com/documents/{}/w/{}/e/{}".format( self.did, self.wid, self.eid )
+        self.myPart = Part( part_URL )                              # Connect to part for modification
+        self.c      = Client()                                      # Create instance of the onshape client for exporting
     
 # ------------------------------------------------------------------------
 
-def read_vars( self, filename = 'vars_def.txt' ):
+def get_values( self, initRun = False ):
     '''
-    READ VARS FILE
-        Function responsible for reading and extracting information from
-        the "vars" input file
+    Extract configured variable names from part and get the current values.
+    When initRun is True, it gets the default values and stores them for later usage.
+
+    FROM: https://stackoverflow.com/questions/4703390/how-to-extract-a-floating-number-from-a-string
+
+    INPUT:-
+        - initRun: Set to True ONLY the first time this command is run.
+                   This allows us to store the default values for the part.
+
+    NOTE:-
+        myPart.param = {
+                        'feature_1': <Quantity(29.5, 'millimeter')>,
+                        'feature_2': <Quantity(27.5, 'millimeter')>,
+                        'fillet': True, 'fillet_type': 'circular'
+                       }
+
+    KNOWN ISSUES:
+        - Still can't get boolean values such as fillets and whatnot
     '''
-    print( '' )
-    print( "READ VARS FILE..." )
-    filepath = self.input + filename
-    _vars = open( filepath, 'r' )
-    for line in _vars:
-        if line[0] == '>':
-            address = line
-            self.address = address[1:]                                                              # Store the url/web address of the onshape part/document
-            break
 
-    address = address.split("/")
-    for i in range( 0, len( address ) ):
-        if address[i] == 'documents':
-            self.did = address[i+1]                                                                 # Store the document id
-        elif address[i] == 'w':
-            self.wid = address[i+1]                                                                 # Store the workspace id
-        elif address[i] == 'e':
-            self.eid = address[i+1]                                                                 # Store the element id
+    numeric_const_pattern = '[-+]? (?: (?: \d* \. \d+ ) | (?: \d+ \.? ) )(?: [Ee] [+-]? \d+ ) ?'
+    rx = re.compile(numeric_const_pattern, re.VERBOSE)
 
-    print( ">> DOCUMENT" + '\t' + "ID: " + self.did )
-    print( ">> WORKSPACE" + '\t' + "ID: " + self.wid )
-    print( ">> ELEMENT" + '\t' + "ID: " + self.eid )
+    if( initRun ):                                                  # If this is the initial run, get defaults
+        self.keys       = list( self.myPart.params )                #   Cast dict as list to extract keys
+        print( self.keys )
+        self.default    = [None] * len( self.keys )                 #   Create a list of length for values
 
-    _doc.close()
+        print( "Found {} configurable parts with defaults:-".format(len(self.keys)) )
+        for i in range( 0, len(self.keys) ):                        #   Loop over all dict entries
+            param = str( self.myPart.params[ self.keys[i] ] )       #       Get dict value as string
+            self.default[i] = float( rx.findall(param)[0] )         #       Extract value from string
+            print( "  {:3}. {:12}: {: >10.3f}".format(i+1, self.keys[i], self.default[i]) )
+        print( '' )
+        return( 0 )
+
+    else:
+        current    = [None] * len( self.keys )                      #   Create a list of length for values
+        
+        print( "{:8}:".format("CURRENT"), end='\t' )
+        for i in range( 0, len(self.keys) ):                        #   Loop over all dict entries
+            param = str( self.myPart.params[ self.keys[i] ] )       #       Get dict value as string
+            current[i] = float( rx.findall(param)[0] )              #       Extract value from string
+            print( "{:4.3f}".format(current[i]), end='\t\t' )
+        print("//"); print( "-" * self.len_cte )
+        return( current )
+        
