@@ -142,12 +142,12 @@ def morph_geometry( self ):
         for j in range( 0, arr.shape[0] ):                          #   Loop over ALL features
             param_crnt[j] = arr[j][prods[i][j]]                     #       Get current value to be passed
 
-            print( self.myPart.params )
+            print( self.myPart.params[self.keys[j]] )
             print( self.keys[j] )
             print( param_crnt[j] )
-            self.myPart.params = { self.keys[j]:param_crnt[j]*u.mm }             #           ...
+            self.myPart.params[self.keys[j]] = param_crnt[j]*u.mm             #           ...
             #assert self.myPart.params == { self.keys[j]:param_crnt[j]*u.mm }
-            print( self.myPart.params )
+            print( self.myPart.params[self.keys[j]] )
             param_prvs[j] = param_crnt[j]                           #           Update previous parameter
             self.i += 1
             
