@@ -142,9 +142,12 @@ def morph_geometry( self ):
         for j in range( 0, arr.shape[0] ):                          #   Loop over ALL features
             param_crnt[j] = arr[j][prods[i][j]]                     #       Get current value to be passed
 
-            self.myPart.params = { self.keys[j]:                    #           Pass new value (aka mutate part)
-                                   param_crnt[j]*u.mm }             #           ...
-
+            print( self.myPart.params )
+            print( self.keys[j] )
+            print( param_crnt[j] )
+            self.myPart.params = { self.keys[j]:param_crnt[j]*u.mm }             #           ...
+            #assert self.myPart.params == { self.keys[j]:param_crnt[j]*u.mm }
+            print( self.myPart.params )
             param_prvs[j] = param_crnt[j]                           #           Update previous parameter
             self.i += 1
             
@@ -173,15 +176,15 @@ def morph_geometry( self ):
         
         #self.check_default( param_crnt )                            #       Check if part regenerated properly
 
-        if( self.allow_export ):                                    #       Export the STL file
-            self.export_stl( file )                                 #       ...
+        #if( self.allow_export ):                                    #       Export the STL file
+        #self.export_stl( file )                                 #       ...
 
     # --- Revert to defaults ---
     print( "*" * self.len_cte )                                     # [INFO] Print break lines
     print( "RESULTS:-" )                                            # ...
-    print( "  {:5} mutations performed".format(b.shape[0]) )        # ...
+    print( "  {:5} mutations performed".format(arr.shape[0]) )        # ...
     print( "    {:5} successful mutations".format(self.valid_mutations))
-    print( "    {:5} failed     mutations".format(b.shape[0]-self.valid_mutations))
+    print( "    {:5} failed     mutations".format(arr.shape[0]-self.valid_mutations))
     print( "  {:5} calls to Onshape".format(self.i) )
     print( "*" * self.len_cte )                                     # [INFO] Print break lines
 

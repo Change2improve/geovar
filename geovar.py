@@ -358,7 +358,6 @@ class geovar( object ):
 
 prog = geovar()                                                         # Startup and prepare program
 
-
 prog.morph_geometry()
 
 
