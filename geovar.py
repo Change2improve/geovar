@@ -56,6 +56,7 @@ import  os, re                                                          # Dir/pa
 
 
 import  _setup
+import  _onshape
 import  _morph
 
 # ************************************************************************
@@ -171,14 +172,9 @@ class geovar( object ):
 
     def get_values( self, initRun = False ):
         '''
-        Extract configured variable names from part and get the current values.
-        When initRun is True, it gets the default values and stores them for later usage.
-
-        FROM: https://stackoverflow.com/questions/4703390/how-to-extract-a-floating-number-from-a-string
-
+        Get configuration parameters from Onshape document
         '''
-
-        _morph.get_values( self, initRun )
+        _onshape.get_configurations( self )
         
 
 # --------------------------
@@ -198,70 +194,6 @@ class geovar( object ):
         '''
 
         _morph.morph_geometry( self ) 
-        
-        '''
-        ranges      = [range(arr.shape[1])] * arr.shape[0]              # Range we would like to go through
-        b           = np.array( list(product(*ranges)) )                # Create an array of indices of the products
-
-        param_prvs  = np.copy( arr.T[0] )                               # Previous unchanged value of the parameters
-        param_crnt  = np.zeros_like( param_prvs )
-
-        fmt_str = str()
-        for name in self.keys:                                          # Build row with key names
-            fmt_str = "{}\t\t{}".format( fmt_str, name )                # for visual presentation
-        fmt_str = "{}\t\tt_regen".format( fmt_str )                     # ...
-
-        self.len_cte = len(fmt_str) * round(len(self.keys)/2)           # Format length constant
-        
-        # ------ Mutate  Part ------
-        self.i = 0
-        for i in range( 0, b.shape[0] ):                                # Loop over ALL possible combinations
-            print( fmt_str )                                            #   [INFO] Print FORMATTED key names
-            print( "=" * self.len_cte )                                 #   [INFO] Print adaptive width dashes
-            print( "{:8}:".format("SENT"), end='\t' )                   #   [INFO] Print values
-
-            temp    = str()                                             #   Temporary string to hold filename
-            start   = time()                                            #   Timer for regeneration time
-            
-            for j in range( 0, arr.shape[0] ):                          #   Loop over ALL features
-                param_crnt[j] = arr.T[b[i][j]][j]                       #       Get current value to be passed
-                
-                if( param_crnt[j] != param_prvs[j] ):                   #       If current and previous parameters are different
-                    self.myPart.params = { self.keys[j]:                #           Pass new value (aka mutate part)
-                                           param_crnt[j]*u.mm }         #           ...
-
-                    param_prvs[j] = param_crnt[j]                       #           Update previous parameter
-                    self.i += 1
-                    
-                else: pass                                              #       Otherwise don't do anything
-                
-                print( "{:4.3f}".format(param_crnt[j]), end='\t\t' )    #       [INFO] Print value being sent to Onshape
-
-                temp = "{}{}{}__".format( temp, self.keys[j],           #       Build file name
-                                          param_crnt[j] )               #       ...
-                
-            print( "{:4.3f}".format(time() - start) )                   #       [INFO] Print regeneration time
-            print( "-" * self.len_cte )                                 #       [INFO] Print break lines
-
-            # get the STL export
-            file = "{}{}.stl".format( self.dst, temp.rstrip('_') )      #       Build file name
-            
-            self.check_default( param_crnt )                            #       Check if part regenerated properly
-
-            if( self.allow_export ):                                    #       Export the STL file
-                self.export_stl( file )                                 #       ...
-
-        # --- Revert to defaults ---
-        print( "*" * self.len_cte )                                     # [INFO] Print break lines
-        print( "RESULTS:-" )                                            # ...
-        print( "  {:5} mutations performed".format(b.shape[0]) )        # ...
-        print( "    {:5} successful mutations".format(self.valid_mutations))
-        print( "    {:5} failed     mutations".format(b.shape[0]-self.valid_mutations))
-        print( "  {:5} calls to Onshape".format(self.i) )
-        print( "*" * self.len_cte )                                     # [INFO] Print break lines
-
-        self.reset_myPart()                                             # Go back to defaults
-        '''
         
 # --------------------------
 
@@ -358,73 +290,9 @@ class geovar( object ):
 
 prog = geovar()                                                         # Startup and prepare program
 
-prog.morph_geometry()
+prog.get_values()
 
 
-'''
-IF QUIET FLAG IS TURNED ON, CONSTRUCT AN ARRAY
-OF ARRAYS OF EQUAL LENGTH AND VARIATION.
-
-if( True ):
-    if( args.lower_bound > args.upper_bound ):                          # If LB > UB
-        err = "Lower bound (LB) greater than upper bound (UB).\n"       #   ...
-        err = "{}Make sure that UB > LB.".format(err)                   #   ...
-        raise ValueError( "{}".format(err) )                            #   Raise error
-    
-    elif( args.lower_bound==0 and args.upper_bound==0 ):                # If no values are specified
-        err = "No values for lower bound and upper bound given.\n"      #   ...
-        err = "{}Use -LB and -UB to specify values.".format(err)        #   ...
-        raise ValueError( "{}".format(err) )                            #   Raise error
-
-    print( "Quiet mode on, auto constructing arrays", end='' )
-    a       = args.lower_bound                                          # Lower bound
-    b       = args.upper_bound                                          # Upper bound
-    h       = args.step_size                                            # Step size
-    arr_len = int((b-a)/h)+1                                            # Array length
-
-    arr = np.zeros( [len(prog.keys), arr_len] )                         # Dynamically create array based on #features
-    for i in range( 0, len(prog.keys) ):                                # ...
-        arr[i] = np.array( np.linspace(a, b, arr_len) )                 # ...
-    print( "...Done!" )
-
-        
-else:
-    print( "*** NOTE: arrays MUST be of the same length." )
-    a       = [None] * len(prog.keys)                                   # Lower bound
-    b       = [None] * len(prog.keys)                                   # Upper bound
-    h       = [None] * len(prog.keys)                                   # Step size
-    arr_len = [None] * len(prog.keys)                                   # Array length
-    
-    for i in range( 0, len(prog.keys) ):                                # Collect data from user
-        print( "Feature: {:_^{width}}".format(prog.keys[i], width=15) )
-        while( True ):                                                  # Make sure user inputs valid data types
-            try:                                                        #   Catch any errors
-                a[i]        = float( input("  Choose lower bound  , a: " ) )
-                b[i]        = float( input("  Choose upper bound  , b: " ) )
-                h[i]        = float( input("  Choose step size    , h: " ) )
-                arr_len[i]  = int((b[i]-a[i])/h[i])+1
-                break                                                   #       If no problems, break from loop and proceed
-            except ValueError:                                          #   If error is caught,
-                print( "Hermano, learn to type numbers!" )              #       Inform user and re-prompt
-        print( "-----------------------------------------" )
-
-        if( a[i] > b[i] ): raise ValueError( "(a) > (b). Fix!" )        # If LB > UB, raise error
-
-    if( all(arr_len[0] == length for length in arr_len) ):              # Check if array lengths are the same
-        pass                                                            #   If they are, good for you!
-    
-    else:                                                               # If they are NOT the same length
-        print( "Arrays are NOT of equal length." )
-        print( "Auto adjusting step size based on longest array...", end='' )
-        for i in range( 0, len(arr_len) ):                              #   Make ALL lengths equal to the longest array
-            arr_len[i] = max(arr_len)                                   #   This gives the highest resolution
-        print( "Done!" )
-
-    arr = np.zeros( [len(prog.keys), arr_len[0]] )                      # Create array of arrays
-    for i in range( 0, len(prog.keys) ):                                # Loop over all the arrays inside the array
-        arr[i] = np.array( np.linspace(a[i], b[i], arr_len[i]) )        #   Build the i-th array
-
-'''
 try:
     print( arr )
     prog.mutate_part( arr )                                             # Do da tang!

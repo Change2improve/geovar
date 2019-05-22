@@ -18,8 +18,8 @@
 
 import  re
 import  numpy                       as      np
-from    onshapepy.play              import  *                           # Onshape API
-from    itertools                   import  product                     # Apply product rule on combinations
+from    onshapepy.play              import  *                               # Onshape API
+from    itertools                   import  product                         # Apply product rule on combinations
 
 
 # ************************************************************************
@@ -32,43 +32,65 @@ def connect_to_sketch( self, args ):
     '''
 
     if( args.demo_mode ):
-        self.did = "04b732c124cfa152cf7c07f3"                       # ...
-        self.wid = "c4358308cbf0c97a44d8a71a"                       # Get features for document of interest
-        self.eid = "a23208c314d70c14da7071e6"                       # ...
+        self.did = "04b732c124cfa152cf7c07f3"                               # ...
+        self.wid = "c4358308cbf0c97a44d8a71a"                               # Get features for document of interest
+        self.eid = "a23208c314d70c14da7071e6"                               # ...
 
-    if( len(self.did) != 24 or                                      # Ensure inputted IDs are valid
-        len(self.wid) != 24 or                                      # ...
-        len(self.eid) != 24 ):                                      # ...
+    if( len(self.did) != 24 or                                              # Ensure inputted IDs are valid
+        len(self.wid) != 24 or                                              # ...
+        len(self.eid) != 24 ):                                              # ...
         raise ValueError( "Document, workspace, and element IDs must each be 24 characters in length" )
     else:
         part_URL    = "https://cad.onshape.com/documents/{}/w/{}/e/{}".format( self.did, self.wid, self.eid )
-        self.myPart = Part( part_URL )                              # Connect to part for modification
-        self.c      = Client()                                      # Create instance of the onshape client for exporting
+        self.myPart = Part( part_URL )                                      # Connect to part for modification
+        self.c      = Client()                                              # Create instance of the onshape client for exporting
     
 # ------------------------------------------------------------------------
 
-def get_values( self, initRun = False ):
+def request_status( self ):
     '''
-    Extract configured variable names from part and get the current values.
-    When initRun is True, it gets the default values and stores them for later usage.
-
-    FROM: https://stackoverflow.com/questions/4703390/how-to-extract-a-floating-number-from-a-string
-
-    INPUT:-
-        - initRun: Set to True ONLY the first time this command is run.
-                   This allows us to store the default values for the part.
-
-    NOTE:-
-        myPart.param = {
-                        'feature_1': <Quantity(29.5, 'millimeter')>,
-                        'feature_2': <Quantity(27.5, 'millimeter')>,
-                        'fillet': True, 'fillet_type': 'circular'
-                       }
-
-    KNOWN ISSUES:
-        - Still can't get boolean values such as fillets and whatnot
+    Decodes request status for the user
     '''
 
+    response        = self.response
+    code            = response.status_code
+    if code == 200:
+        print( " REQUEST SUCCESSFUL! " )
+    else:
+        print( " REQUEST FAILED " )
+        quit()                                                              # Quitting program after failed request
+
+# ------------------------------------------------------------------------
+
+def get_configurations( self ):
+    '''
+    Get configuration parameters from Onshape document
+    '''
+
+    print('\n')
+    print('REQUEST CONFIGURATIONS...')
+    response        = self.c._api.request('get','/api/partstudios/d/{}/w/{}/e/{}/configuration'.format(self.did, self.wid, self.eid))
+    r               = response.json()                                       # Translate request into json() structure
+
+    self.response   = response                                              # Storing variables into self container
+    self.r          = r                                                     # ...
+
+
+    request_status( self )                                                  # The status function will print the status of the request
+
+# ------------------------------------------------------------------------
+
+def get_values( self, ):
+    '''
+    Extracts the values of the Onshape document configurations
+    '''
+
+    res = self.res
+
+    
+    
+
+    '''
     numeric_const_pattern = '[-+]? (?: (?: \d* \. \d+ ) | (?: \d+ \.? ) )(?: [Ee] [+-]? \d+ ) ?'
     rx = re.compile(numeric_const_pattern, re.VERBOSE)
 
@@ -95,7 +117,7 @@ def get_values( self, initRun = False ):
             print( "{:4.3f}".format(current[i]), end='\t\t' )
         print("//"); print( "-" * self.len_cte )
         return( current )
-
+    '''
 # ------------------------------------------------------------------------
 
 def morph_geometry( self ):

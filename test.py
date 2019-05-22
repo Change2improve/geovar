@@ -1,5 +1,6 @@
 from onshapepy import *
 import requests
+import _onshape
 
 did = "04b732c124cfa152cf7c07f3"
 wid = "c4358308cbf0c97a44d8a71a"
@@ -9,11 +10,15 @@ eid = "a23208c314d70c14da7071e6"
 part_URL    = "https://cad.onshape.com/documents/{}/w/{}/e/{}".format(did,wid,eid)
 myPart = Part( part_URL )
 c      = Client()
-
-
-
 res = c._api.request('get', '/api/partstudios/d/' + did + '/w/' + wid + '/e/' + eid + '/configuration')
 
+
+split = res.text.split('\n')
+for i in range(0, len(split)):
+    print( split[i] )
+
+
+'''
 payload = {
     "configurationParameters" : [ {
         "type" : 1826,
@@ -209,3 +214,4 @@ payload2 = {
 } 
 
 res = c._api.request('post', '/api/partstudios/d/' + did + '/w/' + wid + '/e/' + eid + '/configuration', body=payload)
+'''
