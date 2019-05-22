@@ -55,9 +55,9 @@ def request_status( self ):
     response        = self.response
     code            = response.status_code
     if code == 200:
-        print( " REQUEST SUCCESSFUL! " )
+        print( ">> REQUEST SUCCESSFUL! " )
     else:
-        print( " REQUEST FAILED " )
+        print( ">> REQUEST FAILED " )
         quit()                                                              # Quitting program after failed request
 
 # ------------------------------------------------------------------------
@@ -83,10 +83,26 @@ def get_configurations( self ):
 def get_values( self, ):
     '''
     Extracts the values of the Onshape document configurations
+
+    TO DO:
+        - Add the limits of the configurations
+
     '''
 
-    res = self.res
-
+    r               = self.r
+    Nconfigs        = len( r['currentConfiguration'] )                                                                  # Determine the number of available configurations
+    configs         = {}                                                                                                # Create a dict to store information about the configurations
+    configs['parameterId'] = []
+    configs['units'] = []
+    configs['value'] = []
+    print( ">> NUMBER OF CONFIGURATIONS" + '\t' + str(Nconfigs) )
+    for i in range( 0, Nconfigs ):                                                                                      # Extract configuration information and populat dict iteraively
+        configs['parameterId'].append( r['currentConfiguration'][i]['message']['parameterId'] )
+        configs['units'].append( r['currentConfiguration'][i]['message']['units'] )
+        configs['value'].append( r['currentConfiguration'][i]['message']['value'] )
+        print( ">> " + configs['parameterId'][i] + '\t' + str(configs['value'][i]) + '\t' + configs['units'][i])
+        
+    print( configs )
     
     
 

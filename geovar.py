@@ -166,7 +166,7 @@ class geovar( object ):
         '''
         Connect to Onshape and access desired sketch
         '''
-        _morph.connect_to_sketch( self, args )                        # connect to the onshape document
+        _onshape.connect_to_sketch( self, args )                        # connect to the onshape document
 
 # --------------------------
 
@@ -175,6 +175,7 @@ class geovar( object ):
         Get configuration parameters from Onshape document
         '''
         _onshape.get_configurations( self )
+        _onshape.get_values( self )
         
 
 # --------------------------
@@ -290,12 +291,10 @@ class geovar( object ):
 
 prog = geovar()                                                         # Startup and prepare program
 
-prog.get_values()
-
-
+'''
 try:
     print( arr )
     prog.mutate_part( arr )                                             # Do da tang!
 except:
     prog.reset_myPart()                                                 # In case something goes wrong, reset!
-
+'''
