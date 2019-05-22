@@ -13,12 +13,6 @@ c      = Client()
 res = c._api.request('get', '/api/partstudios/d/' + did + '/w/' + wid + '/e/' + eid + '/configuration')
 
 
-split = res.text.split('\n')
-for i in range(0, len(split)):
-    print( split[i] )
-
-
-'''
 payload = {
     "configurationParameters" : [ {
         "type" : 1826,
@@ -170,8 +164,8 @@ payload = {
         "typeName" : "BTMParameterQuantity",
         "message" : {
           "units" : "millimeter",
-          "value" : 65.0,
-          "expression" : "65 mm",
+          "value" : 50.0,
+          "expression" : "50 mm",
           "isInteger" : False,
           "parameterId" : "r_inner",
           "hasUserCode" : False,
@@ -209,9 +203,5 @@ payload = {
       "libraryVersion" : 1063
 }
 
-payload2 = {
-   "currentConfiguration" : [ { "units" : "millimeter", "value" : 65.0, "expression" : "65 mm" } ]
-} 
-
 res = c._api.request('post', '/api/partstudios/d/' + did + '/w/' + wid + '/e/' + eid + '/configuration', body=payload)
-'''
+

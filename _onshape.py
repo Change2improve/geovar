@@ -20,6 +20,7 @@ import  re
 import  numpy                       as      np
 from    onshapepy.play              import  *                               # Onshape API
 from    itertools                   import  product                         # Apply product rule on combinations
+import  json
 
 
 # ************************************************************************
@@ -89,20 +90,23 @@ def get_values( self, ):
 
     '''
 
-    r               = self.r
-    Nconfigs        = len( r['currentConfiguration'] )                                                                  # Determine the number of available configurations
-    configs         = {}                                                                                                # Create a dict to store information about the configurations
-    configs['parameterId'] = []
-    configs['units'] = []
-    configs['value'] = []
+    r                       = self.r
+    Nconfigs                = len( r['currentConfiguration'] )                                                          # Determine the number of available configurations
+    configs                 = {}                                                                                        # Create a dict to store information about the configurations
+    configs['Nconfigs']     = Nconfigs
+    configs['parameterId']  = []
+    configs['units']        = []
+    configs['value']        = []
+    configs['expression']   = []
     print( ">> NUMBER OF CONFIGURATIONS" + '\t' + str(Nconfigs) )
     for i in range( 0, Nconfigs ):                                                                                      # Extract configuration information and populat dict iteraively
         configs['parameterId'].append( r['currentConfiguration'][i]['message']['parameterId'] )
         configs['units'].append( r['currentConfiguration'][i]['message']['units'] )
         configs['value'].append( r['currentConfiguration'][i]['message']['value'] )
+        configs['expression'].append( r['currentConfiguration'][i]['message']['expression'] )
         print( ">> " + configs['parameterId'][i] + '\t' + str(configs['value'][i]) + '\t' + configs['units'][i])
         
-    print( configs )
+    self.configs            = configs
 
 # ------------------------------------------------------------------------
 
@@ -115,6 +119,29 @@ def check_values( self, ):
         - Throws a warning or ends the program
 
     '''
+
+# ------------------------------------------------------------------------
+
+def update_configurations( self, ):
+    '''
+    Updates the configuration values on the onshape document
+    '''
+
+    r                       = self.r                                                                                                # Load variables from the self structure                                                                                                               
+    configs                 = self.configs
+
+    Nconfigs                = configs['Nconfigs']
+    for i in range( 0, Nconfigs ):
+        r['currentConfiguration'][i]['message']['value'] = 73.50 #configs['parameterId'][i]
+        r['currentConfiguration'][i]['message']['expression'] = '73.50 mm' #configs['parameterId'][i]
+
+    payload = r
+    print( payload )
+    response                = self.c._api.request('post',                                                           
+                                          '/api/partstudios/d/{}/w/{}/e/{}/configuration'.format(self.did, self.wid, self.eid),
+                                          body=json.dumps(payload))                                                                             # Send configuration changes
+    print( response )
+    
 
 # ------------------------------------------------------------------------
 

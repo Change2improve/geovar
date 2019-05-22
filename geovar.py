@@ -134,6 +134,12 @@ class geovar( object ):
 ##        if( args.tetgen_dir == "foo" ):                                 # Make sure a directory for TetGen was given
 ##            raise NameError( "No TetGen directory sepcified" )          # ...
 
+        '''
+        TO DO:
+            - Define "r" as a dictionary to store all possible responses
+            - Same for "configs" ...perhaps this should be part of the "_setup" module
+        '''
+
         self.allow_export    = False                                    # Flag to allow STL exports
         self.valid_mutations = 0                                        # Counter for successful mutations
         
@@ -142,7 +148,8 @@ class geovar( object ):
         self.connect_to_sketch()                                        # Instantiate Onshape client and connect
 
         self.get_values( initRun = True )                               # Get configurable part features and CURRENT default values
-        # will use the get values function to check if the user input matches...
+
+
         
 # --------------------------
 
@@ -176,6 +183,7 @@ class geovar( object ):
         '''
         _onshape.get_configurations( self )
         _onshape.get_values( self )
+        _onshape.update_configurations( self )
         
 
 # --------------------------
