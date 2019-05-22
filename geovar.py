@@ -189,7 +189,7 @@ class geovar( object ):
         self.prog_time          = time() - self.prog_start_time
         _onshape.get_configurations( self )
         _onshape.get_values( self )
-        #_onshape.update_configurations( self )
+        _onshape.update_configurations( self )
         
 
 # --------------------------
