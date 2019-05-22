@@ -103,37 +103,19 @@ def get_values( self, ):
         print( ">> " + configs['parameterId'][i] + '\t' + str(configs['value'][i]) + '\t' + configs['units'][i])
         
     print( configs )
-    
-    
+
+# ------------------------------------------------------------------------
+
+def check_values( self, ):
+    '''
+    Checks if the values provided by the user match those available to the file
+
+    TO DO:
+        - Uses the number of configurations and parameterIds to check
+        - Throws a warning or ends the program
 
     '''
-    numeric_const_pattern = '[-+]? (?: (?: \d* \. \d+ ) | (?: \d+ \.? ) )(?: [Ee] [+-]? \d+ ) ?'
-    rx = re.compile(numeric_const_pattern, re.VERBOSE)
 
-    if( initRun ):                                                  # If this is the initial run, get defaults
-        self.keys       = list( self.myPart.params )                #   Cast dict as list to extract keys
-        print( self.keys )
-        self.default    = [None] * len( self.keys )                 #   Create a list of length for values
-
-        print( "Found {} configurable parts with defaults:-".format(len(self.keys)) )
-        for i in range( 0, len(self.keys) ):                        #   Loop over all dict entries
-            param = str( self.myPart.params[ self.keys[i] ] )       #       Get dict value as string
-            self.default[i] = float( rx.findall(param)[0] )         #       Extract value from string
-            print( "  {:3}. {:12}: {: >10.3f}".format(i+1, self.keys[i], self.default[i]) )
-        print( '' )
-        return( 0 )
-
-    else:
-        current    = [None] * len( self.keys )                      #   Create a list of length for values
-        
-        print( "{:8}:".format("CURRENT"), end='\t' )
-        for i in range( 0, len(self.keys) ):                        #   Loop over all dict entries
-            param = str( self.myPart.params[ self.keys[i] ] )       #       Get dict value as string
-            current[i] = float( rx.findall(param)[0] )              #       Extract value from string
-            print( "{:4.3f}".format(current[i]), end='\t\t' )
-        print("//"); print( "-" * self.len_cte )
-        return( current )
-    '''
 # ------------------------------------------------------------------------
 
 def morph_geometry( self ):
