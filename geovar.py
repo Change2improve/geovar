@@ -143,6 +143,7 @@ class geovar( object ):
         # VARIABLES
         self.prog_start_time    = time()
         self.r                  = {}                                    # Initialize the 'r' dict for record of decoded responses
+        self.configs            = {}                                    # Initialized the 'configs' dict
         self.allow_export       = False                                    # Flag to allow STL exports
         self.valid_mutations    = 0                                        # Counter for successful mutations
         

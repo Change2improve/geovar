@@ -100,22 +100,24 @@ def get_values( self, ):
 
     '''
 
-    r                           = self.r                                                                                            # Load dict from self structure
-    r_iter                      = len(r)                                                                                            # Dummy variable that determines the response iteration based on the number of requests
-    Nconfigs                    = len( r[str(r_iter - 1)]['decoded']['currentConfiguration'] )                                      # Determine the number of available configurations
-    configs                     = {}                                                                                                # Create a dict to store information about the configurations (temporary stucture)
-    configs['Nconfigs']         = Nconfigs
-    configs['parameterId']      = []
-    configs['units']            = []
-    configs['value']            = []
-    configs['expression']       = []
+    r                                       = self.r                                                                                # Load dict from self structure
+    r_iter                                  = len(r)                                                                                # Dummy variable that determines the response iteration based on the number of requests
+    Nconfigs                                = len( r[str(r_iter - 1)]['decoded']['currentConfiguration'] )                          # Determine the number of available configurations
+    configs                                 = self.configs
+    c_iter                                  = len(configs)
+    configs[str(c_iter)]                    = {}
+    configs[str(c_iter)]['Nconfigs']        = Nconfigs
+    configs[str(c_iter)]['parameterId']     = []
+    configs[str(c_iter)]['units']           = []
+    configs[str(c_iter)]['value']           = []
+    configs[str(c_iter)]['expression']      = []
     print( ">> NUMBER OF CONFIGURATIONS" + '\t' + str(Nconfigs) )
     for i in range( 0, Nconfigs ):                                                                                                  # Extract configuration information and populat dict iteraively
-        configs['parameterId'].append(  r[str(r_iter - 1)]['decoded']['currentConfiguration'][i]['message']['parameterId'] )
-        configs['units'].append(        r[str(r_iter - 1)]['decoded']['currentConfiguration'][i]['message']['units'] )
-        configs['value'].append(        r[str(r_iter - 1)]['decoded']['currentConfiguration'][i]['message']['value'] )
-        configs['expression'].append(   r[str(r_iter - 1)]['decoded']['currentConfiguration'][i]['message']['expression'] )
-        print( ">> " + configs['parameterId'][i] + '\t' + str(configs['value'][i]) + '\t' + configs['units'][i])
+        configs[str(c_iter)]['parameterId'].append(  r[str(r_iter - 1)]['decoded']['currentConfiguration'][i]['message']['parameterId'] )
+        configs[str(c_iter)]['units'].append(        r[str(r_iter - 1)]['decoded']['currentConfiguration'][i]['message']['units'] )
+        configs[str(c_iter)]['value'].append(        r[str(r_iter - 1)]['decoded']['currentConfiguration'][i]['message']['value'] )
+        configs[str(c_iter)]['expression'].append(   r[str(r_iter - 1)]['decoded']['currentConfiguration'][i]['message']['expression'] )
+        print( ">> " + configs[str(c_iter)]['parameterId'][i] + '\t' + str(configs[str(c_iter)]['value'][i]) + '\t' + configs[str(c_iter)]['units'][i])
         
     self.configs            = configs
     
@@ -138,8 +140,8 @@ def update_configurations( self, ):
     Updates the configuration values on the onshape document
     '''
 
-    r                       = self.r                                                                                                # Load variables from the self structure                                                                                                               
-    configs                 = self.configs
+    r                           = self.r                                                                                            # Load dict from self structure                                                                                                             
+    configs                     = self.configs
 
     Nconfigs                = configs['Nconfigs']
     for i in range( 0, Nconfigs ):
