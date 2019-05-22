@@ -20,6 +20,7 @@ import  re
 import  numpy                       as      np
 from    onshapepy.play              import  *                               # Onshape API
 from    itertools                   import  product                         # Apply product rule on combinations
+from    time                        import  sleep, time                 # Timers/delays
 import  json
 
 
@@ -53,13 +54,15 @@ def request_status( self ):
     Decodes request status for the user
     '''
 
-    response        = self.response
-    code            = response.status_code
+    r                           = self.r                                                # Load dict from self structure
+    r_iter                      = len(r)
+    response                    = r[str(r_iter - 1)]['raw']                             # Extract the latest response [i-1]
+    code                        = response.status_code                                  # Read code from the request/response structure (.status_code)
     if code == 200:
         print( ">> REQUEST SUCCESSFUL! " )
     else:
         print( ">> REQUEST FAILED " )
-        quit()                                                              # Quitting program after failed request
+        quit()                                                                          # Quitting program after failed request
 
 # ------------------------------------------------------------------------
 
@@ -70,14 +73,21 @@ def get_configurations( self ):
 
     print('\n')
     print('REQUEST CONFIGURATIONS...')
-    response        = self.c._api.request('get','/api/partstudios/d/{}/w/{}/e/{}/configuration'.format(self.did, self.wid, self.eid))
-    r               = response.json()                                       # Translate request into json() structure
 
-    self.response   = response                                              # Storing variables into self container
-    self.r          = r                                                     # ...
+    r                           = self.r                                                # Load dict from self structure
+    r_iter                      = len(r)                                                # Dummy variable that determines the response iteration based on the number of requests
+    r[str(r_iter)]              = {}                                                    # Initializing the array for...
+    r[str(r_iter)]['raw']       = []                                                    # ...raw response
+    r[str(r_iter)]['decoded']   = []                                                    # ...decoded
+    
+    response                    = self.c._api.request('get','/api/partstudios/d/{}/w/{}/e/{}/configuration'.format(self.did, self.wid, self.eid))
+    r[str(r_iter)]['time']      = time() - self.prog_start_time                         # Measure time of the request with respect to the beginning of the program
+    r[str(r_iter)]['raw']       = response
+    r[str(r_iter)]['decoded']   = response.json()                                       # Translate request into json() structure
+    
+    self.r                      = r                                                     # Updating dict
 
-
-    request_status( self )                                                  # The status function will print the status of the request
+    request_status( self )                                                              # The status function will print the status of the request
 
 # ------------------------------------------------------------------------
 
@@ -90,24 +100,25 @@ def get_values( self, ):
 
     '''
 
-    r                       = self.r
-    Nconfigs                = len( r['currentConfiguration'] )                                                          # Determine the number of available configurations
-    configs                 = {}                                                                                        # Create a dict to store information about the configurations
-    configs['Nconfigs']     = Nconfigs
-    configs['parameterId']  = []
-    configs['units']        = []
-    configs['value']        = []
-    configs['expression']   = []
+    r                           = self.r                                                                                            # Load dict from self structure
+    r_iter                      = len(r)                                                                                            # Dummy variable that determines the response iteration based on the number of requests
+    Nconfigs                    = len( r[str(r_iter - 1)]['decoded']['currentConfiguration'] )                                      # Determine the number of available configurations
+    configs                     = {}                                                                                                # Create a dict to store information about the configurations (temporary stucture)
+    configs['Nconfigs']         = Nconfigs
+    configs['parameterId']      = []
+    configs['units']            = []
+    configs['value']            = []
+    configs['expression']       = []
     print( ">> NUMBER OF CONFIGURATIONS" + '\t' + str(Nconfigs) )
-    for i in range( 0, Nconfigs ):                                                                                      # Extract configuration information and populat dict iteraively
-        configs['parameterId'].append( r['currentConfiguration'][i]['message']['parameterId'] )
-        configs['units'].append( r['currentConfiguration'][i]['message']['units'] )
-        configs['value'].append( r['currentConfiguration'][i]['message']['value'] )
-        configs['expression'].append( r['currentConfiguration'][i]['message']['expression'] )
+    for i in range( 0, Nconfigs ):                                                                                                  # Extract configuration information and populat dict iteraively
+        configs['parameterId'].append(  r[str(r_iter - 1)]['decoded']['currentConfiguration'][i]['message']['parameterId'] )
+        configs['units'].append(        r[str(r_iter - 1)]['decoded']['currentConfiguration'][i]['message']['units'] )
+        configs['value'].append(        r[str(r_iter - 1)]['decoded']['currentConfiguration'][i]['message']['value'] )
+        configs['expression'].append(   r[str(r_iter - 1)]['decoded']['currentConfiguration'][i]['message']['expression'] )
         print( ">> " + configs['parameterId'][i] + '\t' + str(configs['value'][i]) + '\t' + configs['units'][i])
         
     self.configs            = configs
-
+    
 # ------------------------------------------------------------------------
 
 def check_values( self, ):

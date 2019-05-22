@@ -140,8 +140,11 @@ class geovar( object ):
             - Same for "configs" ...perhaps this should be part of the "_setup" module
         '''
 
-        self.allow_export    = False                                    # Flag to allow STL exports
-        self.valid_mutations = 0                                        # Counter for successful mutations
+        # VARIABLES
+        self.prog_start_time    = time()
+        self.r                  = {}                                    # Initialize the 'r' dict for record of decoded responses
+        self.allow_export       = False                                    # Flag to allow STL exports
+        self.valid_mutations    = 0                                        # Counter for successful mutations
         
         self.setup()                                                    # Setup & define directories
 
@@ -181,9 +184,11 @@ class geovar( object ):
         '''
         Get configuration parameters from Onshape document
         '''
+
+        self.prog_time          = time() - self.prog_start_time
         _onshape.get_configurations( self )
         _onshape.get_values( self )
-        _onshape.update_configurations( self )
+        #_onshape.update_configurations( self )
         
 
 # --------------------------

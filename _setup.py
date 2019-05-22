@@ -224,4 +224,3 @@ def generate_morphing_array( self ):
     arr = np.array(arr)
     self.arr = arr
 
-    # determining list of morphing states...
