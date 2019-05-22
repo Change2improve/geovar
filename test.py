@@ -204,4 +204,8 @@ payload = {
       "libraryVersion" : 1063
 }
 
+payload2 = {
+   "currentConfiguration" : [ { "units" : "millimeter", "value" : 65.0, "expression" : "65 mm" } ]
+} 
+
 res = c._api.request('post', '/api/partstudios/d/' + did + '/w/' + wid + '/e/' + eid + '/configuration', body=payload)
