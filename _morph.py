@@ -16,11 +16,19 @@
 *
 '''
 
+# onshape modules and libraries
+from    onshapepy.play              import  *                               # Onshape API
+
+
+# adapted onshape modules and libraries
+import  _morph
+
+
+# additional python modules and libraries
 import  re
 import  numpy                       as      np
-from    onshapepy.play              import  *                           # Onshape API
-from    itertools                   import  product                     # Apply product rule on combinations
-from    time                        import  sleep, time                 # Timers/delays
+from    itertools                   import  product                         # Apply product rule on combinations
+from    time                        import  sleep, time                     # Timers/delays
 
 # ************************************************************************
 # FUNCTIONS =============================================================*
@@ -28,20 +36,10 @@ from    time                        import  sleep, time                 # Timers
 
 def morph_geometry( self ):
     '''
-    Apply product rule on part to get as many
-    geometric variations as needed
-
-    INPUT:-
-        - arr:  An array of arrays containing the values
-                we would our features to have
-                
-    NOTES:-
-        You MUST multiply the value with whatever unit
-        you want it to be (i.e 3*u.in == 3in)
+    Morph or modify geometries based on a product array
     '''
 
     arr = self.arr
-    #b           = np.array( list(product(self.arr)) )                # Create an array of indices of the products
 
     vals_range = list( range( arr.shape[1] ) )
     prods = list( product( vals_range, repeat = arr.shape[0] ) )

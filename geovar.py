@@ -149,9 +149,7 @@ class geovar( object ):
         
         self.setup()                                                    # Setup & define directories
 
-        self.connect_to_sketch()                                        # Instantiate Onshape client and connect
-
-        self.get_values( initRun = True )                               # Get configurable part features and CURRENT default values
+        self.generate_variant()                                         # Get configurable part features and CURRENT default values
 
 
         
@@ -172,27 +170,23 @@ class geovar( object ):
 
 
 # --------------------------
+    
 
-    def connect_to_sketch( self ):
+    def generate_variant( self ):
         '''
-        Connect to Onshape and access desired sketch
-        '''
-        _onshape.connect_to_sketch( self, args )                        # connect to the onshape document
-
-# --------------------------
-
-    def get_values( self, initRun = False ):
-        '''
-        Get configuration parameters from Onshape document
+        GENERATE GEOMETRY VARIANT:
+            - Connects to onshape document
+            - Retrieves default configurations
+            - Updates configurations based on morphing array
+            - Exports geometric variant (.STL)
         '''
 
         self.prog_time          = time() - self.prog_start_time
+        _onshape.connect_to_sketch( self, args )                        # connect to the onshape document
         _onshape.get_configurations( self )
         _onshape.get_values( self )
-
         updates = [10.25, 200, 80]
         _onshape.update_configurations( self, updates )
-        
 
 # --------------------------
 
