@@ -255,7 +255,12 @@ def query_variants(question, default="yes"):
         if default is not None and choice == '':
             return valid[default]
         elif choice in valid:
-            return valid[choice]
+            if valid[choice] == False:
+                print(">> Terminating program...")
+                quit()
+            else:
+                print(">> Proceed at your own risk..!")
+                return valid[choice]
         else:
             sys.stdout.write("Please respond with 'yes' or 'no' "
                              "(or 'y' or 'n').\n")
