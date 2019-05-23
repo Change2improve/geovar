@@ -39,7 +39,17 @@
 *
 '''
 
+# onshape modules and libraries
 from    onshapepy.play              import  *                           # Onshape API
+
+
+# adapted onshape modules and libraries
+import  _setup
+import  _onshape
+import  _morph
+
+
+# additional python modules and libraries
 from    time                        import  sleep, time                 # Timers/delays
 from    platform                    import  system                      # Running platform info
 from    datetime                    import  datetime                    # Get date and time
@@ -54,10 +64,6 @@ from    itertools                   import  product                     # Apply 
 import  numpy                       as      np                          # Fast array creation
 import  os, re                                                          # Dir/path manipulation, extract numerics from strings
 
-
-import  _setup
-import  _onshape
-import  _morph
 
 # ************************************************************************
 # =====================> CONSTRUCT ARGUMENT PARSER <=====================*
@@ -82,12 +88,6 @@ ap.add_argument( "-v"   , "--verbose"   ,
                  action = 'store_true'  , default=False ,
                  help   = "{}".format(string)           )
 
-### Quiet mode; create arrays of identical variation
-##string = "Quiet mode; arrays have the same value"
-##ap.add_argument( "-q"   , "--quiet"     ,
-##                 dest   = "quiet"       ,
-##                 action = 'store_true'  , default=False ,
-##                 help   = "{}".format(string)           )
 
 # Operation Inputs ---------------------------------------------------- #
 # Input File
@@ -96,33 +96,8 @@ ap.add_argument( "-i"   , "--input_file"     , type = str           ,
                  dest   = "input_file"       , default = "doc.xml"  ,
                  help   = "{}".format(string)                       )
 
-### Lower bound for variations array
-##string = "Minimum value desired"
-##ap.add_argument( "-LB", "--lower-bound" , type = int    ,
-##                 dest   = "lower_bound" , default =  0  ,
-##                 help   = "{}".format(string)           )
-##
-### Upper bound for variations array
-##string = "Maximum value desired"
-##ap.add_argument( "-UB", "--upper-bound" , type = int    ,
-##                 dest   = "upper_bound" , default =  0  ,
-##                 help   = "{}".format(string)           )
-##
-### Step size for variations array
-##string = "Variations step size"
-##ap.add_argument( "-H", "--step-size"    , type = float  ,
-##                 dest   = "step_size" , default = 0.1 ,
-##                 help   = "{}".format(string)           )
-
 args = ap.parse_args()
 
-##if( args.dev_mode ):
-##    args.tetgen_dir     = '/home/moe/Desktop/geovar/tetgen1.5.1/'
-##    args.quiet          = True
-##    args.verbose        = True
-##    args.lower_bound    = 9
-##    args.upper_bound    = 10
-##    args.step_size      = 1
 
 # ************************************************************************
 # ===========================> PROGRAM  SETUP <==========================*
