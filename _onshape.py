@@ -135,7 +135,7 @@ def check_values( self, ):
 
 # ------------------------------------------------------------------------
 
-def update_configurations( self, new_vals ):
+def update_configurations( self, updates ):
     '''
     Updates the configuration values on the onshape document
 
@@ -149,17 +149,22 @@ def update_configurations( self, new_vals ):
     configs                                 = self.configs                                                                          # ...
     c_iter                                  = len(configs)
     Nconfigs                                = configs[str(c_iter - 1)]['Nconfigs']                                                  # Number of configurations
-    Nnew_vals                               = len(new_vals)
+    Nupdates                                = len(updates)
+
+    print( updates )
+    if ( Nconfigs != Nupdates ):
+        print( ">> ERROR: The number of updated values is different from the number of configurations... ending program..." )
+        quit()
     
     for i in range( 0, Nconfigs ):
-        r['currentConfiguration'][i]['message']['value'] = 73.50 #configs['parameterId'][i]
-        r['currentConfiguration'][i]['message']['expression'] = '73.50 mm' #configs['parameterId'][i]
+        r[str(r_iter - 1)]['decoded']['currentConfiguration'][i]['message']['value'] = updates[i]
+        r[str(r_iter - 1)]['decoded']['currentConfiguration'][i]['message']['expression'] = ('{} mm').format( updates[i] )
 
-    payload = r
+    payload = r[str(r_iter - 1)]['decoded']
     print( payload )
-    response                = self.c._api.request('post',                                                           
-                                          '/api/partstudios/d/{}/w/{}/e/{}/configuration'.format(self.did, self.wid, self.eid),
-                                          body=json.dumps(payload))                                                                             # Send configuration changes
+    response                                = self.c._api.request('post',
+                                                                  '/api/partstudios/d/{}/w/{}/e/{}/configuration'.format(self.did, self.wid, self.eid),
+                                                                  body=json.dumps(payload))                                                                             # Send configuration changes
     print( response )
     
 
