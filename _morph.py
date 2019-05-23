@@ -21,7 +21,7 @@ from    onshapepy.play              import  *                               # On
 
 
 # adapted onshape modules and libraries
-import  _morph
+import  _onshape
 
 
 # additional python modules and libraries
@@ -45,11 +45,19 @@ def simple_morph( self ):
     var                     = self.var
     arr                     = self.arr
     prods                   = self.prods
+    Nprods                  = len(prods)
+    Nvars                   = var['nvar']
+    updates                 = []
     
+    for i in range(0, Nvars):
+        updates.append( arr[i][prods[variant_iter][i]] )
 
-    print(prods[variant_iter])
-    # _morph
-    #_onshape.update_configurations( self, updates )
+    _onshape.update_configurations( self, updates )
+    response =self.c._api.request('get','/api/partstudios/d/{}/w/{}/e/{}/features/rollback'.format(self.did, self.wid, self.eid))
+    print(response)
+    # check if morph completed successfully...
+
+    self.variant_iter       = variant_iter + 1                              # Update iteration counter
 
 # --------------------------
         

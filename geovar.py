@@ -123,13 +123,6 @@ class geovar( object ):
         self.valid_mutations    = 0                                        # Counter for successful mutations
         
         self.setup()                                                    # Setup & define directories
-
-        _onshape.connect_to_sketch( self, args )                        # connect to the onshape document
-
-        _morph.simple_morph( self )
-        #self.generate_variant()                                         # Get configurable part features and CURRENT default values
-
-
         
 # --------------------------
 
@@ -140,6 +133,7 @@ class geovar( object ):
             - Gathering document information (did, wid, eid)
             - Gathering document variables
             - Generating the morphing array
+            - Connect to onshape document
         '''
         
         self.prog_time          = time() - self.prog_start_time
@@ -147,7 +141,7 @@ class geovar( object ):
         _setup.read_doc( self, args.input_file )                        # retrieve document information
         _setup.read_vars( self, args.input_file )                       # retrieve variable information
         _setup.generate_variant_array( self )
-
+        _onshape.connect_to_sketch( self, args )                        # connect to the onshape document
 
 # --------------------------
     
@@ -162,31 +156,9 @@ class geovar( object ):
         '''
 
         self.prog_time          = time() - self.prog_start_time
-        
-        
         _onshape.get_configurations( self )
         _onshape.get_values( self )
-        updates = [10.25, 200, 80]
-        # _morph
-        _onshape.update_configurations( self, updates )
-
-# --------------------------
-
-    def morph_geometry( self ):
-        '''
-        Apply product rule on part to get as many
-        geometric variations as needed
-
-        INPUT:-
-            - arr:  An array of arrays containing the values
-                    we would our features to have
-                    
-        NOTES:-
-            You MUST multiply the value with whatever unit
-            you want it to be (i.e 3*u.in == 3in)
-        '''
-
-        _morph.morph_geometry( self ) 
+        _morph.simple_morph( self )
         
 # --------------------------
 
@@ -283,7 +255,8 @@ class geovar( object ):
 
 prog = geovar()                                                         # Startup and prepare program
 
-
+for i in range( 0, 3 ):
+    prog.generate_variant()
 
 '''
 try:
