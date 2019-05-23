@@ -34,6 +34,25 @@ from    time                        import  sleep, time                     # Ti
 # FUNCTIONS =============================================================*
 # ************************************************************************
 
+def simple_morph( self ):
+    '''
+    simple morph
+    '''
+
+    self.prog_time          = time() - self.prog_start_time
+
+    variant_iter            = self.variant_iter
+    var                     = self.var
+    arr                     = self.arr
+    prods                   = self.prods
+    
+
+    print(prods[variant_iter])
+    # _morph
+    #_onshape.update_configurations( self, updates )
+
+# --------------------------
+        
 def morph_geometry( self, updates ):
     '''
     Morph or modify geometries based on a product array

@@ -117,13 +117,16 @@ class geovar( object ):
         self.prog_start_time    = time()
         self.r                  = {}                                    # Initialize the 'r' dict for record of decoded responses
         self.configs            = {}                                    # Initialized the 'configs' dict
+        self.variant_iter       = 0
+        
         self.allow_export       = False                                    # Flag to allow STL exports
         self.valid_mutations    = 0                                        # Counter for successful mutations
         
         self.setup()                                                    # Setup & define directories
 
-        #_onshape.connect_to_sketch( self, args )                        # connect to the onshape document
+        _onshape.connect_to_sketch( self, args )                        # connect to the onshape document
 
+        _morph.simple_morph( self )
         #self.generate_variant()                                         # Get configurable part features and CURRENT default values
 
 
@@ -138,6 +141,8 @@ class geovar( object ):
             - Gathering document variables
             - Generating the morphing array
         '''
+        
+        self.prog_time          = time() - self.prog_start_time
         _setup.setup_directories( self )                                # retrieve directory information
         _setup.read_doc( self, args.input_file )                        # retrieve document information
         _setup.read_vars( self, args.input_file )                       # retrieve variable information

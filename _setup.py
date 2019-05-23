@@ -227,7 +227,7 @@ def generate_variant_array( self ):
     print( (">> WARNING: THIS PROGRAM WILL GENERATE {} GEOMETRIC VARIANTS (.STL)...").format(len(prods)))
     query_variants( ">> Do you wish to continue?", default="yes")
         
-    self.var                    = vars                                                                  # Load changes to 'self' structure
+    self.var                    = var                                                                   # Load changes to 'self' structure
     self.arr                    = arr
     self.prods                  = prods
 
