@@ -56,7 +56,7 @@ import  os, re                                                          # Dir/pa
 
 
 import  _setup
-import  _onshape_2
+import  _onshape
 import  _morph
 
 # ************************************************************************
@@ -190,7 +190,7 @@ class geovar( object ):
         _onshape.get_configurations( self )
         _onshape.get_values( self )
 
-        updates = [15, 75, 95]
+        updates = [10.25, 200, 80]
         _onshape.update_configurations( self, updates )
         
 

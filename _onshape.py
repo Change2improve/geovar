@@ -144,6 +144,9 @@ def update_configurations( self, updates ):
         - Ensure that the program is smart enough to check the 'parameter_id' name rather than just the iterative order
     '''
 
+    print('\n')
+    print('UPDATE CONFIGURATIONS...')
+    
     r                                       = self.r                                                                                # Load dict from self structure
     r_iter                                  = len(r)                                                                                # Dummy variable that determines the response iteration based on the number of requests
     configs                                 = self.configs                                                                          # ...
@@ -151,7 +154,6 @@ def update_configurations( self, updates ):
     Nconfigs                                = configs[str(c_iter - 1)]['Nconfigs']                                                  # Number of configurations
     Nupdates                                = len(updates)
 
-    print( updates )
     if ( Nconfigs != Nupdates ):
         print( ">> ERROR: The number of updated values is different from the number of configurations... ending program..." )
         quit()
@@ -159,13 +161,13 @@ def update_configurations( self, updates ):
     for i in range( 0, Nconfigs ):
         r[str(r_iter - 1)]['decoded']['currentConfiguration'][i]['message']['value'] = updates[i]
         r[str(r_iter - 1)]['decoded']['currentConfiguration'][i]['message']['expression'] = ('{} mm').format( updates[i] )
+        print( ">> " + r[str(r_iter - 1)]['decoded']['currentConfiguration'][i]['message']['parameterId'] + '\t' + ('{} mm').format( updates[i] ))
 
     payload = r[str(r_iter - 1)]['decoded']
-    print( payload )
     response                                = self.c._api.request('post',
                                                                   '/api/partstudios/d/{}/w/{}/e/{}/configuration'.format(self.did, self.wid, self.eid),
                                                                   body=json.dumps(payload))                                                                             # Send configuration changes
-    print( response )
+    request_status( self )                                                                                                          # The status function will print the status of the request
     
 
 # ------------------------------------------------------------------------
