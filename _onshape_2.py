@@ -16,9 +16,14 @@
 *
 '''
 
+# onshape modules and libraries
+
+
+
+
+# other libraries
 import  re
 import  numpy                       as      np
-from    onshapepy.play              import  *                               # Onshape API
 from    itertools                   import  product                         # Apply product rule on combinations
 from    time                        import  sleep, time                 # Timers/delays
 import  json
@@ -162,9 +167,7 @@ def update_configurations( self, updates ):
 
     payload = r[str(r_iter - 1)]['decoded']
     print( payload )
-    response                                = self.c._api.request('post',
-                                                                  '/api/partstudios/d/{}/w/{}/e/{}/configuration'.format(self.did, self.wid, self.eid),
-                                                                  body=json.dumps(payload))                                                                             # Send configuration changes
+    response                                = self.c._api.request('post','/api/partstudios/d/{}/w/{}/e/{}/configuration'.format(self.did, self.wid, self.eid),body=json.dumps(payload))                                                                             # Send configuration changes
     print( response )
     
 

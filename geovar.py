@@ -56,7 +56,7 @@ import  os, re                                                          # Dir/pa
 
 
 import  _setup
-import  _onshape
+import  _onshape_2
 import  _morph
 
 # ************************************************************************
