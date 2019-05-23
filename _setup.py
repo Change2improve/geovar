@@ -16,12 +16,15 @@
 *
 '''
 
+
+# additional python modules and libraries
 import  os, re                                                                                      # Dir/path manipulation, extract numerics from strings
+import  sys
 import  numpy                       as      np
 from    platform                    import  system                                                  # Running platform info
 from    datetime                    import  datetime                                                # Get date and time
 from    lxml                        import  etree
-
+from    itertools                   import  product                                                 # Apply product rule on combinations
 
 # ************************************************************************
 # FUNCTIONS =============================================================*
@@ -169,9 +172,9 @@ def read_vars( self, filename ):
     _doc = etree.parse( file )
     _doc_vars_ele = _doc.find('variables')
 
-    var                 = {}
-    var['nvar']         = len(_doc_vars_ele)
-    var['names']        = []
+    var                         = {}
+    var['nvar']                 = len(_doc_vars_ele)
+    var['names']                = []
     print( ">> NUMBER OF VARIABLES" + '\t' + str(var['nvar']) )
 
     for i in range(0, len(_doc_vars_ele) ):
@@ -187,40 +190,77 @@ def read_vars( self, filename ):
     #print( var )
 
     # storing updated variables into self structure  
-    self.var            = var
+    self.var                    = var
 
 
 # ------------------------------------------------------------------------
 
-def generate_morphing_array( self ):
+def generate_variant_array( self ):
     '''
-    Generates Array of Combinations, based on the variables input arrays
-
-    things to do here:
-    1. generate variable arrays
-    2. verify consistency between input file variable and configuration (future function called check_values())
+    GENERATE GEOMETRIC VARIANT ARRAY
+        - Generates the array of values for every input variable
+        - Generates all possible combinations for all possible values of each variable
     '''
 
     # interpolating morphing values based on user input
     print( '\n' )
-    print( "PREPARING MORPHING ARRAY..." )
+    print( "PREPARING VARIANT ARRAY..." )
     
-    var     = self.var
-    arr     = []
-    for i in range(0, var['nvar']):
-        _name               = var['names'][i]
-        _start              = var[_name]['start']
-        _stop               = var[_name]['stop']
-        _np                 = var[_name]['np']
-        _ep                 = var[_name]['ep']
-        var[_name]['vals']  = []
-        var[_name]['vals']  = np.linspace( _start, _stop, _np, _ep )
+    var                         = self.var                                                              # Load var from self structure 
+    arr                         = []                                                                    # Define array 'arr' which will contain all the user input values for each user input variable
+    for i in range(0, var['nvar']):                                                                     # Populate 'arr'
+        _name                   = var['names'][i]
+        _start                  = var[_name]['start']
+        _stop                   = var[_name]['stop']
+        _np                     = var[_name]['np']
+        _ep                     = var[_name]['ep']
+        var[_name]['vals']      = []
+        var[_name]['vals']      = np.linspace( _start, _stop, _np, _ep )                                # Generate values using linspace
         arr.append( var[_name]['vals'] )
+        print( (">> {} \t vals: {}").format(_name,str(var[_name]['vals'])))                             # Reporting
 
-        # reporting results
-        print( ">> " + _name + '\t' + "vals: " + str( var[_name]['vals'] ) )
+    arr = np.array(arr)                                                                                 # Convert 'arr' into a numpy array
+    
+    vals_range                  = list( range( arr.shape[1] ) )
+    prods                       = list( product( vals_range, repeat = arr.shape[0] ) )                  # Calculate all possible variable combinations, considering all the values for each variable
+    print("\n")
+    print( (">> WARNING: THIS PROGRAM WILL GENERATE {} GEOMETRIC VARIANTS (.STL)...").format(len(prods)))
+    query_variants( ">> Do you wish to continue?", default="yes")
+        
+    self.var                    = vars                                                                  # Load changes to 'self' structure
+    self.arr                    = arr
+    self.prods                  = prods
 
-    self.var = var
-    arr = np.array(arr)
-    self.arr = arr
+# ------------------------------------------------------------------------
 
+def query_variants(question, default="yes"):
+    """Ask a yes/no question via raw_input() and return their answer.
+
+    "question" is a string that is presented to the user.
+    "default" is the presumed answer if the user just hits <Enter>.
+        It must be "yes" (the default), "no" or None (meaning
+        an answer is required of the user).
+
+    The "answer" return value is True for "yes" or False for "no".
+    """
+    valid = {"yes": True, "y": True, "ye": True,
+             "no": False, "n": False}
+    if default is None:
+        prompt = " [y/n] "
+    elif default == "yes":
+        prompt = " [Y/n] "
+    elif default == "no":
+        prompt = " [y/N] "
+    else:
+        raise ValueError("invalid default answer: '%s'" % default)
+
+    while True:
+        sys.stdout.write(question + prompt)
+        choice = input().lower()
+        if default is not None and choice == '':
+            return valid[default]
+        elif choice in valid:
+            return valid[choice]
+        else:
+            sys.stdout.write("Please respond with 'yes' or 'no' "
+                             "(or 'y' or 'n').\n")

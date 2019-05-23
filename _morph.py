@@ -34,7 +34,7 @@ from    time                        import  sleep, time                     # Ti
 # FUNCTIONS =============================================================*
 # ************************************************************************
 
-def morph_geometry( self ):
+def morph_geometry( self, updates ):
     '''
     Morph or modify geometries based on a product array
     '''

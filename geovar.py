@@ -106,8 +106,6 @@ args = ap.parse_args()
 class geovar( object ):
 
     def __init__( self ):
-##        if( args.tetgen_dir == "foo" ):                                 # Make sure a directory for TetGen was given
-##            raise NameError( "No TetGen directory sepcified" )          # ...
 
         '''
         TO DO:
@@ -124,7 +122,9 @@ class geovar( object ):
         
         self.setup()                                                    # Setup & define directories
 
-        self.generate_variant()                                         # Get configurable part features and CURRENT default values
+        #_onshape.connect_to_sketch( self, args )                        # connect to the onshape document
+
+        #self.generate_variant()                                         # Get configurable part features and CURRENT default values
 
 
         
@@ -141,7 +141,7 @@ class geovar( object ):
         _setup.setup_directories( self )                                # retrieve directory information
         _setup.read_doc( self, args.input_file )                        # retrieve document information
         _setup.read_vars( self, args.input_file )                       # retrieve variable information
-        _setup.generate_morphing_array( self )
+        _setup.generate_variant_array( self )
 
 
 # --------------------------
@@ -157,10 +157,12 @@ class geovar( object ):
         '''
 
         self.prog_time          = time() - self.prog_start_time
-        _onshape.connect_to_sketch( self, args )                        # connect to the onshape document
+        
+        
         _onshape.get_configurations( self )
         _onshape.get_values( self )
         updates = [10.25, 200, 80]
+        # _morph
         _onshape.update_configurations( self, updates )
 
 # --------------------------
@@ -275,6 +277,8 @@ class geovar( object ):
 # ************************************************************************
 
 prog = geovar()                                                         # Startup and prepare program
+
+
 
 '''
 try:
