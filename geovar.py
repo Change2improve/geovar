@@ -159,6 +159,7 @@ class geovar( object ):
         _onshape.get_configurations( self )
         _onshape.get_values( self )
         _morph.simple_morph( self )
+        _onshape.export_stl( self )
         
 # --------------------------
 

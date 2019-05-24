@@ -167,7 +167,31 @@ def update_configurations( self, updates ):
     response                                = self.c._api.request('post',
                                                                   '/api/partstudios/d/{}/w/{}/e/{}/configuration'.format(self.did, self.wid, self.eid),
                                                                   body=json.dumps(payload))                                                                             # Send configuration changes
+    print(response.text)
     request_status( self )                                                                                                          # The status function will print the status of the request
+    
+
+# ------------------------------------------------------------------------
+
+def export_stl( self ):
+    '''
+    EXPORT STL OF GENERATED PART/VARIANT
+    '''
+
+    print('\n')
+    print('REQUEST STL...')
+
+    variant_iter                            = self.variant_iter
+
+    req_headers = {'Accept': 'application/vnd.onshape.v1+octet-stream'}
+    stl = self.c._api.request('get','/api/partstudios/d/{}/w/{}/e/{}/stl'.format(self.did, self.wid, self.eid),headers=req_headers)
+
+        
+
+    with open( ('part{}.stl').format(variant_iter), 'w' ) as f:                               # Write STL to file
+        f.write( stl.text )                                         # ...
+
+    #self.mesh_file( file_name )                                     # Create MESH
     
 
 # ------------------------------------------------------------------------

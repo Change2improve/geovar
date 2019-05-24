@@ -53,13 +53,13 @@ def simple_morph( self ):
         updates.append( arr[i][prods[variant_iter][i]] )
 
     _onshape.update_configurations( self, updates )
-    response =self.c._api.request('get','/api/partstudios/d/{}/w/{}/e/{}/features/rollback'.format(self.did, self.wid, self.eid))
-    print(response)
     # check if morph completed successfully...
 
     self.variant_iter       = variant_iter + 1                              # Update iteration counter
 
 # --------------------------
+        
+
         
 def morph_geometry( self, updates ):
     '''
