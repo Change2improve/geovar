@@ -203,5 +203,9 @@ payload = {
       "libraryVersion" : 1063
 }
 
-res = c._api.request('post', '/api/partstudios/d/' + did + '/w/' + wid + '/e/' + eid + '/configuration', body=payload)
-
+c._api.request('post', '/api/partstudios/d/' + did + '/w/' + wid + '/e/' + eid + '/configuration', body=payload)
+res = c._api.request('get', '/api/partstudios/d/' + did + '/w/' + wid + '/e/' + eid + '/configuration')
+req_headers = {'Accept': 'application/vnd.onshape.v1+octet-stream'}
+stl = c._api.request('get','/api/partstudios/d/{}/w/{}/e/{}/stl'.format(did, wid, eid))
+with open( ('part{}.stl').format(1), 'w' ) as f:
+    f.write( stl.text ) 
