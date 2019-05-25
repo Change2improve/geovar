@@ -142,6 +142,7 @@ class geovar( object ):
         _setup.read_vars( self, args.input_file )                       # retrieve variable information
         _setup.generate_variant_array( self )
         _onshape.connect_to_sketch( self, args )                        # connect to the onshape document
+        _onshape.get_list_of_parts( self )
 
 # --------------------------
     

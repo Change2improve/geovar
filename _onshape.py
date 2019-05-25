@@ -16,11 +16,12 @@
 *
 '''
 
+import  sys, os
 import  re
 import  numpy                       as      np
 from    onshapepy.play              import  *                               # Onshape API
 from    itertools                   import  product                         # Apply product rule on combinations
-from    time                        import  sleep, time                 # Timers/delays
+from    time                        import  sleep, time                     # Timers/delays
 import  json
 
 
@@ -49,14 +50,31 @@ def connect_to_sketch( self, args ):
     
 # ------------------------------------------------------------------------
 
-def request_status( self ):
+def get_list_of_parts( self ):
+    '''
+    Get list of parts
+    '''
+    
+    print('\n')
+    print('REQUEST LIST OF PARTS...')
+
+    response                    = self.c._api.request('get','/api/parts/d/{}/w/{}'.format(self.did, self.wid))
+    res                         = json.loads(response.text)
+    print( res )
+    print( len(res) )
+    request_status( self, response )                                                              # The status function will print the status of the request
+    
+    
+# ------------------------------------------------------------------------
+
+def request_status( self, response ):
     '''
     Decodes request status for the user
     '''
 
-    r                           = self.r                                                # Load dict from self structure
-    r_iter                      = len(r)
-    response                    = r[str(r_iter - 1)]['raw']                             # Extract the latest response [i-1]
+    #r                           = self.r                                                # Load dict from self structure
+    #r_iter                      = len(r)
+    #response                    = r[str(r_iter - 1)]['raw']                             # Extract the latest response [i-1]
     code                        = response.status_code                                  # Read code from the request/response structure (.status_code)
     if code == 200:
         print( ">> REQUEST SUCCESSFUL! " )
@@ -81,13 +99,12 @@ def get_configurations( self ):
     r[str(r_iter)]['decoded']   = []                                                    # ...decoded
     
     response                    = self.c._api.request('get','/api/partstudios/d/{}/w/{}/e/{}/configuration'.format(self.did, self.wid, self.eid))
+    request_status( self, response )                                                    # The status function will print the status of the request
     r[str(r_iter)]['time']      = time() - self.prog_start_time                         # Measure time of the request with respect to the beginning of the program
     r[str(r_iter)]['raw']       = response
     r[str(r_iter)]['decoded']   = json.loads(response.text)                             # Translate request into json() structure
     
     self.r                      = r                                                     # Updating dict
-
-    request_status( self )                                                              # The status function will print the status of the request
 
 # ------------------------------------------------------------------------
 
@@ -165,9 +182,7 @@ def update_configurations( self, updates ):
 
     payload = r[str(r_iter - 1)]['decoded']
     response                                = self.c._api.request('post','/api/partstudios/d/{}/w/{}/e/{}/configuration'.format(self.did, self.wid, self.eid),body=json.dumps(payload))                                                                             # Send configuration changes
-    print(response.text)
-    request_status( self )                                                                                                          # The status function will print the status of the request
-    
+    request_status( self, response )                                                                                                # The status function will print the status of the request
 
 # ------------------------------------------------------------------------
 
@@ -180,14 +195,15 @@ def export_stl( self ):
     print('REQUEST STL...')
 
     variant_iter                            = self.variant_iter
+    dest                                    = self.dst
 
     stl = self.c._api.request('get','/api/partstudios/d/{}/w/{}/e/{}/stl'.format(self.did, self.wid, self.eid))
 
 
-    with open( ('part{}.stl').format(variant_iter), 'w' ) as f:                                                                     # Write STL to file
+    stl_filename = ('{}/part_var{}.stl'.format(dest, variant_iter))
+    
+    with open( stl_filename, 'w' ) as f:                                                                                            # Write STL to file
         f.write( stl.text )
-
-    #self.mesh_file( file_name )                                     # Create MESH
     
 
 # ------------------------------------------------------------------------
