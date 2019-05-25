@@ -64,6 +64,7 @@ def get_list_of_parts( self ):
     
     if len(res) == 1:
         partname                = res[0]['name']
+        partname                = partname.replace( " ", "_" )              # This ensures that unix versions wont have issues reading the filename
 
 
     self.partname               = partname
@@ -201,10 +202,12 @@ def export_stl( self ):
     stl = self.c._api.request('get','/api/partstudios/d/{}/w/{}/e/{}/stl'.format(self.did, self.wid, self.eid))
 
 
-    stl_filename = ('{}/{}_var{}.stl'.format(dest, partname, variant_iter))
+    stl_filename = ('{}{}_var{}.stl'.format(dest, partname, variant_iter))
     
     with open( stl_filename, 'w' ) as f:                                                                                            # Write STL to file
         f.write( stl.text )
+
+    self.stl_filename                       = stl_filename 
     
 
 # ------------------------------------------------------------------------

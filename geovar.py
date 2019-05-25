@@ -47,17 +47,14 @@ from    onshapepy.play              import  *                           # Onshap
 import  _setup
 import  _onshape
 import  _morph
-
+import  _mesh
 
 # additional python modules and libraries
 from    time                        import  sleep, time                 # Timers/delays
 from    platform                    import  system                      # Running platform info
 from    datetime                    import  datetime                    # Get date and time
 
-try:
-    from    pexpect                 import  spawn                       # Call external programs (UNIX)
-except:
-    from    pexpect.popen_spawn     import  PopenSpawn as spawn         # Call external programs (Windows)
+
     
 from    argparse                    import  ArgumentParser              # Add input arguments to script
 from    itertools                   import  product                     # Apply product rule on combinations
@@ -191,51 +188,16 @@ class geovar( object ):
         self.allow_export = True                                        #       Allow exporting of STL
         self.valid_mutations += 1                                       #       Increment counter
         print( "{:_^{width}}".format("VALID  MUTATION", width=self.len_cte), end='\n\n' )
-                
-# --------------------------
-
-    def export_stl( self, file_name ):
-        '''
-        Export file as STL.
-
-        INPUT:-
-            - file_name: The name you'd like the STL file
-                         to be given.
-        '''
-
-        stl = self.c.part_studio_stl( self.did, self.wid, self.eid )    # Get the STL
-
-        with open( file_name, 'w' ) as f:                               # Write STL to file
-            f.write( stl.text )                                         # ...
-
-        self.mesh_file( file_name )                                     # Create MESH
 
 # --------------------------
 
-    def mesh_file( self, file_name ):
+    def mesh_variant( self ):
         '''
-        Create a MESH out of the STL file.
-
-        INPUT:-
-            - file_name: The name you'd like the MESH file
-                         to be given.
+        MESH FILE
         '''
 
-        if( system()=='Linux' ):
-            cmd = "{}tetgen -pq1.2 -g -F -C -V -N -E -I -a0.1 {}".format( self.tet, file_name )
-        elif( system()=='Windows' ):
-            print( self.tet )
-            print( file_name )
-            cmd = "{}tetgen.exe -pq1.2 -g -F -C -V -N -E -I -a0.1 {}".format( self.tet, file_name )
-            print( cmd )
-            
-        child = spawn( cmd, timeout=None )                              # Spawn child
+        _mesh.tetgen( self )
         
-        for line in child:                                              # Read STDOUT ...
-            out = line.decode('utf-8').strip('\r\n')                    # ... of spawned child ...
-            if( args.verbose ): print( out )                            # ... process and print.
-        
-        if( system()=='Linux' ): child.close()                          # Kill child process
         
 # --------------------------
 
@@ -259,6 +221,7 @@ prog = geovar()                                                         # Startu
 
 for i in range( 0, 3 ):
     prog.generate_variant()
+    prog.mesh_variant()
 
 '''
 try:
