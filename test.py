@@ -26,7 +26,7 @@ payload = {
               "units" : "millimeter",
               "minValue" : 10.0,
               "maxValue" : 100.0,
-              "defaultValue" : 25.0,
+              "defaultValue" : 15.0,
               "location" : {
                 "type" : 226,
                 "typeName" : "BTLocationInfo",
@@ -74,7 +74,7 @@ payload = {
               "units" : "millimeter",
               "minValue" : 10.0,
               "maxValue" : 150.0,
-              "defaultValue" : 100.0,
+              "defaultValue" : 20.0,
               "location" : {
                 "type" : 226,
                 "typeName" : "BTLocationInfo",
@@ -122,7 +122,7 @@ payload = {
               "units" : "millimeter",
               "minValue" : 10.0,
               "maxValue" : 200.0,
-              "defaultValue" : 100.0,
+              "defaultValue" : 190.0,
               "location" : {
                 "type" : 226,
                 "typeName" : "BTLocationInfo",
@@ -176,8 +176,8 @@ payload = {
         "typeName" : "BTMParameterQuantity",
         "message" : {
           "units" : "millimeter",
-          "value" : 100.0,
-          "expression" : "100 mm",
+          "value" : 20.0,
+          "expression" : "20 mm",
           "isInteger" : False,
           "parameterId" : "r_outer",
           "hasUserCode" : False,
@@ -188,8 +188,8 @@ payload = {
         "typeName" : "BTMParameterQuantity",
         "message" : {
           "units" : "millimeter",
-          "value" : 100.0,
-          "expression" : "100 mm",
+          "value" : 25.0,
+          "expression" : "25 mm",
           "isInteger" : False,
           "parameterId" : "height",
           "hasUserCode" : False,
