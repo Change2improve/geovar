@@ -59,11 +59,14 @@ def get_list_of_parts( self ):
     print('REQUEST LIST OF PARTS...')
 
     response                    = self.c._api.request('get','/api/parts/d/{}/w/{}'.format(self.did, self.wid))
+    request_status( self, response )                                        # The status function will print the status of the request
     res                         = json.loads(response.text)
-    print( res )
-    print( len(res) )
-    request_status( self, response )                                                              # The status function will print the status of the request
     
+    if len(res) == 1:
+        partname                = res[0]['name']
+
+
+    self.partname               = partname
     
 # ------------------------------------------------------------------------
 
@@ -72,15 +75,12 @@ def request_status( self, response ):
     Decodes request status for the user
     '''
 
-    #r                           = self.r                                                # Load dict from self structure
-    #r_iter                      = len(r)
-    #response                    = r[str(r_iter - 1)]['raw']                             # Extract the latest response [i-1]
-    code                        = response.status_code                                  # Read code from the request/response structure (.status_code)
+    code                        = response.status_code                      # Read code from the request/response structure (.status_code)
     if code == 200:
         print( ">> REQUEST SUCCESSFUL! " )
     else:
         print( ">> REQUEST FAILED " )
-        quit()                                                                          # Quitting program after failed request
+        quit()                                                              # Quitting program after failed request
 
 # ------------------------------------------------------------------------
 
@@ -195,12 +195,13 @@ def export_stl( self ):
     print('REQUEST STL...')
 
     variant_iter                            = self.variant_iter
+    partname                                = self.partname
     dest                                    = self.dst
 
     stl = self.c._api.request('get','/api/partstudios/d/{}/w/{}/e/{}/stl'.format(self.did, self.wid, self.eid))
 
 
-    stl_filename = ('{}/part_var{}.stl'.format(dest, variant_iter))
+    stl_filename = ('{}/{}_var{}.stl'.format(dest, partname, variant_iter))
     
     with open( stl_filename, 'w' ) as f:                                                                                            # Write STL to file
         f.write( stl.text )
