@@ -83,7 +83,7 @@ def get_configurations( self ):
     response                    = self.c._api.request('get','/api/partstudios/d/{}/w/{}/e/{}/configuration'.format(self.did, self.wid, self.eid))
     r[str(r_iter)]['time']      = time() - self.prog_start_time                         # Measure time of the request with respect to the beginning of the program
     r[str(r_iter)]['raw']       = response
-    r[str(r_iter)]['decoded']   = response.json()                                       # Translate request into json() structure
+    r[str(r_iter)]['decoded']   = json.loads(response.text)                             # Translate request into json() structure
     
     self.r                      = r                                                     # Updating dict
 
@@ -110,13 +110,13 @@ def get_values( self, ):
     configs[str(c_iter)]['parameterId']     = []
     configs[str(c_iter)]['units']           = []
     configs[str(c_iter)]['value']           = []
-    configs[str(c_iter)]['expression']      = []
+    #configs[str(c_iter)]['expression']      = []
     print( ">> NUMBER OF CONFIGURATIONS" + '\t' + str(Nconfigs) )
     for i in range( 0, Nconfigs ):                                                                                                  # Extract configuration information and populat dict iteraively
-        configs[str(c_iter)]['parameterId'].append(  r[str(r_iter - 1)]['decoded']['currentConfiguration'][i]['message']['parameterId'] )
-        configs[str(c_iter)]['units'].append(        r[str(r_iter - 1)]['decoded']['currentConfiguration'][i]['message']['units'] )
-        configs[str(c_iter)]['value'].append(        r[str(r_iter - 1)]['decoded']['currentConfiguration'][i]['message']['value'] )
-        configs[str(c_iter)]['expression'].append(   r[str(r_iter - 1)]['decoded']['currentConfiguration'][i]['message']['expression'] )
+        configs[str(c_iter)]['parameterId'].append(  r[str(r_iter - 1)]['decoded']['configurationParameters'][i]['message']['parameterId'] )
+        configs[str(c_iter)]['units'].append(        r[str(r_iter - 1)]['decoded']['configurationParameters'][i]['message']['rangeAndDefault']['message']['units'] )
+        configs[str(c_iter)]['value'].append(        r[str(r_iter - 1)]['decoded']['configurationParameters'][i]['message']['rangeAndDefault']['message']['defaultValue'] )
+        #configs[str(c_iter)]['expression'].append(   r[str(r_iter - 1)]['decoded']['configurationParameters'][i]['message']['expression'] )
         print( ">> " + configs[str(c_iter)]['parameterId'][i] + '\t' + str(configs[str(c_iter)]['value'][i]) + '\t' + configs[str(c_iter)]['units'][i])
         
     self.configs            = configs
@@ -159,14 +159,12 @@ def update_configurations( self, updates ):
         quit()
     
     for i in range( 0, Nconfigs ):
-        r[str(r_iter - 1)]['decoded']['currentConfiguration'][i]['message']['value'] = updates[i]
-        r[str(r_iter - 1)]['decoded']['currentConfiguration'][i]['message']['expression'] = ('{} mm').format( updates[i] )
-        print( ">> " + r[str(r_iter - 1)]['decoded']['currentConfiguration'][i]['message']['parameterId'] + '\t' + ('{} mm').format( updates[i] ))
+        r[str(r_iter - 1)]['decoded']['configurationParameters'][i]['message']['rangeAndDefault']['message']['defaultValue'] = updates[i]
+        #r[str(r_iter - 1)]['decoded']['currentConfiguration'][i]['message']['expression'] = ('{} mm').format( updates[i] )
+        print( ">> " + r[str(r_iter - 1)]['decoded']['configurationParameters'][i]['message']['parameterId'] + '\t' + ('{} mm').format( updates[i] ))
 
     payload = r[str(r_iter - 1)]['decoded']
-    response                                = self.c._api.request('post',
-                                                                  '/api/partstudios/d/{}/w/{}/e/{}/configuration'.format(self.did, self.wid, self.eid),
-                                                                  body=json.dumps(payload))                                                                             # Send configuration changes
+    response                                = self.c._api.request('post','/api/partstudios/d/{}/w/{}/e/{}/configuration'.format(self.did, self.wid, self.eid),body=json.dumps(payload))                                                                             # Send configuration changes
     print(response.text)
     request_status( self )                                                                                                          # The status function will print the status of the request
     
@@ -183,13 +181,11 @@ def export_stl( self ):
 
     variant_iter                            = self.variant_iter
 
-    req_headers = {'Accept': 'application/vnd.onshape.v1+octet-stream'}
-    stl = self.c._api.request('get','/api/partstudios/d/{}/w/{}/e/{}/stl'.format(self.did, self.wid, self.eid),headers=req_headers)
+    stl = self.c._api.request('get','/api/partstudios/d/{}/w/{}/e/{}/stl'.format(self.did, self.wid, self.eid))
 
-        
 
-    with open( ('part{}.stl').format(variant_iter), 'w' ) as f:                               # Write STL to file
-        f.write( stl.text )                                         # ...
+    with open( ('part{}.stl').format(variant_iter), 'w' ) as f:                                                                     # Write STL to file
+        f.write( stl.text )
 
     #self.mesh_file( file_name )                                     # Create MESH
     

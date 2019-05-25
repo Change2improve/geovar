@@ -159,7 +159,7 @@ class geovar( object ):
         _onshape.get_configurations( self )
         _onshape.get_values( self )
         _morph.simple_morph( self )
-        #_onshape.export_stl( self )
+        _onshape.export_stl( self )
         
 # --------------------------
 
@@ -256,7 +256,7 @@ class geovar( object ):
 
 prog = geovar()                                                         # Startup and prepare program
 
-for i in range( 0, 2 ):
+for i in range( 0, 3 ):
     prog.generate_variant()
 
 '''
