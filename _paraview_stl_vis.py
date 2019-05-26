@@ -1,4 +1,3 @@
-
 import sys
 bin_path = 'C:\\Program Files\\ParaView 5.6.0-Windows-msvc2015-64bit\\bin'
 lib_path = 'C:\\Program Files\\ParaView 5.6.0-Windows-msvc2015-64bit\\bin\\Lib'
@@ -15,7 +14,7 @@ from paraview.simple import *
 paraview.simple._DisableFirstRenderCameraReset()
 
 # create a new 'STL Reader'
-part_1_var1stl = STLReader(FileNames=['C:/Users/WOLF512/Documents/Gits/PD3D/geovar/output/2019-05-25__18_49_24/Part_1_var1.stl'])
+part_1_var1stl = STLReader(FileNames=['C:/Users/WOLF512/Documents/Gits/PD3D/geovar/output/2019-05-26__17_29_33/Part_1_var1.stl'])
 
 # set active source
 SetActiveSource(part_1_var1stl)
