@@ -148,6 +148,7 @@ def check_values( self, ):
     TO DO:
         - Uses the number of configurations and parameterIds to check
         - Throws a warning or ends the program
+        - Use the configuration file to see if there was an actual change in the part
 
     '''
 

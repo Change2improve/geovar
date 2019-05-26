@@ -158,60 +158,27 @@ class geovar( object ):
         _onshape.get_values( self )
         _morph.simple_morph( self )
         _onshape.export_stl( self )
-        
-# --------------------------
-
-    def check_default( self, passed_value ):
-        '''
-        Check if the value reverted to the default value after
-        being changed.
-        This indicates that the feature failed to mutate.
-
-        INPUT:-
-            - passed_value : Value that was sent to Onshape.
-        '''
-
-        print( "{:8}:".format("DEFAULT"), end='\t' )                    # [INFO] Print DEFAULT values
-        for num in self.default:                                        # ...
-            print( "{:4.3f}".format(num), end='\t\t' )                  # ...
-        print( "//" ); print( "-" * self.len_cte )                      # ...
-
-        current_value = self.get_values( )                              # Read CURRENT value from Onshape
-        for i in range( 0, len(current_value) ):
-                
-            if( passed_value[i] != self.default[i] ):                   # If passed value is different than the default
-                if( current_value[i] == self.default[i] ):              #   Current value is equal to the default
-                    self.allow_export = False                           #       File failed to regenerate, don't export!
-                    print( "{:_^{width}}".format("FAILED MUTATION", width=self.len_cte), end='\n\n' )
-                    return 0
-
-        self.allow_export = True                                        #       Allow exporting of STL
-        self.valid_mutations += 1                                       #       Increment counter
-        print( "{:_^{width}}".format("VALID  MUTATION", width=self.len_cte), end='\n\n' )
 
 # --------------------------
 
     def mesh_variant( self ):
         '''
-        MESH FILE
+        MESH VARIANT
+            - Generates a mesh of the geometric variant
         '''
 
         _mesh.tetgen( self )
         
-        
+
 # --------------------------
 
-    def reset_myPart( self ):
+    def sim_variant( self ):
         '''
-        Resets part to default values found at the
-        beginning of the script.
+        SIMULATE VARIANT
+            - Triggers the simulation of the geometric variant
         '''
 
-        print( "Reverting part to defaults", end='' )                   # [INFO] ...
-        for i in range( 0, len(self.keys) ):                            # Loop over ALL features
-            self.myPart.params = { self.keys[i]:                        #   Set back to default
-                                   self.default[i]*u.mm }               #   ...
-        print( "...DONE!" )
+      
 
 # ************************************************************************
 # =========================> MAKE IT ALL HAPPEN <=========================
