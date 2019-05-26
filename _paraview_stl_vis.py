@@ -1,4 +1,4 @@
-'''
+
 import sys
 bin_path = 'C:\\Program Files\\ParaView 5.6.0-Windows-msvc2015-64bit\\bin'
 lib_path = 'C:\\Program Files\\ParaView 5.6.0-Windows-msvc2015-64bit\\bin\\Lib'
@@ -8,7 +8,7 @@ sys.path.insert(0, lib_path)
 sys.path.insert(0, packages_path)
 
 print( sys.path )
-'''
+
 #### import the simple module from the paraview
 from paraview.simple import *
 #### disable automatic camera reset on 'Show'
