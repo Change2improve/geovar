@@ -1,3 +1,5 @@
+
+# import visualization modules
 import numpy as np
 from stl import mesh
 
@@ -5,8 +7,9 @@ import plotly
 import plotly.graph_objs as go
 from plotly.offline import *
 
-mesh = mesh.Mesh.from_file('output/2019-05-26__17_29_33/Part_1_var1.stl')
 
+# import mesh from file
+mesh = mesh.Mesh.from_file('output/2019-05-26__17_29_33/Part_1_var1.stl')
 
 # transform data to plotly array
 Ntris = len(mesh.points)
@@ -20,6 +23,7 @@ v = []
 w = []
 data = np.zeros((Ntris,3))
 
+# this section reads data specifically from an .stl mesh
 for i in range( 0, Ntris ):
     for j in range( 0, Nnodes ):
         x.append( mesh.x[i][j] )
@@ -29,6 +33,7 @@ for i in range( 0, Ntris ):
     v.append( Nnodes*i + 1 )
     w.append( Nnodes*i + 2 )
 
+# creating data structure for plotly
 data = [
     go.Mesh3d(
         x = x,
@@ -55,9 +60,11 @@ layout = go.Layout(
 #fig = go.Figure(data=data, layout=layout)
 #py.iplot(fig, filename='3d-mesh-tetrahedron-python')
 
+# plotting
+fig = go.Figure(data=data, layout=layout)
+plotly.offline.plot(fig)
 
 '''
 https://plot.ly/python/reference/#mesh3d
 '''
-fig = go.Figure(data=data, layout=layout)
-plotly.offline.plot(fig)
+
