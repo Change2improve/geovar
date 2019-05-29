@@ -68,9 +68,9 @@ layout = go.Layout(
 
 # plotting
 fig = go.Figure(data=data, layout=layout)
-plotly.offline.plot(fig)
+#plotly.offline.plot(fig)
 
-pio.write_image(fig, 'fig1.png')
+pio.write_image(fig, 'fig1.svg')
 
 '''
 https://plot.ly/python/reference/#mesh3d
