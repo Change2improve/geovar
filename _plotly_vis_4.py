@@ -31,7 +31,8 @@ w = []
 data = np.zeros((Ntris,3))
 
 # this section reads data specifically from an .stl mesh
-for i in range( 0, 100 ):
+test = Ntris
+for i in range( 0, test ):
     for j in range( 0, Nnodes ):
         x.append( mesh.x[i][j] )
         y.append( mesh.y[i][j] )
@@ -59,12 +60,10 @@ trace0 = go.Mesh3d(
 # need to make trace1 a dict() to trace over each triangle
 # later, this will become a quad...
 data = []
-scatter_trace = {}
-
-for i in range( 0, 100 ):
-    x_trace = []
-    y_trace = []
-    z_trace = [] 
+x_trace = []
+y_trace = []
+z_trace = [] 
+for i in range( 0, test ):
     for j in range( 0, (Nnodes+1) ):
 
         if j < Nnodes:
@@ -73,28 +72,28 @@ for i in range( 0, 100 ):
             z_trace.append( z[Nnodes*i + j] )
             
         elif j == Nnodes:
-            x_trace.append( x_trace[0] )
-            y_trace.append( y_trace[0] )
-            z_trace.append( z_trace[0] )
+            x_trace.append( x[Nnodes*i + j - Nnodes] )
+            y_trace.append( y[Nnodes*i + j - Nnodes] )
+            z_trace.append( z[Nnodes*i + j - Nnodes] )
 
-    scatter_trace[str(i)] = go.Scatter3d(
-        x=x_trace,
-        y=y_trace,
-        z=z_trace,
-        marker=dict(
-            size=2,
-            color=z,
-            symbol='circle',
-            #color='rgb(127, 127, 127)',
-            colorscale='Viridis',
-        ),
-        line=dict(
-            color='#000000',
-            width=1
-        )
+scatter_trace = go.Scatter3d(
+    x=x_trace,
+    y=y_trace,
+    z=z_trace,
+    marker=dict(
+        size=2,
+        color=z,
+        symbol='circle',
+        #color='rgb(127, 127, 127)',
+        colorscale='Viridis',
+    ),
+    line=dict(
+        color='#000000',
+        width=1
     )
+)
 
-    data.append( scatter_trace[str(i)] )
+data = [trace0, scatter_trace]
 
 layout = go.Layout(
     xaxis=go.layout.XAxis(
