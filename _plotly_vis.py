@@ -65,6 +65,33 @@ layout = go.Layout(
     yaxis=go.layout.YAxis(
         title='y'
     )
+##    scene = go.layout.
+##    scene = {
+##      "xaxis": {
+##        "gridcolor": "rgb(255, 255, 255)",
+##        "zerolinecolor": "rgb(255, 255, 255)",
+##        "showbackground": true,
+##        "backgroundcolor": "rgb(235, 235,235)"
+##      },
+##      "yaxis": {
+##        "gridcolor": "rgb(255, 255, 255)",
+##        "zerolinecolor": "rgb(255, 255, 255)",
+##        "showbackground": true,
+##        "backgroundcolor": "rgb(235, 235,235)"
+##      },
+##      "zaxis": {
+##        "gridcolor": "rgb(255, 255, 255)",
+##        "zerolinecolor": "rgb(255, 255, 255)",
+##        "showbackground": true,
+##        "backgroundcolor": "rgb(235, 235,235)"
+##      },
+##      "camera": {
+##        "eye": {
+##          "x": 1.15,
+##          "y": 1.15,
+##          "z": 1.15
+##        }
+##      },
 )
 
 # plotting
