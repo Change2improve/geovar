@@ -15,7 +15,7 @@ import os
 
 
 # import mesh from file
-mesh = mesh.Mesh.from_file('output/2019-05-26__17_29_33/Part_1_var1.stl')
+mesh = mesh.Mesh.from_file('output/part1.stl')
 
 # transform data to plotly array
 Ntris = len(mesh.points)
@@ -49,7 +49,9 @@ data = [
         colorbar = {
             "title" : "z"
             },
-        colorscale = 'Portland',
+        #colorscale = 'Blues',
+        colorscale = 'Viridis',
+        opacity = 1,
         intensity = z,
         i = u,
         j = v,
@@ -64,14 +66,12 @@ layout = go.Layout(
         title='y'
     )
 )
-#fig = go.Figure(data=data, layout=layout)
-#py.iplot(fig, filename='3d-mesh-tetrahedron-python')
 
 # plotting
 fig = go.Figure(data=data, layout=layout)
 plotly.offline.plot(fig)
 
-#pio.write_image(fig, 'fig1.svg')
+pio.write_image(fig, 'fig1.svg')
 
 '''
 https://plot.ly/python/reference/#mesh3d
