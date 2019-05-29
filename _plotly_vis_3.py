@@ -31,7 +31,7 @@ w = []
 data = np.zeros((Ntris,3))
 
 # this section reads data specifically from an .stl mesh
-for i in range( 0, Ntris ):
+for i in range( 0, 100 ):
     for j in range( 0, Nnodes ):
         x.append( mesh.x[i][j] )
         y.append( mesh.y[i][j] )
@@ -58,21 +58,45 @@ trace0 = go.Mesh3d(
 
 # need to make trace1 a dict() to trace over each triangle
 # later, this will become a quad...
+data = []
+scatter_trace = {}
 
-trace1 = go.Scatter3d(
-    x=x, y=y, z=z,
-    marker=dict(
-        size=2,
-        #color=z,
-        symbol='circle',
-        color='rgb(127, 127, 127)',
-        #colorscale='Viridis',
-    ),
-    line=dict(
-        color='#000000',
-        width=1
+for i in range( 0, 100 ):
+    x_trace = []
+    y_trace = []
+    z_trace = [] 
+    for j in range( 0, (Nnodes+1) ):
+
+        if j < Nnodes:
+            #print(j)
+            x_trace.append( x[Nnodes*i + j] )
+            y_trace.append( y[Nnodes*i + j] )
+            z_trace.append( z[Nnodes*i + j] )
+            
+        elif j == Nnodes:
+            #print(j)
+            x_trace.append( x_trace[0] )
+            y_trace.append( y_trace[0] )
+            z_trace.append( z_trace[0] )
+
+    scatter_trace[str(i)] = go.Scatter3d(
+        x=x_trace,
+        y=y_trace,
+        z=z_trace,
+        marker=dict(
+            size=2,
+            color=z,
+            symbol='circle',
+            #color='rgb(127, 127, 127)',
+            colorscale='Viridis',
+        ),
+        line=dict(
+            color='#000000',
+            width=1
+        )
     )
-)
+
+    data.append( scatter_trace[str(i)] )
 
 layout = go.Layout(
     xaxis=go.layout.XAxis(
@@ -83,9 +107,6 @@ layout = go.Layout(
     )
 )
 
-data = [trace1]
-#fig = go.Figure(data=data, layout=layout)
-#py.iplot(fig, filename='3d-mesh-tetrahedron-python')
 
 # plotting
 fig = go.Figure(data=data, layout=layout)
