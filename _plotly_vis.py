@@ -6,6 +6,12 @@ from stl import mesh
 import plotly
 import plotly.graph_objs as go
 from plotly.offline import *
+import plotly.io as pio
+'''
+install orca using npm https://nodejs.org/en/
+pip install psutil
+'''
+import os
 
 
 # import mesh from file
@@ -63,6 +69,8 @@ layout = go.Layout(
 # plotting
 fig = go.Figure(data=data, layout=layout)
 plotly.offline.plot(fig)
+
+pio.write_image(fig, 'fig1.png')
 
 '''
 https://plot.ly/python/reference/#mesh3d
