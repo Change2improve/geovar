@@ -30,7 +30,7 @@ w = []
 data = np.zeros((Ntris,3))
 
 # this section reads data specifically from an .stl mesh
-for i in range( 0, Ntris ):
+for i in range( 0, 4 ):
     for j in range( 0, Nnodes ):
         x.append( mesh.x[i][j] )
         y.append( mesh.y[i][j] )
@@ -40,22 +40,24 @@ for i in range( 0, Ntris ):
     w.append( Nnodes*i + 2 )
 
 # creating data structure for plotly
-data = [
-    go.Mesh3d(
-        x = x,
-        y = y,
-        z = z,
-        alphahull=5,
-        colorbar = {
-            "title" : "z"
-            },
-        colorscale = 'Portland',
-        intensity = z,
-        i = u,
-        j = v,
-        k = w,
-    ),
-    go.Scatter3d(
+trace0 = go.Mesh3d(
+    x = x,
+    y = y,
+    z = z,
+    alphahull=5,
+    colorbar = {
+        "title" : "z"
+        },
+    colorscale = 'Portland',
+    intensity = z,
+    i = u,
+    j = v,
+    k = w,
+)
+
+# need to make trace1 a dict() to trace over each triangle
+# later, this will become a quad...
+trace1 = go.Scatter3d(
     x=x, y=y, z=z,
     marker=dict(
         size=4,
@@ -63,11 +65,11 @@ data = [
         colorscale='Viridis',
     ),
     line=dict(
-        color='#1f77b4',
+        color='#000000',
         width=1
     )
 )
-]
+
 layout = go.Layout(
     xaxis=go.layout.XAxis(
         title='x'
@@ -76,6 +78,8 @@ layout = go.Layout(
         title='y'
     )
 )
+
+data = [trace1]
 #fig = go.Figure(data=data, layout=layout)
 #py.iplot(fig, filename='3d-mesh-tetrahedron-python')
 
