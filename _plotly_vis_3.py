@@ -28,20 +28,63 @@ z = []
 u = []
 v = []
 w = []
-data = np.zeros((Ntris,3))
 
 # this section reads data specifically from an .stl mesh
-for i in range( 0, 100 ):
+data = []
+scatter_trace = {}
+
+for i in range( 0, 300 ):
+
+    # element edge trace arrays
+    x_trace = []
+    y_trace = []
+    z_trace = []
+    
     for j in range( 0, Nnodes ):
+
+        # importing from stl
         x.append( mesh.x[i][j] )
         y.append( mesh.y[i][j] )
         z.append( mesh.z[i][j] )
+
+        # creating edge
+        if j < Nnodes:
+            
+            x_trace.append( x[Nnodes*i + j] )
+            y_trace.append( y[Nnodes*i + j] )
+            z_trace.append( z[Nnodes*i + j] )
+            
+        elif j == Nnodes:
+            x_trace.append( x_trace[0] )
+            y_trace.append( y_trace[0] )
+            z_trace.append( z_trace[0] )
+
+    # determining connectivity
     u.append( Nnodes*i + 0 )
     v.append( Nnodes*i + 1 )
     w.append( Nnodes*i + 2 )
 
+    # making traces
+    scatter_trace[str(i)] = go.Scatter3d(
+        x=x_trace,
+        y=y_trace,
+        z=z_trace,
+        marker=dict(
+            size=2,
+            color=z,
+            symbol='circle',
+            #color='rgb(127, 127, 127)',
+            colorscale='Viridis',
+        ),
+        line=dict(
+            color='#000000',
+            width=1
+        )
+    )
+
+    data.append( scatter_trace[str(i)] )
 # creating data structure for plotly
-trace0 = go.Mesh3d(
+mesh_trace = go.Mesh3d(
     x = x,
     y = y,
     z = z,
@@ -58,13 +101,10 @@ trace0 = go.Mesh3d(
 
 # need to make trace1 a dict() to trace over each triangle
 # later, this will become a quad...
-data = []
-scatter_trace = {}
 
+'''
 for i in range( 0, 100 ):
-    x_trace = []
-    y_trace = []
-    z_trace = [] 
+
     for j in range( 0, (Nnodes+1) ):
 
         if j < Nnodes:
@@ -95,7 +135,7 @@ for i in range( 0, 100 ):
     )
 
     data.append( scatter_trace[str(i)] )
-
+'''
 layout = go.Layout(
     xaxis=go.layout.XAxis(
         title='x'
