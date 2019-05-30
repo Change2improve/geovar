@@ -53,9 +53,9 @@ def tetgen( self ):
     if( system()=='Linux' ):
         cmd = "{}tetgen -pq1.2 -g -F -C -V -N -G -I -a0.1 {}".format( self.tet, stl_filename )
     elif( system()=='Windows' ):
-        print( self.tet )
-        print( self.stl_filename )
-        cmd = "{}tetgen.exe -pq1.2 -g -k -C -V -I -a0.1 {}".format( self.tet, stl_filename )
+        #print( self.tet )
+        #print( self.stl_filename )
+        cmd = '{}tetgen.exe -pq1.2 -g -k -C -V -I -a0.1 "{}"'.format( self.tet, stl_filename )
         print( cmd )
         
     child = spawn( cmd, timeout=None )                              # Spawn child

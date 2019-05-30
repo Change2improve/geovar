@@ -186,6 +186,7 @@ class geovar( object ):
 
 prog = geovar()                                                         # Startup and prepare program
 
+
 for i in range( 0, 3 ):
     prog.generate_variant()
     prog.mesh_variant()
