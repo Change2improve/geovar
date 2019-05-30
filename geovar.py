@@ -90,7 +90,7 @@ ap.add_argument( "-v"   , "--verbose"   ,
 # Input File
 string = "Input file containing onshape document IDs, variable information"
 ap.add_argument( "-i"   , "--input_file"     , type = str           ,
-                 dest   = "input_file"       , default = "doc.xml"  ,
+                 dest   = "input_file"       , default = "dogbone.xml"  ,
                  help   = "{}".format(string)                       )
 
 args = ap.parse_args()
