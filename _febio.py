@@ -75,8 +75,12 @@ def get_febio_data( geo ):
     fdata['baseline']['geo']['elements']            = {}
     fdata['baseline']['geo']['elements']['id']      = []
     fdata['baseline']['geo']['elements']['text']    = []
+    fdata['baseline']['geo']['nodeset']             = {}
 
     for i in range( 0, geo_len ):
+
+        #print( i )
+        #print( geo[i].tag )
 
         if geo[i].tag == 'Nodes': # -------------------------------------------------------------------------- #
 
@@ -86,9 +90,26 @@ def get_febio_data( geo ):
 
             fdata, elements_array   = get_elements(     geo, i, fdata )
 
-        if geo[i].tag == 'NoteSet': # ----------------------------------------------------------------------- #
+        if geo[i].tag == 'NodeSet': # ----------------------------------------------------------------------- #
 
-            fdata, elements_array   = get_elements(     geo, i, fdata )
+            nodeset = geo[i]
+            nodeset_len = len(nodeset)
+
+            # using the attributes
+            # fdata['baseline']['geo']['nodeset']    = {}
+            nodeset_type = nodeset.attrib['name']
+            nodeset_len = len(nodeset)
+            print(nodeset_type)
+            print(nodeset_len)
+
+            if nodeset_type[:-2] == 'FixedDisplacement':
+                label_str = 'fixdisp{}'.format(nodeset_type[len(nodeset_type)-2:])
+                fdata['baseline']['geo']['nodeset'][label_str]          = {}
+                fdata['baseline']['geo']['nodeset'][label_str]['id']    = []
+                for j in range( 0, nodeset_len ):
+                    fdata['baseline']['geo']['nodeset'][label_str]['id'].append( nodeset[j].attrib['id'] )
+                    
+                
 
 
     # update structure
