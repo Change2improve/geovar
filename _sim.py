@@ -13,16 +13,27 @@
 *
 '''
 
+
+from    lxml                        import  etree
+
 # ************************************************************************
 # FUNCTIONS =============================================================*
 # ************************************************************************
 
-def generate_FEBio_file( self ):
+def read_FEBio_file( self, febio_filename ):
     '''
     Generate FEBio file of the meshed geometric variant for simulation
         - The program uses a default PreView (FEBio's pre-processor) as reference
     '''
 
+    print( '\n' )
+    print( "READ DOC INFO..." )
+    file = self.input + febio_filename
+
+    _doc = etree.parse( file )
+    _doc_geometry = _doc.find('geometry')
+    
+    
     
 
 # --------------------------
