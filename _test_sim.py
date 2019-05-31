@@ -1,8 +1,8 @@
 
 from    lxml                        import  etree
 
-file = "C:\\Users\\WOLF512\\Documents\\Gits\\PD3D\\geovar\\input\\dogbone.feb"
-
+#file = "C:\\Users\\WOLF512\\Documents\\Gits\\PD3D\\geovar\\input\\dogbone.feb"
+file = 'dogbone.feb'
 _doc = etree.parse( file )
 root = _doc.getroot()
 
@@ -24,6 +24,13 @@ print( geo_len )
 nodes = []
 elements = []
 
+fdata                                       = {}
+fdata['baseline']                           = {}
+fdata['baseline']['geo']                    = {}
+fdata['baseline']['geo']['nodes']           = {}
+fdata['baseline']['geo']['nodes']['id']     = []
+fdata['baseline']['geo']['nodes']['text']   = []
+
 for i in range( 0, geo_len ):
 
     if geo_ele[i].tag == 'Nodes':
@@ -33,9 +40,10 @@ for i in range( 0, geo_len ):
 
         for j in range( 0, nodes_len ):
             
-            instring = "{},{}".format( int(nodes_ele[j].attrib['id']),
-                                       nodes_ele[j].text )
-            nodes.append( instring.split(',') )
+
+            fdata['baseline']['geo']['nodes']['id'].append( nodes_ele[j].attrib['id'] )
+            fdata['baseline']['geo']['nodes']['text'].append( nodes_ele[j].text )
+
 
 backup = nodes_ele[0].text
 nodes_ele[0].text = " -1, -1, -1"
