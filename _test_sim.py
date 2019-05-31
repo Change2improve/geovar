@@ -1,26 +1,12 @@
 
 import  numpy                       as      np
 from    lxml                        import  etree
+from    _febio                      import  *
 
-#file = "C:\\Users\\WOLF512\\Documents\\Gits\\PD3D\\geovar\\input\\dogbone.feb"
 file = 'dogbone.feb'
-_doc = etree.parse( file )
-root = _doc.getroot()
 
-# find the geometry 'child' although this should not change... but perhaps in the future
-root_len = len(root)
-print( root_len )
-for i in range( 0, root_len ):
-    if root[i].tag == 'Geometry':
-        geo_index = i
+febio_doc, root, geo, geo_index, geo_len = read_febio_file( file )
 
-print(geo_index) # validation
-
-
-# extracting parts from the geometry section
-geo = root[geo_index]
-geo_len = len( geo )
-print( geo_len )
 
 
 fdata                                           = {}
@@ -80,4 +66,4 @@ fdata['baseline']['geo']['elements']['array']       = elements_array
 
 backup = nodes[0].text
 nodes[0].text = " -1, -1, -1"
-_doc.write('dogbone_mod.xml')
+febio_doc.write('dogbone_mod.xml')
