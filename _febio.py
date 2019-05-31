@@ -129,10 +129,15 @@ def get_elements( geo, index, fdata ):
     '''
     elements            = geo[index]
     elements_len        = len( elements )
-    print( elements_len )
+
+    # using attributes to ensure proper extraction
+    # this will be implemented now and should be standard in the future
+    if elements.attrib['type'] == 'tet4':
+        print( "The mesh uses tets of 4 nodes" )
+        nodes_per_tet = 4
 
     # initializing numpy arrays
-    elements_array      = np.zeros(( elements_len, 4 ), dtype=int)
+    elements_array      = np.zeros(( elements_len, nodes_per_tet ), dtype=int)
     
     for j in range( 0, elements_len ):           
 
