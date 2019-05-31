@@ -83,45 +83,17 @@ def get_febio_data( geo ):
         #print( geo[i].tag )
 
         if geo[i].tag == 'Nodes': # -------------------------------------------------------------------------- #
-
+            print( "> Gathering Nodes..." )
             fdata, nodes_array      = get_nodes(        geo, i, fdata )
 
         if geo[i].tag == 'Elements': # ----------------------------------------------------------------------- #
-
+            print( "> Gathering Elements..." )
             fdata, elements_array   = get_elements(     geo, i, fdata )
-
+            
         if geo[i].tag == 'NodeSet': # ------------------------------------------------------------------------ #
-
-            nodeset = geo[i]
-            nodeset_len = len(nodeset)
-
-            # using the attributes
-            # fdata['baseline']['geo']['nodeset']    = {}
-            nodeset_type = nodeset.attrib['name']
-            nodeset_len = len(nodeset)
-            print(nodeset_type)
-            print(nodeset_len)
-
-            if nodeset_type[:-2] == 'FixedDisplacement': # --------------------------------------------------- #
-                label_str = 'fixdisp{}'.format(nodeset_type[len(nodeset_type)-2:])
-                fdata['baseline']['geo']['nodeset'][label_str]          = {}
-                fdata['baseline']['geo']['nodeset'][label_str]['id']    = []
-                for j in range( 0, nodeset_len ):
-                    fdata['baseline']['geo']['nodeset'][label_str]['id'].append( nodeset[j].attrib['id'] )
-
-            if nodeset_type[:-2] == 'PrescribedDisplacement': # ---------------------------------------------- #
-                label_str = 'presdisp{}'.format(nodeset_type[len(nodeset_type)-2:])
-                fdata['baseline']['geo']['nodeset'][label_str]          = {}
-                fdata['baseline']['geo']['nodeset'][label_str]['id']    = []
-                for j in range( 0, nodeset_len ):
-                    fdata['baseline']['geo']['nodeset'][label_str]['id'].append( nodeset[j].attrib['id'] )
-
-            elif nodeset_type[:-2] != 'FixedDisplacement' and nodeset_type[:-2] != 'PrescribedDisplacement':
-                message = "The current version of GEOVAR does not support FEBio's NoseSet:Type {}".format( nodeset_type )
-                print( message )
+            print( "> Gathering NodeSet(s)..." )
+            fdata                   = get_nodeset(      geo, i, fdata )
                     
-                
-
 
     # update structure
     fdata['baseline']['geo']['nodes']['array']          = nodes_array
@@ -165,7 +137,7 @@ def get_elements( geo, index, fdata ):
     # using attributes to ensure proper extraction
     # this will be implemented now and should be standard in the future
     if elements.attrib['type'] == 'tet4':
-        print( "The mesh uses tets of 4 nodes" )
+        print( ">> The mesh uses tets of 4 nodes" )
         nodes_per_tet = 4
 
     # initializing numpy arrays
@@ -182,3 +154,36 @@ def get_elements( geo, index, fdata ):
         elements_array[j] = elements[j].text.split(',')
 
     return fdata, elements_array
+
+# --------------------------
+
+def get_nodeset( geo, index, fdata ):
+    '''
+    Get NodeSet data
+    '''
+    nodeset = geo[index]
+    nodeset_len = len(nodeset)
+
+    # using the attributes
+    nodeset_type = nodeset.attrib['name']
+    nodeset_len = len(nodeset)
+
+    if nodeset_type[:-2] == 'FixedDisplacement': # --------------------------------------------------- #
+        label_str = 'fixdisp{}'.format(nodeset_type[len(nodeset_type)-2:])
+        fdata['baseline']['geo']['nodeset'][label_str]          = {}
+        fdata['baseline']['geo']['nodeset'][label_str]['id']    = []
+        for j in range( 0, nodeset_len ):
+            fdata['baseline']['geo']['nodeset'][label_str]['id'].append( nodeset[j].attrib['id'] )
+
+    if nodeset_type[:-2] == 'PrescribedDisplacement': # ---------------------------------------------- #
+        label_str = 'presdisp{}'.format(nodeset_type[len(nodeset_type)-2:])
+        fdata['baseline']['geo']['nodeset'][label_str]          = {}
+        fdata['baseline']['geo']['nodeset'][label_str]['id']    = []
+        for j in range( 0, nodeset_len ):
+            fdata['baseline']['geo']['nodeset'][label_str]['id'].append( nodeset[j].attrib['id'] )
+
+    elif nodeset_type[:-2] != 'FixedDisplacement' and nodeset_type[:-2] != 'PrescribedDisplacement':
+        message = "The current version of GEOVAR does not support FEBio's NoseSet:Type {}".format( nodeset_type )
+        print( message )
+
+    return fdata
