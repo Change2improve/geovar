@@ -36,3 +36,7 @@ for i in range( 0, geo_len ):
             instring = "{},{}".format( int(nodes_ele[j].attrib['id']),
                                        nodes_ele[j].text )
             nodes.append( instring.split(',') )
+
+backup = nodes_ele[0].text
+nodes_ele[0].text = " -1, -1, -1"
+_doc.write('dogbone_mod.xml')
