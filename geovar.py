@@ -106,6 +106,9 @@ class geovar( object ):
 
         # VARIABLES
         self.prog_start_time    = time()
+
+        self.mode               = args.mode
+        
         self.r                  = {}                                    # Initialize the 'r' dict for record of decoded responses
         self.configs            = {}                                    # Initialized the 'configs' dict
         self.variant_iter       = 0
@@ -136,7 +139,7 @@ class geovar( object ):
         _setup.read_vars(               self, args.input_file )                       # retrieve variable information
         _setup.generate_variant_array(  self )
 
-        _febio.read_febio_file(         self, args.input_file )
+        #_febio.read_febio_file(         self, args.input_file )
         
         _onshape.connect_to_sketch(     self, args )                        # connect to the onshape document
         _onshape.get_list_of_parts(     self )
@@ -188,6 +191,7 @@ class geovar( object ):
 
 prog = geovar()                                                         # Startup and prepare program
 
+print( prog.mode )
 
 ##for i in range( 0, 3 ):
 ##    prog.generate_variant()

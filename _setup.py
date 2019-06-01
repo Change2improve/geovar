@@ -169,7 +169,7 @@ def read_doc( self, filename ):
     '''
     print( '\n' )
     print( "READ DOC INFO..." )
-    file                        = self.input + filename
+    file                        = self.input + self.input_xml_filename
 
     _doc = etree.parse( file )
     _doc_address_ele            = _doc.find('address')
@@ -198,7 +198,7 @@ def read_vars( self, filename ):
     '''
     print( '\n' )
     print( "READ VAR INFO..." )
-    file = self.input + filename
+    file                        = self.input + self.input_xml_filename
 
     _doc = etree.parse( file )
     _doc_vars_ele = _doc.find('variables')
