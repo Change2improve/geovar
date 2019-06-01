@@ -126,10 +126,10 @@ class geovar( object ):
             - Gather template FEBio (or simulation file)
             - Connect to onshape document
         '''
-        
-        self.prog_time          = time() - self.prog_start_time
 
-        
+        print( "PROGRAM SETUP" )
+        print( " ========================================================= " )
+
         _setup.setup_directories(       self )                                # retrieve directory information
         _setup.generate_filenames(      self, args.input_file, args.mode )
         _setup.read_doc(                self, args.input_file )                        # retrieve document information
@@ -184,24 +184,31 @@ class geovar( object ):
 # =========================> MAKE IT ALL HAPPEN <============================
 # ***************************************************************************
 
-prog = geovar()                                                             # Startup and prepare program
+prog = geovar()
 
-#print( prog.mode )
+print(" \n ")
+print(" \n ")
+print( (" WARNING: THIS PROGRAM WILL GENERATE {} GEOMETRIC VARIANTS (.STL)...").format(len(prog.prods)))
+_setup.query_variants( "Do you wish to continue?", default="yes")
+print(" \n ")
+print(" \n ")
 
-print( "\n" )
 print( "PROGRAM STARTING " )
-#print( "> User selected MODE = {}".format( prog.mode ) ) 
+print( " ========================================================= " )
 
-Nprods = 3
+Nprods = 5
 
 if prog.mode == 1:      # MODE 1: Geometric Variations ==================== #
     for i in range( 0, Nprods ):
+        print( "> GENERATING VARIANT {}/{}".format( (i+1), Nprods ) )
         prog.generate_variant()
-        prog.mesh_variant()
 
 elif prog.mode == 2:    # MODE 2: Meshing  ================================ #
-    print( "> MODE {} HAS NOT BEEN INTEGRATED...".format( prog.mode ) )
-
+    for i in range( 0, Nprods ):
+        prog.generate_variant()
+        prog.mesh_variant()
+    
 elif prog.mode == 3:    # MODE 3: Simulation ============================== #
     print( "> MODE {} HAS NOT BEEN INTEGRATED...".format( prog.mode ) )
-
+    print( ">> Goodbye..." )
+    exit()

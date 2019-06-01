@@ -55,8 +55,9 @@ def get_list_of_parts( self ):
     Get list of parts
     '''
     
-    print('\n')
-    print('REQUEST LIST OF PARTS...')
+    self.prog_time              = time() - self.prog_start_time
+    print( "> REQUEST LIST OF PARTS... \t {}".format(self.prog_time) )
+    print( " --------------------------------------------------------- " )
 
     response                    = self.c._api.request('get','/api/parts/d/{}/w/{}'.format(self.did, self.wid))
     request_status( self, response )                                        # The status function will print the status of the request
@@ -78,9 +79,12 @@ def request_status( self, response ):
 
     code                        = response.status_code                      # Read code from the request/response structure (.status_code)
     if code == 200:
-        print( ">> REQUEST SUCCESSFUL! " )
+        pass
+        #print( ">> REQUEST SUCCESSFUL! " )
+        #print( " --------------------------------------------------------- " )
     else:
         print( ">> REQUEST FAILED " )
+        print( " --------------------------------------------------------- " )
         quit()                                                              # Quitting program after failed request
 
 # ------------------------------------------------------------------------
@@ -90,8 +94,9 @@ def get_configurations( self ):
     Get configuration parameters from Onshape document
     '''
 
-    print('\n')
-    print('REQUEST CONFIGURATIONS...')
+    self.prog_time              = time() - self.prog_start_time
+    print( ">> GET CONFIGURATIONS... \t {}".format(self.prog_time) )
+    print( " --------------------------------------------------------- " )
 
     r                           = self.r                                                # Load dict from self structure
     r_iter                      = len(r)                                                # Dummy variable that determines the response iteration based on the number of requests
@@ -118,6 +123,8 @@ def get_values( self, ):
 
     '''
 
+    self.prog_time              = time() - self.prog_start_time
+    
     r                                       = self.r                                                                                # Load dict from self structure
     r_iter                                  = len(r)                                                                                # Dummy variable that determines the response iteration based on the number of requests
     Nconfigs                                = len( r[str(r_iter - 1)]['decoded']['currentConfiguration'] )                          # Determine the number of available configurations
@@ -136,7 +143,7 @@ def get_values( self, ):
         configs[str(c_iter)]['value'].append(        r[str(r_iter - 1)]['decoded']['configurationParameters'][i]['message']['rangeAndDefault']['message']['defaultValue'] )
         #configs[str(c_iter)]['expression'].append(   r[str(r_iter - 1)]['decoded']['configurationParameters'][i]['message']['expression'] )
         print( ">> " + configs[str(c_iter)]['parameterId'][i] + '\t' + str(configs[str(c_iter)]['value'][i]) + '\t' + configs[str(c_iter)]['units'][i])
-        
+    print( " --------------------------------------------------------- " )
     self.configs            = configs
     
 # ------------------------------------------------------------------------
@@ -163,8 +170,9 @@ def update_configurations( self, updates ):
         - Ensure that the program is smart enough to check the 'parameter_id' name rather than just the iterative order
     '''
 
-    print('\n')
-    print('UPDATE CONFIGURATIONS...')
+    self.prog_time                          = time() - self.prog_start_time
+    print( ">> SIMPLE MORPH... \t {}".format(self.prog_time) )
+    print( " --------------------------------------------------------- " )
     
     r                                       = self.r                                                                                # Load dict from self structure
     r_iter                                  = len(r)                                                                                # Dummy variable that determines the response iteration based on the number of requests
@@ -193,8 +201,9 @@ def export_stl( self ):
     EXPORT STL OF GENERATED PART/VARIANT
     '''
 
-    print('\n')
-    print('REQUEST STL...')
+    self.prog_time                          = time() - self.prog_start_time
+    print( ">> EXPORT STL... \t {}".format(self.prog_time) )
+    print( " --------------------------------------------------------- " )
 
     variant_iter                            = self.variant_iter
     partname                                = self.partname

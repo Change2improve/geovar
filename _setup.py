@@ -21,6 +21,7 @@
 import  os, re                                                                                      # Dir/path manipulation, extract numerics from strings
 import  sys
 import  numpy                       as      np
+from    time                        import  sleep, time                 # Timers/delays
 from    platform                    import  system                                                  # Running platform info
 from    datetime                    import  datetime                                                # Get date and time
 from    lxml                        import  etree
@@ -36,12 +37,15 @@ def setup_input_directory( self ):
         - The repository structure
         - On a Windows OS
     '''
-    print( '\n' )
-    print( "SETUP INPUT DIR..." )
-    dir_list = os.listdir()                                                                         # List elements within current directory
-    dir_len  = len(dir_list)
-    test_string = 'input'
-    test_string_len = len(test_string)
+
+    self.prog_time              = time() - self.prog_start_time
+    print( "> SETUP INPUT DIR... \t {}".format(self.prog_time) )
+    print( " --------------------------------------------------------- " )
+    
+    dir_list                    = os.listdir()                                                                         # List elements within current directory
+    dir_len                     = len(dir_list)
+    test_string                 = 'input'
+    test_string_len             = len(test_string)
     for i in range( 0, dir_len ):
         if len( dir_list[i] ) >= test_string_len:
             if dir_list[i][0:test_string_len] == test_string:
@@ -53,7 +57,7 @@ def setup_input_directory( self ):
     input_dir = current_dir + '\\' + dir_list[match_index] + '\\'
     print( ">> CURRENT" + '\t' + "DIR: " + current_dir )
     print( ">> INPUT" + '\t' + "DIR: " + input_dir )
-
+    print( " --------------------------------------------------------- " )
     self.input = input_dir                                                                           # Passing tetgen path to the .self structure
            
 # ------------------------------------------------------------------------
@@ -64,8 +68,11 @@ def setup_tetgen_directory( self ):
         - The repository structure
         - On a Windows OS
     '''
-    print( '\n' )
-    print( "SETUP TETGEN DIR..." )
+
+    self.prog_time              = time() - self.prog_start_time
+    print( "> SETUP TETGEN DIR... \t {}".format(self.prog_time) )
+    print( " --------------------------------------------------------- " )
+    
     dir_list                    = os.listdir()                                                                         # List elements within current directory
     dir_len                     = len(dir_list)
     test_string                 = 'tetgen'
@@ -136,23 +143,25 @@ def generate_filenames( self, filename, mode ):
           accordance with the program's structure, have the same "name",
           while lacking the same extension
     '''
-    print( '\n' )
-    print( "GENERATE INPUT FILENAMES..." )
+    self.prog_time              = time() - self.prog_start_time
+    print( "> SETUP FILENAMES... \t {}".format(self.prog_time) )
+    print( " --------------------------------------------------------- " )
 
-    print( "> User provided INPUT FILENAME = {}".format( filename ) )
+    print( ">> User provided INPUT FILENAME = {}".format( filename ) )
 
     # check for extension
     if filename.rfind('.'):
         print( "> The INPUT FILENAME has an extension... and will be removed!" )
-        filename_woe = filename[:filename.rfind('.')]
+        filename_woe            = filename[:filename.rfind('.')]
 
-    print( "> Geovar will look for the following input files:" )
-    print( ">> {}.stl".format(filename_woe) )
-    print( ">> {}.xml".format(filename_woe) )
-    print( ">> {}.vtk".format(filename_woe) )
-    print( ">> {}.feb".format(filename_woe) )
-    print( ">> Only a subset of these files may be used, depending on the operation mode")
-
+    print( ">> Geovar will look for the following input files:" )
+    print( ">>> {}.stl".format(filename_woe) )
+    print( ">>> {}.xml".format(filename_woe) )
+    print( ">>> {}.vtk".format(filename_woe) )
+    print( ">>> {}.feb".format(filename_woe) )
+    print( ">>> Only a subset of these files may be used, depending on the operation mode")
+    print( " --------------------------------------------------------- " )
+    
     self.input_stl_filename = "{}.stl".format(filename_woe)
     self.input_xml_filename = "{}.xml".format(filename_woe)
     self.input_vtk_filename = "{}.vtk".format(filename_woe)
@@ -167,8 +176,11 @@ def read_doc( self, filename ):
         the "doc" input file
             doc_def contains the identification of the target document within the onshape platform
     '''
-    print( '\n' )
-    print( "READ DOC INFO..." )
+    
+    self.prog_time              = time() - self.prog_start_time
+    print( "> READ DOC... \t {}".format(self.prog_time) )
+    print( " --------------------------------------------------------- " )
+    
     file                        = self.input + self.input_xml_filename
 
     _doc = etree.parse( file )
@@ -186,6 +198,7 @@ def read_doc( self, filename ):
     print( ">> DOCUMENT" + '\t' + "ID: " + self.did )
     print( ">> WORKSPACE" + '\t' + "ID: " + self.wid )
     print( ">> ELEMENT" + '\t' + "ID: " + self.eid )
+    print( " --------------------------------------------------------- " )
     
 # ------------------------------------------------------------------------
 
@@ -196,8 +209,11 @@ def read_vars( self, filename ):
         the "doc" input file
             doc_def contains the identification of the target document within the onshape platform
     '''
-    print( '\n' )
-    print( "READ VAR INFO..." )
+    
+    self.prog_time              = time() - self.prog_start_time
+    print( "> READ VAR... \t {}".format(self.prog_time) )
+    print( " --------------------------------------------------------- " )
+    
     file                        = self.input + self.input_xml_filename
 
     _doc = etree.parse( file )
@@ -217,12 +233,9 @@ def read_vars( self, filename ):
         var[var_name]['np']     = int( _doc_vars_ele[i].get("np") )
         var[var_name]['ep']     = int( _doc_vars_ele[i].get("ep") )
         print( ">> " + str(var_name) + '\t' + str(var[var_name]['start']) + '\t' + str(var[var_name]['stop']) + '\t' + str(var[var_name]['np']) + '\t' + str(var[var_name]['ep']) )
+    print( " --------------------------------------------------------- " ) 
 
-    #print( var )
-
-    # storing updated variables into self structure  
     self.var                    = var
-
 
 # ------------------------------------------------------------------------
 
@@ -233,9 +246,9 @@ def generate_variant_array( self ):
         - Generates all possible combinations for all possible values of each variable
     '''
 
-    # interpolating morphing values based on user input
-    print( '\n' )
-    print( "PREPARING VARIANT ARRAY..." )
+    self.prog_time              = time() - self.prog_start_time
+    print( "> GENERATE VAR ARRAY... \t {}".format(self.prog_time) )
+    print( " --------------------------------------------------------- " )
     
     var                         = self.var                                                              # Load var from self structure 
     arr                         = []                                                                    # Define array 'arr' which will contain all the user input values for each user input variable
@@ -254,9 +267,8 @@ def generate_variant_array( self ):
     
     vals_range                  = list( range( arr.shape[1] ) )
     prods                       = list( product( vals_range, repeat = arr.shape[0] ) )                  # Calculate all possible variable combinations, considering all the values for each variable
-    print("\n")
-    print( (">> WARNING: THIS PROGRAM WILL GENERATE {} GEOMETRIC VARIANTS (.STL)...").format(len(prods)))
-    query_variants( ">> Do you wish to continue?", default="yes")
+
+    print( " --------------------------------------------------------- " )
         
     self.var                    = var                                                                   # Load changes to 'self' structure
     self.arr                    = arr
