@@ -39,8 +39,7 @@ def setup_input_directory( self ):
     '''
 
     self.prog_time              = time() - self.prog_start_time
-    print( "> SETUP INPUT DIR... \t {}".format(self.prog_time) )
-    print( " --------------------------------------------------------- " )
+    print( "[{:0.6f}] Setup input directory".format(self.prog_time) )
     
     dir_list                    = os.listdir()                                                                         # List elements within current directory
     dir_len                     = len(dir_list)
@@ -49,15 +48,14 @@ def setup_input_directory( self ):
     for i in range( 0, dir_len ):
         if len( dir_list[i] ) >= test_string_len:
             if dir_list[i][0:test_string_len] == test_string:
-                print( ">> FOUND" + '\t' + "DIR ...geovar\\" + dir_list[i] )
+##                print( ">> FOUND" + '\t' + "DIR ...geovar\\" + dir_list[i] )
                 match_index = i
                 break
 
     current_dir = os.getcwd()
     input_dir = current_dir + '\\' + dir_list[match_index] + '\\'
-    print( ">> CURRENT" + '\t' + "DIR: " + current_dir )
-    print( ">> INPUT" + '\t' + "DIR: " + input_dir )
-    print( " --------------------------------------------------------- " )
+##    print( ">> CURRENT" + '\t' + "DIR: " + current_dir )
+##    print( ">> INPUT" + '\t' + "DIR: " + input_dir )
     self.input = input_dir                                                                           # Passing tetgen path to the .self structure
            
 # ------------------------------------------------------------------------
@@ -70,8 +68,7 @@ def setup_tetgen_directory( self ):
     '''
 
     self.prog_time              = time() - self.prog_start_time
-    print( "> SETUP TETGEN DIR... \t {}".format(self.prog_time) )
-    print( " --------------------------------------------------------- " )
+    print( "[{:0.6f}] Setup TetGen directory".format(self.prog_time) )
     
     dir_list                    = os.listdir()                                                                         # List elements within current directory
     dir_len                     = len(dir_list)
@@ -80,14 +77,14 @@ def setup_tetgen_directory( self ):
     for i in range( 0, dir_len ):
         if len( dir_list[i] ) >= test_string_len:
             if dir_list[i][0:test_string_len] == test_string:
-                print( ">> FOUND" + '\t' + "DIR ...geovar\\" + dir_list[i] )
+##                print( ">> FOUND" + '\t' + "DIR ...geovar\\" + dir_list[i] )
                 match_index = i
                 break
 
     current_dir                 = os.getcwd()
     tetgen_dir                  = '{}\\{}\\build\\Debug\\'.format(current_dir,dir_list[match_index])
-    print( ">> CURRENT" + '\t' + "DIR: " + current_dir )
-    print( ">> TETGEN" + '\t' + "DIR: " + tetgen_dir )
+##    print( ">> CURRENT" + '\t' + "DIR: " + current_dir )
+##    print( ">> TETGEN" + '\t' + "DIR: " + tetgen_dir )
 
     self.tet = tetgen_dir                                                                           # Passing tetgen path to the .self structure
            
@@ -144,23 +141,22 @@ def generate_filenames( self, filename, mode ):
           while lacking the same extension
     '''
     self.prog_time              = time() - self.prog_start_time
-    print( "> SETUP FILENAMES... \t {}".format(self.prog_time) )
-    print( " --------------------------------------------------------- " )
+    print( "[{:0.6f}] Setup filenames".format(self.prog_time) )
 
-    print( ">> User provided INPUT FILENAME = {}".format( filename ) )
+##    print( ">> User provided INPUT FILENAME = {}".format( filename ) )
 
     # check for extension
     if filename.rfind('.'):
-        print( "> The INPUT FILENAME has an extension... and will be removed!" )
+##        print( "> The INPUT FILENAME has an extension... and will be removed!" )
         filename_woe            = filename[:filename.rfind('.')]
 
-    print( ">> Geovar will look for the following input files:" )
-    print( ">>> {}.stl".format(filename_woe) )
-    print( ">>> {}.xml".format(filename_woe) )
-    print( ">>> {}.vtk".format(filename_woe) )
-    print( ">>> {}.feb".format(filename_woe) )
-    print( ">>> Only a subset of these files may be used, depending on the operation mode")
-    print( " --------------------------------------------------------- " )
+##    print( ">> Geovar will look for the following input files:" )
+##    print( ">>> {}.stl".format(filename_woe) )
+##    print( ">>> {}.xml".format(filename_woe) )
+##    print( ">>> {}.vtk".format(filename_woe) )
+##    print( ">>> {}.feb".format(filename_woe) )
+##    print( ">>> Only a subset of these files may be used, depending on the operation mode")
+##    print( " --------------------------------------------------------- " )
     
     self.input_stl_filename = "{}.stl".format(filename_woe)
     self.input_xml_filename = "{}.xml".format(filename_woe)
@@ -178,8 +174,7 @@ def read_doc( self, filename ):
     '''
     
     self.prog_time              = time() - self.prog_start_time
-    print( "> READ DOC... \t {}".format(self.prog_time) )
-    print( " --------------------------------------------------------- " )
+    print( "[{:0.6f}] Reading Onshape doc. info. from input XML".format(self.prog_time) )
     
     file                        = self.input + self.input_xml_filename
 
@@ -195,10 +190,9 @@ def read_doc( self, filename ):
         elif _doc_address_text[i] == 'e':
             self.eid = _doc_address_text[i+1]                                                           # Store the element id
             
-    print( ">> DOCUMENT" + '\t' + "ID: " + self.did )
-    print( ">> WORKSPACE" + '\t' + "ID: " + self.wid )
-    print( ">> ELEMENT" + '\t' + "ID: " + self.eid )
-    print( " --------------------------------------------------------- " )
+##    print( ">> DOCUMENT" + '\t' + "ID: " + self.did )
+##    print( ">> WORKSPACE" + '\t' + "ID: " + self.wid )
+##    print( ">> ELEMENT" + '\t' + "ID: " + self.eid )
     
 # ------------------------------------------------------------------------
 
@@ -211,8 +205,7 @@ def read_vars( self, filename ):
     '''
     
     self.prog_time              = time() - self.prog_start_time
-    print( "> READ VAR... \t {}".format(self.prog_time) )
-    print( " --------------------------------------------------------- " )
+    print( "[{:0.6f}] Reading variants info. from input XML".format(self.prog_time) )
     
     file                        = self.input + self.input_xml_filename
 
@@ -222,7 +215,7 @@ def read_vars( self, filename ):
     var                         = {}
     var['nvar']                 = len(_doc_vars_ele)
     var['names']                = []
-    print( ">> NUMBER OF VARIABLES" + '\t' + str(var['nvar']) )
+##    print( ">> NUMBER OF VARIABLES" + '\t' + str(var['nvar']) )
 
     for i in range(0, len(_doc_vars_ele) ):
         var_name                = _doc_vars_ele[i].get("name")
@@ -232,8 +225,7 @@ def read_vars( self, filename ):
         var[var_name]['stop']   = float( _doc_vars_ele[i].get("stop") )
         var[var_name]['np']     = int( _doc_vars_ele[i].get("np") )
         var[var_name]['ep']     = int( _doc_vars_ele[i].get("ep") )
-        print( ">> " + str(var_name) + '\t' + str(var[var_name]['start']) + '\t' + str(var[var_name]['stop']) + '\t' + str(var[var_name]['np']) + '\t' + str(var[var_name]['ep']) )
-    print( " --------------------------------------------------------- " ) 
+##        print( ">> " + str(var_name) + '\t' + str(var[var_name]['start']) + '\t' + str(var[var_name]['stop']) + '\t' + str(var[var_name]['np']) + '\t' + str(var[var_name]['ep']) )
 
     self.var                    = var
 
@@ -247,8 +239,7 @@ def generate_variant_array( self ):
     '''
 
     self.prog_time              = time() - self.prog_start_time
-    print( "> GENERATE VAR ARRAY... \t {}".format(self.prog_time) )
-    print( " --------------------------------------------------------- " )
+    print( "[{:0.6f}] Generate geomatric variants array".format(self.prog_time) )
     
     var                         = self.var                                                              # Load var from self structure 
     arr                         = []                                                                    # Define array 'arr' which will contain all the user input values for each user input variable
@@ -261,14 +252,12 @@ def generate_variant_array( self ):
         var[_name]['vals']      = []
         var[_name]['vals']      = np.linspace( _start, _stop, _np, _ep )                                # Generate values using linspace
         arr.append( var[_name]['vals'] )
-        print( (">> {} \t vals: {}").format(_name,str(var[_name]['vals'])))                             # Reporting
+        print( ("[{:0.6f}] \t {} \t vals: {}").format(self.prog_time,_name,str(var[_name]['vals'])))                             # Reporting
 
     arr = np.array(arr)                                                                                 # Convert 'arr' into a numpy array
     
     vals_range                  = list( range( arr.shape[1] ) )
     prods                       = list( product( vals_range, repeat = arr.shape[0] ) )                  # Calculate all possible variable combinations, considering all the values for each variable
-
-    print( " --------------------------------------------------------- " )
         
     self.var                    = var                                                                   # Load changes to 'self' structure
     self.arr                    = arr

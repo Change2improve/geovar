@@ -56,8 +56,7 @@ def get_list_of_parts( self ):
     '''
     
     self.prog_time              = time() - self.prog_start_time
-    print( "> REQUEST LIST OF PARTS... \t {}".format(self.prog_time) )
-    print( " --------------------------------------------------------- " )
+    print( "[{:0.6f}] Request list of parts from Onshape".format(self.prog_time) )
 
     response                    = self.c._api.request('get','/api/parts/d/{}/w/{}'.format(self.did, self.wid))
     request_status( self, response )                                        # The status function will print the status of the request
@@ -79,12 +78,9 @@ def request_status( self, response ):
 
     code                        = response.status_code                      # Read code from the request/response structure (.status_code)
     if code == 200:
-        pass
-        #print( ">> REQUEST SUCCESSFUL! " )
-        #print( " --------------------------------------------------------- " )
+        print( "[{:0.6f}] Request successful".format(self.prog_time) )
     else:
-        print( ">> REQUEST FAILED " )
-        print( " --------------------------------------------------------- " )
+        print( "[{:0.6f}] Request failed... quiting program...".format(self.prog_time) )
         quit()                                                              # Quitting program after failed request
 
 # ------------------------------------------------------------------------
@@ -95,8 +91,7 @@ def get_configurations( self ):
     '''
 
     self.prog_time              = time() - self.prog_start_time
-    print( ">> GET CONFIGURATIONS... \t {}".format(self.prog_time) )
-    print( " --------------------------------------------------------- " )
+    print( "[{:0.6f}] Get configurations from Onshape".format(self.prog_time) )
 
     r                           = self.r                                                # Load dict from self structure
     r_iter                      = len(r)                                                # Dummy variable that determines the response iteration based on the number of requests
@@ -136,14 +131,14 @@ def get_values( self, ):
     configs[str(c_iter)]['units']           = []
     configs[str(c_iter)]['value']           = []
     #configs[str(c_iter)]['expression']      = []
-    print( ">> NUMBER OF CONFIGURATIONS" + '\t' + str(Nconfigs) )
+##    print( ">> NUMBER OF CONFIGURATIONS" + '\t' + str(Nconfigs) )
     for i in range( 0, Nconfigs ):                                                                                                  # Extract configuration information and populat dict iteraively
         configs[str(c_iter)]['parameterId'].append(  r[str(r_iter - 1)]['decoded']['configurationParameters'][i]['message']['parameterId'] )
         configs[str(c_iter)]['units'].append(        r[str(r_iter - 1)]['decoded']['configurationParameters'][i]['message']['rangeAndDefault']['message']['units'] )
         configs[str(c_iter)]['value'].append(        r[str(r_iter - 1)]['decoded']['configurationParameters'][i]['message']['rangeAndDefault']['message']['defaultValue'] )
         #configs[str(c_iter)]['expression'].append(   r[str(r_iter - 1)]['decoded']['configurationParameters'][i]['message']['expression'] )
-        print( ">> " + configs[str(c_iter)]['parameterId'][i] + '\t' + str(configs[str(c_iter)]['value'][i]) + '\t' + configs[str(c_iter)]['units'][i])
-    print( " --------------------------------------------------------- " )
+        print( "[{:0.6f}] \t {} \t {} \t {} ".format(self.prog_time, configs[str(c_iter)]['parameterId'][i], str(configs[str(c_iter)]['value'][i]), configs[str(c_iter)]['units'][i]))
+
     self.configs            = configs
     
 # ------------------------------------------------------------------------
@@ -171,8 +166,7 @@ def update_configurations( self, updates ):
     '''
 
     self.prog_time                          = time() - self.prog_start_time
-    print( ">> SIMPLE MORPH... \t {}".format(self.prog_time) )
-    print( " --------------------------------------------------------- " )
+    print( "[{:0.6f}] Update configuration based on variations".format(self.prog_time) )
     
     r                                       = self.r                                                                                # Load dict from self structure
     r_iter                                  = len(r)                                                                                # Dummy variable that determines the response iteration based on the number of requests
@@ -182,13 +176,13 @@ def update_configurations( self, updates ):
     Nupdates                                = len(updates)
 
     if ( Nconfigs != Nupdates ):
-        print( ">> ERROR: The number of updated values is different from the number of configurations... ending program..." )
+        print( "[{:0.6f}] ERROR: The number of updated values is different from the number of configurations... ending program...".format(self.prog_time) )
         quit()
     
     for i in range( 0, Nconfigs ):
         r[str(r_iter - 1)]['decoded']['configurationParameters'][i]['message']['rangeAndDefault']['message']['defaultValue'] = updates[i]
         #r[str(r_iter - 1)]['decoded']['currentConfiguration'][i]['message']['expression'] = ('{} mm').format( updates[i] )
-        print( ">> " + r[str(r_iter - 1)]['decoded']['configurationParameters'][i]['message']['parameterId'] + '\t' + ('{} mm').format( updates[i] ))
+        print( "[{:0.6f}] \t {} \t {} mm".format(self.prog_time, r[str(r_iter - 1)]['decoded']['configurationParameters'][i]['message']['parameterId'], updates[i] ))
 
     payload = r[str(r_iter - 1)]['decoded']
     response                                = self.c._api.request('post','/api/partstudios/d/{}/w/{}/e/{}/configuration'.format(self.did, self.wid, self.eid),body=json.dumps(payload))                                                                             # Send configuration changes
@@ -202,8 +196,7 @@ def export_stl( self ):
     '''
 
     self.prog_time                          = time() - self.prog_start_time
-    print( ">> EXPORT STL... \t {}".format(self.prog_time) )
-    print( " --------------------------------------------------------- " )
+    print( "[{:0.6f}] Export .STL".format(self.prog_time) )
 
     variant_iter                            = self.variant_iter
     partname                                = self.partname

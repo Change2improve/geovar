@@ -59,7 +59,6 @@ from    itertools                   import  product                     # Apply 
 import  numpy                       as      np                          # Fast array creation
 import  os, re                                                          # Dir/path manipulation, extract numerics from strings
 
-
 # ************************************************************************
 # =====================> CONSTRUCT ARGUMENT PARSER <=====================*
 # ************************************************************************
@@ -152,8 +151,6 @@ class geovar( object ):
             - Updates configurations based on morphing array
             - Exports geometric variant (.STL)
         '''
-
-        self.prog_time          = time() - self.prog_start_time
         _onshape.get_configurations( self )
         _onshape.get_values( self )
         _morph.simple_morph( self )
@@ -200,8 +197,9 @@ Nprods = 5
 
 if prog.mode == 1:      # MODE 1: Geometric Variations ==================== #
     for i in range( 0, Nprods ):
-        print( "> GENERATING VARIANT {}/{}".format( (i+1), Nprods ) )
+        print( "[{:0.6f}] GENERATING VARIANT {}/{}".format(prog.prog_time, (i+1), Nprods ) )
         prog.generate_variant()
+        print( " --------------------------------------------------------- " )
 
 elif prog.mode == 2:    # MODE 2: Meshing  ================================ #
     for i in range( 0, Nprods ):
