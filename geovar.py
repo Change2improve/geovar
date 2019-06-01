@@ -71,27 +71,26 @@ ap = ArgumentParser()
 
 # Operation Modalities ------------------------------------------------- #
 
-# Demo. Mode
-#   Demonstrates use of the geovar() program 
-string = "Demo. or Example Mode --uses 'permute' document"
-ap.add_argument( "-dem" , "--demo_mode" ,
-                 dest   = "demo_mode"    ,
-                 action = 'store_true'  , default=False ,
+string = """(1) Generate Geometric Variations of Input Geometry
+            (2) Mesh Geometric Variations using TetGen
+            (3) Simulate Geometric Variations using FEBio
+         """
+ap.add_argument( "-m"   , "--mode"     , type = int     ,
+                 dest   = "mode"       , default = 1    ,
                  help   = "{}".format(string)           )
 
-# Print out stuff to help debug
-string = "WARNING: Prints EVERYTHING!!"
-ap.add_argument( "-v"   , "--verbose"   ,
-                 dest   = "verbose"     ,
-                 action = 'store_true'  , default=False ,
-                 help   = "{}".format(string)           )
+### Print out stuff to help debug
+##string = "WARNING: Prints EVERYTHING!!"
+##ap.add_argument( "-v"   , "--verbose"   ,
+##                 dest   = "verbose"     ,
+##                 action = 'store_true'  , default=False ,
+##                 help   = "{}".format(string)           )
 
 
-# Operation Inputs ---------------------------------------------------- #
 # Input File
-string = "Input file containing onshape document IDs, variable information"
+string = "Input file name (no extensions)"
 ap.add_argument( "-i"   , "--input_file"     , type = str           ,
-                 dest   = "input_file"       , default = "dogbone.xml"  ,
+                 dest   = "input_file"       , default = "dogbone"  ,
                  help   = "{}".format(string)                       )
 
 args = ap.parse_args()
