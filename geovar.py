@@ -54,9 +54,6 @@ import  _febio
 from    time                        import  sleep, time                 # Timers/delays
 from    platform                    import  system                      # Running platform info
 from    datetime                    import  datetime                    # Get date and time
-
-
-    
 from    argparse                    import  ArgumentParser              # Add input arguments to script
 from    itertools                   import  product                     # Apply product rule on combinations
 import  numpy                       as      np                          # Fast array creation
@@ -144,8 +141,6 @@ class geovar( object ):
         _onshape.connect_to_sketch(     self, args )                        # connect to the onshape document
         _onshape.get_list_of_parts(     self )
 
-        print( self )
-
 # --------------------------
     
 
@@ -185,22 +180,28 @@ class geovar( object ):
 
       
 
-# ************************************************************************
-# =========================> MAKE IT ALL HAPPEN <=========================
-# ************************************************************************
+# ***************************************************************************
+# =========================> MAKE IT ALL HAPPEN <============================
+# ***************************************************************************
 
-prog = geovar()                                                         # Startup and prepare program
+prog = geovar()                                                             # Startup and prepare program
 
-print( prog.mode )
+#print( prog.mode )
 
-##for i in range( 0, 3 ):
-##    prog.generate_variant()
-##    prog.mesh_variant()
+print( "\n" )
+print( "PROGRAM STARTING " )
+#print( "> User selected MODE = {}".format( prog.mode ) ) 
 
-'''
-try:
-    print( arr )
-    prog.mutate_part( arr )                                             # Do da tang!
-except:
-    prog.reset_myPart()                                                 # In case something goes wrong, reset!
-'''
+Nprods = 3
+
+if prog.mode == 1:      # MODE 1: Geometric Variations ==================== #
+    for i in range( 0, Nprods ):
+        prog.generate_variant()
+        prog.mesh_variant()
+
+elif prog.mode == 2:    # MODE 2: Meshing  ================================ #
+    print( "> MODE {} HAS NOT BEEN INTEGRATED...".format( prog.mode ) )
+
+elif prog.mode == 3:    # MODE 3: Simulation ============================== #
+    print( "> MODE {} HAS NOT BEEN INTEGRATED...".format( prog.mode ) )
+
