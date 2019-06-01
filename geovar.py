@@ -90,7 +90,7 @@ ap.add_argument( "-m"   , "--mode"     , type = int     ,
 # Input File
 string = "Input file name (no extensions)"
 ap.add_argument( "-i"   , "--input_file"     , type = str           ,
-                 dest   = "input_file"       , default = "dogbone"  ,
+                 dest   = "input_file"       , default = "dogbone.xml"  ,
                  help   = "{}".format(string)                       )
 
 args = ap.parse_args()
@@ -104,12 +104,6 @@ class geovar( object ):
 
     def __init__( self ):
 
-        '''
-        TO DO:
-            - Define "r" as a dictionary to store all possible responses
-            - Same for "configs" ...perhaps this should be part of the "_setup" module
-        '''
-
         # VARIABLES
         self.prog_start_time    = time()
         self.r                  = {}                                    # Initialize the 'r' dict for record of decoded responses
@@ -117,9 +111,6 @@ class geovar( object ):
         self.variant_iter       = 0
 
         self.g                  = {}                                    # Initialize the 'g' dict for geometry data
-        
-        self.allow_export       = False                                    # Flag to allow STL exports
-        self.valid_mutations    = 0                                        # Counter for successful mutations
         
         self.setup()                                                    # Setup & define directories
         
@@ -137,15 +128,18 @@ class geovar( object ):
         '''
         
         self.prog_time          = time() - self.prog_start_time
-        _setup.setup_directories( self )                                # retrieve directory information
-        _setup.read_doc( self, args.input_file )                        # retrieve document information
-        _setup.read_vars( self, args.input_file )                       # retrieve variable information
-        _setup.generate_variant_array( self )
 
-        _febio.read_febio_file( self, args.input_file )
         
-        _onshape.connect_to_sketch( self, args )                        # connect to the onshape document
-        _onshape.get_list_of_parts( self )
+        _setup.setup_directories(       self )                                # retrieve directory information
+        _setup.generate_filenames(      self, args.input_file, args.mode )
+        _setup.read_doc(                self, args.input_file )                        # retrieve document information
+        _setup.read_vars(               self, args.input_file )                       # retrieve variable information
+        _setup.generate_variant_array(  self )
+
+        _febio.read_febio_file(         self, args.input_file )
+        
+        _onshape.connect_to_sketch(     self, args )                        # connect to the onshape document
+        _onshape.get_list_of_parts(     self )
 
         print( self )
 

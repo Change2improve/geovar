@@ -129,6 +129,37 @@ def setup_directories( self ):
 
 # ------------------------------------------------------------------------
 
+def generate_filenames( self, filename, mode ):
+    '''
+    Generates Filenames for inputs
+        - This program works on the premise that all input filenames, in
+          accordance with the program's structure, have the same "name",
+          while lacking the same extension
+    '''
+    print( '\n' )
+    print( "GENERATE INPUT FILENAMES..." )
+
+    print( "> User provided INPUT FILENAME = {}".format( filename ) )
+
+    # check for extension
+    if filename.rfind('.'):
+        print( "> The INPUT FILENAME has an extension... and will be removed!" )
+        filename_woe = filename[:filename.rfind('.')]
+
+    print( "> Geovar will look for the following input files:" )
+    print( ">> {}.stl".format(filename_woe) )
+    print( ">> {}.xml".format(filename_woe) )
+    print( ">> {}.vtk".format(filename_woe) )
+    print( ">> {}.feb".format(filename_woe) )
+    print( ">> Only a subset of these files may be used, depending on the operation mode")
+
+    self.input_stl_filename = "{}.stl".format(filename_woe)
+    self.input_xml_filename = "{}.xml".format(filename_woe)
+    self.input_vtk_filename = "{}.vtk".format(filename_woe)
+    self.input_feb_filename = "{}.feb".format(filename_woe)
+           
+# ------------------------------------------------------------------------
+
 def read_doc( self, filename ):
     '''
     READ DOC INFO
