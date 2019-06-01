@@ -40,7 +40,9 @@ def simple_morph( self ):
     '''
 
     self.prog_time          = time() - self.prog_start_time
-
+    print( ">> SIMPLE MORPH... \t {}".format(self.prog_time) )
+    print( " --------------------------------------------------------- " )
+    
     variant_iter            = self.variant_iter
     var                     = self.var
     arr                     = self.arr
