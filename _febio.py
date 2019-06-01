@@ -19,15 +19,15 @@ from    lxml                        import  etree
 # FUNCTIONS =============================================================*
 # ************************************************************************
 
-def read_febio_file( febio_filename ):
+def read_febio_file( self, febio_filename ):
     '''
     Read FEBio file
     '''
 
     print( '\n' )
     print( "READ FEBio INFO..." )
-    #file = self.input + febio_filename
-    file = febio_filename
+    file = self.input + febio_filename
+    print(file)
 
     febio_doc       = etree.parse( file )
     febio_root      = febio_doc.getroot()
@@ -44,9 +44,9 @@ def read_febio_file( febio_filename ):
     geo_len = len( geo )
     
 
-    return febio_doc, febio_root, geo, geo_index, geo_len
-    #self.febio_doc  = febio_doc
-    #self.febio_root = febio_root
+    #return febio_doc, febio_root, geo, geo_index, geo_len
+    self.febio_doc  = febio_doc
+    self.febio_root = febio_root
     
 
 # --------------------------

@@ -66,10 +66,10 @@ def setup_tetgen_directory( self ):
     '''
     print( '\n' )
     print( "SETUP TETGEN DIR..." )
-    dir_list = os.listdir()                                                                         # List elements within current directory
-    dir_len  = len(dir_list)
-    test_string = 'tetgen'
-    test_string_len = len(test_string)
+    dir_list                    = os.listdir()                                                                         # List elements within current directory
+    dir_len                     = len(dir_list)
+    test_string                 = 'tetgen'
+    test_string_len             = len(test_string)
     for i in range( 0, dir_len ):
         if len( dir_list[i] ) >= test_string_len:
             if dir_list[i][0:test_string_len] == test_string:
@@ -77,8 +77,8 @@ def setup_tetgen_directory( self ):
                 match_index = i
                 break
 
-    current_dir = os.getcwd()
-    tetgen_dir = current_dir + '\\' + dir_list[match_index] + '\\build\\Debug\\'
+    current_dir                 = os.getcwd()
+    tetgen_dir                  = '{}\\{}\\build\\Debug\\'.format(current_dir,dir_list[match_index])
     print( ">> CURRENT" + '\t' + "DIR: " + current_dir )
     print( ">> TETGEN" + '\t' + "DIR: " + tetgen_dir )
 
@@ -94,10 +94,10 @@ def setup_directories( self ):
 
     # ------ UNIX systems ------
     if( system()=='Linux' ):
-        src      = os.getcwd()
-        self.dst = "{}/output/{}/".format( src,
-                                           datetime.now().strftime("%Y-%m-%d__%H_%M_%S") )
-        self.tet = args.tetgen_dir                                                                  # Setup tetgen directory
+        src                     = os.getcwd()
+        self.dst                = "{}/output/{}/".format( src,
+                                                          datetime.now().strftime("%Y-%m-%d__%H_%M_%S") )
+        self.tet                = args.tetgen_dir                                                                  # Setup tetgen directory
 
         try:
             os.makedirs( self.dst )
@@ -110,11 +110,11 @@ def setup_directories( self ):
     # ----- Windows system -----
     elif( system()=='Windows' ):
         # Define useful paths
-        src             = os.getcwd()
-        self.input      = "{}\\input\\".format( src )                                                    # Setup input directory
-        self.doc_def    = self.input + 'doc_def.txt'
-        self.dst        = "{}\\output\\{}\\".format( src,
-                                                     datetime.now().strftime("%Y-%m-%d__%H_%M_%S") )
+        src                     = os.getcwd()
+        self.input              = "{}\\input\\".format( src )                                                    # Setup input directory
+        self.doc_def            = self.input + 'doc_def.txt'
+        self.dst                = "{}\\output\\{}\\".format( src,
+                                                             datetime.now().strftime("%Y-%m-%d__%H_%M_%S") )
 
         setup_input_directory( self )
         setup_tetgen_directory( self )                                                                  
@@ -138,12 +138,12 @@ def read_doc( self, filename ):
     '''
     print( '\n' )
     print( "READ DOC INFO..." )
-    file = self.input + filename
+    file                        = self.input + filename
 
     _doc = etree.parse( file )
-    _doc_address_ele = _doc.find('address')
-    _doc_address_text = _doc_address_ele.text
-    _doc_address_text = _doc_address_text.split("/")
+    _doc_address_ele            = _doc.find('address')
+    _doc_address_text           = _doc_address_ele.text
+    _doc_address_text           = _doc_address_text.split("/")
     for i in range( 0, len( _doc_address_text ) ):
         if _doc_address_text[i] == 'documents':
             self.did = _doc_address_text[i+1]                                                           # Store the document id

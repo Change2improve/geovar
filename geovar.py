@@ -48,6 +48,7 @@ import  _setup
 import  _onshape
 import  _morph
 import  _mesh
+import  _febio
 
 # additional python modules and libraries
 from    time                        import  sleep, time                 # Timers/delays
@@ -115,6 +116,8 @@ class geovar( object ):
         self.r                  = {}                                    # Initialize the 'r' dict for record of decoded responses
         self.configs            = {}                                    # Initialized the 'configs' dict
         self.variant_iter       = 0
+
+        self.g                  = {}                                    # Initialize the 'g' dict for geometry data
         
         self.allow_export       = False                                    # Flag to allow STL exports
         self.valid_mutations    = 0                                        # Counter for successful mutations
@@ -130,6 +133,7 @@ class geovar( object ):
             - Gathering document information (did, wid, eid)
             - Gathering document variables
             - Generating the morphing array
+            - Gather template FEBio (or simulation file)
             - Connect to onshape document
         '''
         
@@ -138,8 +142,13 @@ class geovar( object ):
         _setup.read_doc( self, args.input_file )                        # retrieve document information
         _setup.read_vars( self, args.input_file )                       # retrieve variable information
         _setup.generate_variant_array( self )
+
+        _febio.read_febio_file( self, args.input_file )
+        
         _onshape.connect_to_sketch( self, args )                        # connect to the onshape document
         _onshape.get_list_of_parts( self )
+
+        print( self )
 
 # --------------------------
     
@@ -187,9 +196,9 @@ class geovar( object ):
 prog = geovar()                                                         # Startup and prepare program
 
 
-for i in range( 0, 3 ):
-    prog.generate_variant()
-    prog.mesh_variant()
+##for i in range( 0, 3 ):
+##    prog.generate_variant()
+##    prog.mesh_variant()
 
 '''
 try:
