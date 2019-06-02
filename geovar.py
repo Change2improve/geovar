@@ -47,6 +47,7 @@ from    onshapepy.play              import  *                           # Onshap
 import  _setup
 import  _onshape
 import  _morph
+import  _vis
 import  _mesh
 import  _febio
 
@@ -67,6 +68,7 @@ ap = ArgumentParser()
 
 # Operation Modalities ------------------------------------------------- #
 
+# Operation Mode
 string = """(1) Generate Geometric Variations of Input Geometry
             (2) Mesh Geometric Variations using TetGen
             (3) Simulate Geometric Variations using FEBio
@@ -74,14 +76,6 @@ string = """(1) Generate Geometric Variations of Input Geometry
 ap.add_argument( "-m"   , "--mode"     , type = int     ,
                  dest   = "mode"       , default = 1    ,
                  help   = "{}".format(string)           )
-
-### Print out stuff to help debug
-##string = "WARNING: Prints EVERYTHING!!"
-##ap.add_argument( "-v"   , "--verbose"   ,
-##                 dest   = "verbose"     ,
-##                 action = 'store_true'  , default=False ,
-##                 help   = "{}".format(string)           )
-
 
 # Input File
 string = "Input file name (no extensions)"
@@ -141,7 +135,6 @@ class geovar( object ):
         _onshape.get_list_of_parts(     self )
 
 # --------------------------
-    
 
     def generate_variant( self ):
         '''
@@ -151,10 +144,13 @@ class geovar( object ):
             - Updates configurations based on morphing array
             - Exports geometric variant (.STL)
         '''
-        _onshape.get_configurations( self )
-        _onshape.get_values( self )
-        _morph.simple_morph( self )
-        _onshape.export_stl( self )
+        _onshape.get_configurations(    self )
+        _onshape.get_values(            self )
+        _morph.simple_morph(            self )
+        _onshape.export_stl(            self )
+        _vis.import_stl(                self )
+        _vis.read_stl(                  self )
+        _vis.vis_stl(                   self, 0, 1 )
 
 # --------------------------
 
@@ -164,7 +160,7 @@ class geovar( object ):
             - Generates a mesh of the geometric variant
         '''
 
-        _mesh.tetgen( self )
+        _mesh.tetgen(                   self )
         
 
 # --------------------------

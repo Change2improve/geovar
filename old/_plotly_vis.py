@@ -15,7 +15,7 @@ import os
 
 
 # import mesh from file
-mesh = mesh.Mesh.from_file('output/part1.stl')
+mesh = mesh.Mesh.from_file('output/part.stl')
 
 # transform data to plotly array
 Ntris = len(mesh.points)
@@ -49,10 +49,9 @@ data = [
         colorbar = {
             "title" : "z"
             },
-        #colorscale = 'Blues',
         colorscale = 'Viridis',
         opacity = 1,
-        intensity = z,
+        intensity = x,
         i = u,
         j = v,
         k = w,
@@ -64,35 +63,19 @@ layout = go.Layout(
     ),
     yaxis=go.layout.YAxis(
         title='y'
+    ),
+    scene = dict(
+        aspectmode='data',
+        camera = dict(
+            eye = dict(
+                x = 3.00,
+                y = 3.00,
+                z = 3.00
+            )
+        )
     )
-##    scene = go.layout.
-##    scene = {
-##      "xaxis": {
-##        "gridcolor": "rgb(255, 255, 255)",
-##        "zerolinecolor": "rgb(255, 255, 255)",
-##        "showbackground": true,
-##        "backgroundcolor": "rgb(235, 235,235)"
-##      },
-##      "yaxis": {
-##        "gridcolor": "rgb(255, 255, 255)",
-##        "zerolinecolor": "rgb(255, 255, 255)",
-##        "showbackground": true,
-##        "backgroundcolor": "rgb(235, 235,235)"
-##      },
-##      "zaxis": {
-##        "gridcolor": "rgb(255, 255, 255)",
-##        "zerolinecolor": "rgb(255, 255, 255)",
-##        "showbackground": true,
-##        "backgroundcolor": "rgb(235, 235,235)"
-##      },
-##      "camera": {
-##        "eye": {
-##          "x": 1.15,
-##          "y": 1.15,
-##          "z": 1.15
-##        }
-##      },
 )
+
 
 # plotting
 fig = go.Figure(data=data, layout=layout)
