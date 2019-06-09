@@ -39,18 +39,18 @@ def setup_input_directory( self ):
     Defines input directory
     '''
 
-    print( '[{:0.6f}] Setup input directory'.format( current_time( self )))
+    print('[{:0.6f}] Setup input directory'.format(current_time( self )))
     current_dir                 = os.getcwd()
     input_dir                   = '{}\\input\\'.format( current_dir )
 
     if os.path.exists( input_dir ) == False:
-        print( '[{:0.6f}] FATAL ERROR :: No input directory detected'.format(current_time( self )))
+        print('[{:0.6f}] FATAL ERROR :: No input directory detected'.format(current_time( self )))
         #os.makedirs( input_dir )
     else:
-        print( '[{:0.6f}] Input directory found'.format( current_time( self ) ))
+        print('[{:0.6f}] Input directory found'.format(current_time( self )))
         
     self.current_dir            = current_dir
-    self.input_dir              = input_dir                                                                           # Passing tetgen path to the .self structure
+    self.input_dir              = input_dir                                                         # Passing tetgen path to the .self structure
 
 # ------------------------------------------------------------------------
 
@@ -60,10 +60,19 @@ def setup_output_directory( self ):
     '''
 
     self.prog_time              = time() - self.prog_start_time
-    print( "[{:0.6f}] Setup output directory".format(self.prog_time) )
+    print('[{:0.6f}] Setup output directory'.format(current_time( self )))
     current_dir                 = os.getcwd()
     output_dir                  = '{}\\output\\'.format( current_dir )
+    print( output_dir )
 
+    if os.path.exists( output_dir ) == False:
+        print('[{:0.6f}] WARNING :: No output directory detected... geovar will generate it!'.format(current_time( self )))
+        os.makedirs( output_dir )
+    else:
+        print('[{:0.6f}] Output directory found'.format(current_time( self )))
+    
+    dst                         = "{}{}".format( output_dir, datetime.now().strftime("%Y-%m-%d__%H_%M_%S") )
+    print( dst )
     self.output_dir             = output_dir
     
 # ------------------------------------------------------------------------
@@ -74,9 +83,8 @@ def setup_tetgen_directory( self ):
         - The repository structure
         - On a Windows OS
     '''
-
-    self.prog_time              = time() - self.prog_start_time
-    print( "[{:0.6f}] Setup TetGen directory".format(self.prog_time) )
+           
+    print('[{:0.6f}] Setup TetGen directory'.format(current_time( self )))
     
     dir_list                    = os.listdir()                                                                         # List elements within current directory
     dir_len                     = len(dir_list)
@@ -91,6 +99,7 @@ def setup_tetgen_directory( self ):
     current_dir                 = os.getcwd()
     tetgen_dir                  = '{}\\{}\\build\\Debug\\'.format(current_dir,dir_list[match_index])
 
+    print( tetgen_dir )
     self.tetgen_dir             = tetgen_dir                                                                           # Passing tetgen path to the .self structure
            
 # ------------------------------------------------------------------------
@@ -123,22 +132,7 @@ def setup_directories( self ):
         # Define useful paths
         setup_input_directory(  self )
         setup_tetgen_directory( self )
-        input_dir               = self.input_dir
-
-        input_doc               = '{}doc_def.txt'.format( input_dir )
-        print( input_doc )
-        self.dst                = "{}\\output\\{}\\".format( src,
-                                                             datetime.now().strftime("%Y-%m-%d__%H_%M_%S") )
-
-                                                                         
-
-        try:
-            os.makedirs( self.dst )
-        except WindowsError:
-            print( "FAILED to create directory. Check permissions" )
-            quit()
-##        else:
-##            print( "Created {}".format(self.dst) )
+        setup_output_directory( self )
 
 # ------------------------------------------------------------------------
 
