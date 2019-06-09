@@ -33,31 +33,44 @@ from    itertools                   import  product                             
 
 def setup_input_directory( self ):
     '''
-    Locates the path to the input files;
+    Defines input directory
+    '''
+
+    self.prog_time              = time() - self.prog_start_time
+    print( "[{:0.6f}] Setup input directory".format(self.prog_time) )
+    current_dir                 = os.getcwd()
+    input_dir                   = '{}\\input\\'.format( current_dir )
+
+    self.current_dir            = current_dir
+    self.input_dir              = input_dir                                                                           # Passing tetgen path to the .self structure
+
+# ------------------------------------------------------------------------
+
+def setup_output_directory( self ):
+    '''
+    Locates the path to the output directory;
         - The repository structure
         - On a Windows OS
     '''
 
     self.prog_time              = time() - self.prog_start_time
-    print( "[{:0.6f}] Setup input directory".format(self.prog_time) )
+    print( "[{:0.6f}] Setup output directory".format(self.prog_time) )
     
     dir_list                    = os.listdir()                                                                         # List elements within current directory
     dir_len                     = len(dir_list)
-    test_string                 = 'input'
+    test_string                 = 'output'
     test_string_len             = len(test_string)
     for i in range( 0, dir_len ):
         if len( dir_list[i] ) >= test_string_len:
             if dir_list[i][0:test_string_len] == test_string:
-##                print( ">> FOUND" + '\t' + "DIR ...geovar\\" + dir_list[i] )
                 match_index = i
                 break
 
-    current_dir = os.getcwd()
-    input_dir = current_dir + '\\' + dir_list[match_index] + '\\'
-##    print( ">> CURRENT" + '\t' + "DIR: " + current_dir )
-##    print( ">> INPUT" + '\t' + "DIR: " + input_dir )
-    self.input = input_dir                                                                           # Passing tetgen path to the .self structure
-           
+    current_dir                 = os.getcwd()
+    output_dir                  = current_dir + '\\' + dir_list[match_index] + '\\'
+
+    self.output_dir             = output_dir
+    
 # ------------------------------------------------------------------------
 
 def setup_tetgen_directory( self ):
@@ -77,16 +90,13 @@ def setup_tetgen_directory( self ):
     for i in range( 0, dir_len ):
         if len( dir_list[i] ) >= test_string_len:
             if dir_list[i][0:test_string_len] == test_string:
-##                print( ">> FOUND" + '\t' + "DIR ...geovar\\" + dir_list[i] )
                 match_index = i
                 break
 
     current_dir                 = os.getcwd()
     tetgen_dir                  = '{}\\{}\\build\\Debug\\'.format(current_dir,dir_list[match_index])
-##    print( ">> CURRENT" + '\t' + "DIR: " + current_dir )
-##    print( ">> TETGEN" + '\t' + "DIR: " + tetgen_dir )
 
-    self.tet = tetgen_dir                                                                           # Passing tetgen path to the .self structure
+    self.tetgen_dir             = tetgen_dir                                                                           # Passing tetgen path to the .self structure
            
 # ------------------------------------------------------------------------
 
@@ -98,30 +108,34 @@ def setup_directories( self ):
 
     # ------ UNIX systems ------
     if( system()=='Linux' ):
-        src                     = os.getcwd()
-        self.dst                = "{}/output/{}/".format( src,
-                                                          datetime.now().strftime("%Y-%m-%d__%H_%M_%S") )
-        self.tet                = args.tetgen_dir                                                                  # Setup tetgen directory
-
-        try:
-            os.makedirs( self.dst )
-        except OSError:
-            print( "FAILED to create directory. Check permissions" )
-            quit()
-        else:
-            print( "Created {}".format(self.dst) )
+        print( " ERROR: geovar() has only been configured for Windows... ")
+        quit()
+##        src                     = os.getcwd()
+##        self.dst                = "{}/output/{}/".format( src,
+##                                                          datetime.now().strftime("%Y-%m-%d__%H_%M_%S") )
+##        self.tet                = args.tetgen_dir                                                                  # Setup tetgen directory
+##
+##        try:
+##            os.makedirs( self.dst )
+##        except OSError:
+##            print( "FAILED to create directory. Check permissions" )
+##            quit()
+##        else:
+##            print( "Created {}".format(self.dst) )
 
     # ----- Windows system -----
     elif( system()=='Windows' ):
         # Define useful paths
-        src                     = os.getcwd()
-        self.input              = "{}\\input\\".format( src )                                                    # Setup input directory
-        self.doc_def            = self.input + 'doc_def.txt'
+        setup_input_directory(  self )
+        setup_tetgen_directory( self )
+        input_dir               = self.input_dir
+
+        input_doc               = '{}doc_def.txt'.format( input_dir )
+        print( input_doc )
         self.dst                = "{}\\output\\{}\\".format( src,
                                                              datetime.now().strftime("%Y-%m-%d__%H_%M_%S") )
 
-        setup_input_directory( self )
-        setup_tetgen_directory( self )                                                                  
+                                                                         
 
         try:
             os.makedirs( self.dst )

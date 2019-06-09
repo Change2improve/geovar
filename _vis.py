@@ -88,6 +88,9 @@ def vis_stl( self, intensity, export ):
     g               = self.g
     variant_iter    = self.variant_iter
     stl_filename    = self.stl_filename
+    units           = self.configs[variant_iter]['units']
+
+    print( units )
     
     x               = g[str(variant_iter)]['stl']['data']['x']
     y               = g[str(variant_iter)]['stl']['data']['y']

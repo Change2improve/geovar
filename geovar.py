@@ -189,7 +189,7 @@ print(" \n ")
 print( "PROGRAM STARTING " )
 print( " ========================================================= " )
 
-Nprods = 5
+Nprods = 1
 
 if prog.mode == 1:      # MODE 1: Geometric Variations ==================== #
     for i in range( 0, Nprods ):
