@@ -17,7 +17,7 @@
 '''
 
 
-# additional python modules and libraries
+# Python Libraries and Modules
 import  os, re                                                                                      # Dir/path manipulation, extract numerics from strings
 import  sys
 import  numpy                       as      np
@@ -26,6 +26,9 @@ from    platform                    import  system                              
 from    datetime                    import  datetime                                                # Get date and time
 from    lxml                        import  etree
 from    itertools                   import  product                                                 # Apply product rule on combinations
+
+# Geovar Libraries and Modules
+from    _performance                import  *
 
 # ************************************************************************
 # FUNCTIONS =============================================================*
@@ -36,11 +39,16 @@ def setup_input_directory( self ):
     Defines input directory
     '''
 
-    self.prog_time              = time() - self.prog_start_time
-    print( "[{:0.6f}] Setup input directory".format(self.prog_time) )
+    print( '[{:0.6f}] Setup input directory'.format( current_time( self )))
     current_dir                 = os.getcwd()
     input_dir                   = '{}\\input\\'.format( current_dir )
 
+    if os.path.exists( input_dir ) == False:
+        print( '[{:0.6f}] FATAL ERROR :: No input directory detected'.format(current_time( self )))
+        #os.makedirs( input_dir )
+    else:
+        print( '[{:0.6f}] Input directory found'.format( current_time( self ) ))
+        
     self.current_dir            = current_dir
     self.input_dir              = input_dir                                                                           # Passing tetgen path to the .self structure
 
@@ -48,26 +56,13 @@ def setup_input_directory( self ):
 
 def setup_output_directory( self ):
     '''
-    Locates the path to the output directory;
-        - The repository structure
-        - On a Windows OS
+    Defines output directory
     '''
 
     self.prog_time              = time() - self.prog_start_time
     print( "[{:0.6f}] Setup output directory".format(self.prog_time) )
-    
-    dir_list                    = os.listdir()                                                                         # List elements within current directory
-    dir_len                     = len(dir_list)
-    test_string                 = 'output'
-    test_string_len             = len(test_string)
-    for i in range( 0, dir_len ):
-        if len( dir_list[i] ) >= test_string_len:
-            if dir_list[i][0:test_string_len] == test_string:
-                match_index = i
-                break
-
     current_dir                 = os.getcwd()
-    output_dir                  = current_dir + '\\' + dir_list[match_index] + '\\'
+    output_dir                  = '{}\\output\\'.format( current_dir )
 
     self.output_dir             = output_dir
     
