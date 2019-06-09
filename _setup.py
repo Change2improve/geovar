@@ -106,26 +106,13 @@ def setup_tetgen_directory( self ):
 
 def setup_directories( self ):
     '''
-    Create output folder and point to
-    location of compiled TetGen program
+    Setup all required directories
     '''
 
     # ------ UNIX systems ------
     if( system()=='Linux' ):
         print( " ERROR: geovar() has only been configured for Windows... ")
         quit()
-##        src                     = os.getcwd()
-##        self.dst                = "{}/output/{}/".format( src,
-##                                                          datetime.now().strftime("%Y-%m-%d__%H_%M_%S") )
-##        self.tet                = args.tetgen_dir                                                                  # Setup tetgen directory
-##
-##        try:
-##            os.makedirs( self.dst )
-##        except OSError:
-##            print( "FAILED to create directory. Check permissions" )
-##            quit()
-##        else:
-##            print( "Created {}".format(self.dst) )
 
     # ----- Windows system -----
     elif( system()=='Windows' ):
