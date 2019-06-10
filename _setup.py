@@ -243,6 +243,7 @@ def generate_variant_array( self ):
     self.var                    = var                                                                   # Load changes to 'self' structure
     self.arr                    = arr
     self.prods                  = prods
+    self.Nprods                 = len( prods )
 
 # ------------------------------------------------------------------------
 

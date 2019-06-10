@@ -75,7 +75,7 @@ string = """(1) Generate Geometric Variations of Input Geometry
             (3) Simulate Geometric Variations using FEBio
          """
 ap.add_argument( "-m"   , "--mode"     , type = int     ,
-                 dest   = "mode"       , default = 2    ,
+                 dest   = "mode"       , default = 1    ,
                  help   = "{}".format(string)           )
 
 # Input File
@@ -176,32 +176,37 @@ class geovar( object ):
 # =========================> MAKE IT ALL HAPPEN <============================
 # ***************************************************************************
 
-prog = geovar()
+try:
+    prog = geovar()
 
-print()
-print()
-print('[{:0.6f}] WARNING: This program will generate {} geometric variants (.STL)...'.format(_performance.current_time( prog ), len(prog.prods)))
-_setup.query_variants( "Do you wish to continue?", default="yes")
-print()
-print()
+    print()
+    print()
+    print('[{:0.6f}] WARNING: This program will generate {} geometric variants (.STL)...'.format(_performance.current_time( prog ), prog.Nprods))
+    _setup.query_variants( "Do you wish to continue?", default="yes")
+    print()
+    print()
 
-print( "PROGRAM STARTING " )
-print( " ========================================================= " )
+    print( "PROGRAM STARTING " )
+    print( " ========================================================= " )
 
-Nprods = 2
+    Nprods = prog.Nprods
 
-if prog.mode == 1:      # MODE 1: Geometric Variations ==================== #
-    for i in range( 0, Nprods ):
-        print('[{:0.6f}] GENERATING VARIANT {}/{}'.format(_performance.current_time( prog ), (i+1), Nprods ) )
-        prog.generate_variant()
-        print( " --------------------------------------------------------- " )
+    if prog.mode == 1:      # MODE 1: Geometric Variations ==================== #
+        for i in range( 0, Nprods ):
+            print('[{:0.6f}] GENERATING VARIANT {}/{}'.format(_performance.current_time( prog ), (i+1), Nprods ) )
+            prog.generate_variant()
+            print( " --------------------------------------------------------- " )
 
-elif prog.mode == 2:    # MODE 2: Meshing  ================================ #
-    for i in range( 0, Nprods ):
-        prog.generate_variant()
-        prog.mesh_variant()
+    elif prog.mode == 2:    # MODE 2: Meshing  ================================ #
+        for i in range( 0, Nprods ):
+            prog.generate_variant()
+            prog.mesh_variant()
+        
+    elif prog.mode == 3:    # MODE 3: Simulation ============================== #
+        print( "> MODE {} HAS NOT BEEN INTEGRATED...".format( prog.mode ) )
+        print( ">> Goodbye..." )
+        exit()
+
+except KeyboardInterrupt:
+    print('[{:0.6f}] PROGRAM TERMINATED...'.format(_performance.current_time( prog )))
     
-elif prog.mode == 3:    # MODE 3: Simulation ============================== #
-    print( "> MODE {} HAS NOT BEEN INTEGRATED...".format( prog.mode ) )
-    print( ">> Goodbye..." )
-    exit()
