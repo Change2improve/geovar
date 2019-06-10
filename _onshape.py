@@ -133,7 +133,10 @@ def get_values( self, ):
         configs[str(c_iter)]['parameterId'].append(  r[str(r_iter)]['decoded']['configurationParameters'][i]['message']['parameterId'] )
         configs[str(c_iter)]['units'].append(        r[str(r_iter)]['decoded']['configurationParameters'][i]['message']['rangeAndDefault']['message']['units'] )
         configs[str(c_iter)]['value'].append(        r[str(r_iter)]['decoded']['configurationParameters'][i]['message']['rangeAndDefault']['message']['defaultValue'] )
-        print( "[{:0.6f}] \t {} \t {} \t {} ".format(self.prog_time, configs[str(c_iter)]['parameterId'][i], str(configs[str(c_iter)]['value'][i]), configs[str(c_iter)]['units'][i]))
+        print( "[{:0.6f}] \t {} \t {} \t {} ".format(current_time( self ),
+                                                     configs[str(c_iter)]['parameterId'][i],
+                                                     str(configs[str(c_iter)]['value'][i]),
+                                                     configs[str(c_iter)]['units'][i]))
 
     self.configs            = configs
     
@@ -174,7 +177,10 @@ def update_configurations( self, updates ):
     
     for i in range( 0, Nconfigs ):
         r[str(r_iter)]['decoded']['configurationParameters'][i]['message']['rangeAndDefault']['message']['defaultValue'] = updates[i]
-        print( "[{:0.6f}] \t {} \t {} mm".format(self.prog_time, r[str(r_iter)]['decoded']['configurationParameters'][i]['message']['parameterId'], updates[i] ))
+        print( "[{:0.6f}] \t {} \t {} {}".format(current_time( self ),
+                                                 r[str(r_iter)]['decoded']['configurationParameters'][i]['message']['parameterId'],
+                                                 updates[i],
+                                                 r[str(r_iter)]['decoded']['configurationParameters'][i]['message']['rangeAndDefault']['message']['units']))
 
     payload = r[str(r_iter)]['decoded']
     response                                = self.c._api.request('post','/api/partstudios/d/{}/w/{}/e/{}/configuration'.format(self.did, self.wid, self.eid),body=json.dumps(payload))                                                                             # Send configuration changes

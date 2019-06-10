@@ -86,8 +86,10 @@ def vis_stl( self, intensity, export ):
     '''
 
     r               = self.r
+    configs         = self.configs
     variant_iter    = self.variant_iter
     stl_filename    = self.stl_filename
+    Nconfigs        = configs[str(variant_iter)]['Nconfigs']
     #units           = self.configs[str(variant_iter)]['units']
     # here we can make a section that deals with the units... in the dogbone example, variables are unitless...
 
@@ -110,15 +112,17 @@ def vis_stl( self, intensity, export ):
         intensity_axis = z
         colorbar_title = "z"
 
-    
     data = [
         go.Mesh3d(
             x = x,
             y = y,
             z = z,
             alphahull=5,
+            showscale=True,
             colorbar = {
-                "title" : colorbar_title
+                "title" : colorbar_title,
+                "xpad" : 10,
+                "ypad" : 10,
                 },
             colorscale = 'Viridis',
             opacity = 1, 
@@ -128,7 +132,17 @@ def vis_stl( self, intensity, export ):
             k = w,
         )
     ]
+
+    title = []
+    for i in range(0, Nconfigs):
+        title.append( ' {} = {} {}'.format( configs[str(variant_iter)]['parameterId'][i],
+                                            configs[str(variant_iter)]['value'][i],
+                                            configs[str(variant_iter)]['units'][i] ))
+
+    title = ','.join(title)
+        
     layout = go.Layout(
+        title=title,
         xaxis=go.layout.XAxis(
             title='x'
         ),
@@ -153,6 +167,6 @@ def vis_stl( self, intensity, export ):
 
     if export == 1:
         pio.write_image(fig, '{}.svg'.format( stl_filename[:-4] ))
-        pio.write_image(fig, '{}.png'.format( stl_filename[:-4] ), width=1024, height=1024)
+        pio.write_image(fig, '{}.png'.format( stl_filename[:-4] ), width=2048, height=1024)
 
 
