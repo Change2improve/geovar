@@ -46,11 +46,11 @@ def read_stl( self ):
     EXTRACT DATA FROM STL MESH
     '''
 
-    r               = self.r
-    variant_iter    = self.variant_iter
-    stl_mesh        = self.stl_mesh
-    Ntris           = len( stl_mesh.points )
-    Nnodes          = 3                                                     # 3 nodes per triangle
+    r                                       = self.r
+    r_iter                                  = self.variant_iter
+    stl_mesh                                = self.stl_mesh
+    Ntris                                   = len( stl_mesh.points )
+    Nnodes                                  = 3                                                     # 3 nodes per triangle
 
     x = []
     y = []
@@ -69,37 +69,37 @@ def read_stl( self ):
         v.append( Nnodes*i + 1 )
         w.append( Nnodes*i + 2 )
 
-    r[str(variant_iter)]['stl']['data']         = {}
-    r[str(variant_iter)]['stl']['data']['x']    = x
-    r[str(variant_iter)]['stl']['data']['y']    = y
-    r[str(variant_iter)]['stl']['data']['z']    = z
-    r[str(variant_iter)]['stl']['data']['u']    = u
-    r[str(variant_iter)]['stl']['data']['v']    = v
-    r[str(variant_iter)]['stl']['data']['w']    = w
+    r[str(r_iter)]['stl']['data']           = {}
+    r[str(r_iter)]['stl']['data']['x']      = x
+    r[str(r_iter)]['stl']['data']['y']      = y
+    r[str(r_iter)]['stl']['data']['z']      = z
+    r[str(r_iter)]['stl']['data']['u']      = u
+    r[str(r_iter)]['stl']['data']['v']      = v
+    r[str(r_iter)]['stl']['data']['w']      = w
     
 
 # --------------------------
 
-def vis_stl( self, intensity, export ):
+def vis_stl( self, intensity, plot, export ):
     '''
     VISUALIZE STL MESH
     '''
 
     r               = self.r
     configs         = self.configs
-    variant_iter    = self.variant_iter
+    r_iter          = self.variant_iter
     stl_filename    = self.stl_filename
-    Nconfigs        = configs[str(variant_iter)]['Nconfigs']
+    Nconfigs        = configs[str(r_iter)]['Nconfigs']
     #units           = self.configs[str(variant_iter)]['units']
     # here we can make a section that deals with the units... in the dogbone example, variables are unitless...
 
     
-    x               = r[str(variant_iter)]['stl']['data']['x']
-    y               = r[str(variant_iter)]['stl']['data']['y']
-    z               = r[str(variant_iter)]['stl']['data']['z']
-    u               = r[str(variant_iter)]['stl']['data']['u']
-    v               = r[str(variant_iter)]['stl']['data']['v']
-    w               = r[str(variant_iter)]['stl']['data']['w']
+    x               = r[str(r_iter)]['stl']['data']['x']
+    y               = r[str(r_iter)]['stl']['data']['y']
+    z               = r[str(r_iter)]['stl']['data']['z']
+    u               = r[str(r_iter)]['stl']['data']['u']
+    v               = r[str(r_iter)]['stl']['data']['v']
+    w               = r[str(r_iter)]['stl']['data']['w']
 
     
     if intensity == 0:
@@ -135,9 +135,9 @@ def vis_stl( self, intensity, export ):
 
     title = []
     for i in range(0, Nconfigs):
-        title.append( ' {} = {} {}'.format( configs[str(variant_iter)]['parameterId'][i],
-                                            configs[str(variant_iter)]['value'][i],
-                                            configs[str(variant_iter)]['units'][i] ))
+        title.append( ' {} = {} {}'.format( r[str(r_iter)]['decoded']['configurationParameters'][i]['message']['parameterId'],
+                                            r[str(r_iter)]['decoded']['configurationParameters'][i]['message']['rangeAndDefault']['message']['defaultValue'],
+                                            r[str(r_iter)]['decoded']['configurationParameters'][i]['message']['rangeAndDefault']['message']['units'] ))
 
     title = ','.join(title)
         
@@ -163,7 +163,8 @@ def vis_stl( self, intensity, export ):
 
     # plotting
     fig = go.Figure(data=data, layout=layout)
-    plotly.offline.plot(fig)
+    if plot == 1:
+        plotly.offline.plot(fig)
 
     if export == 1:
         pio.write_image(fig, '{}.svg'.format( stl_filename[:-4] ))

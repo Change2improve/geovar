@@ -75,7 +75,7 @@ string = """(1) Generate Geometric Variations of Input Geometry
             (3) Simulate Geometric Variations using FEBio
          """
 ap.add_argument( "-m"   , "--mode"     , type = int     ,
-                 dest   = "mode"       , default = 1    ,
+                 dest   = "mode"       , default = 2    ,
                  help   = "{}".format(string)           )
 
 # Input File
@@ -96,18 +96,18 @@ class geovar( object ):
     def __init__( self ):
 
         # VARIABLES
-        self.prog_start_time    = time()                                # start time (for performance analysis)
+        self.prog_start_time    = time()                                        # start time (for performance analysis)
 
-        self.mode               = args.mode                             # operation mode (user input)
+        self.mode               = args.mode                                     # operation mode (user input)
         self.input_file         = args.input_file
         
-        self.r                  = {}                                    # Initialize the 'r' dict for everything
-        self.configs            = {}                                    # Initialized the 'configs' dict
+        self.r                  = {}                                            # Initialize the 'r' dict for everything
+        self.configs            = {}                                            # Initialized the 'configs' dict
         self.variant_iter       = 0
 
-        self.setup()                                                    # Setup & define directories
+        self.setup()                                                            # Setup & define directories
         
-# --------------------------
+# ----------------------------------------------------------------------------- #
 
     def setup( self ):
         '''
@@ -146,9 +146,9 @@ class geovar( object ):
         _onshape.get_values(            self )
         _morph.simple_morph(            self )
         _onshape.export_stl(            self )    
-        _vis.import_stl(                self )
-        _vis.read_stl(                  self )
-        _vis.vis_stl(                   self, 0, 1 )
+        #_vis.import_stl(                self )
+        #_vis.read_stl(                  self )
+        #_vis.vis_stl(                   self, 0, 0, 1 )
 
         # --------------------------------------------------------------------- # update variant_iter
         self.variant_iter       =   self.variant_iter  + 1
@@ -164,15 +164,13 @@ class geovar( object ):
         _mesh.tetgen(                   self )
         
 
-# --------------------------
+# ----------------------------------------------------------------------------- #
 
     def sim_variant( self ):
         '''
         SIMULATE VARIANT
             - Triggers the simulation of the geometric variant
         '''
-
-      
 
 # ***************************************************************************
 # =========================> MAKE IT ALL HAPPEN <============================
