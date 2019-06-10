@@ -65,13 +65,14 @@ def setup_output_directory( self ):
     output_dir                  = '{}\\output\\'.format( current_dir )
 
     if os.path.exists( output_dir ) == False:
-        print('[{:0.6f}] WARNING :: No output directory detected... geovar will generate it!'.format(current_time( self )))
+        print('[{:0.6f}] WARNING :: No output directory found... generating...'.format(current_time( self )))
         os.makedirs( output_dir )
     else:
         print('[{:0.6f}] Output directory found'.format(current_time( self )))
     
-    dst                         = "{}{}".format( output_dir, datetime.now().strftime("%Y-%m-%d__%H_%M_%S") )
+    dst                         = "{}{}".format( output_dir, datetime.now().strftime("%Y-%m-%d__%H_%M_%S") )                    # create time-stamped destination directory
     self.output_dir             = output_dir
+    self.dst                    = dst
     
 # ------------------------------------------------------------------------
 
@@ -82,7 +83,7 @@ def setup_tetgen_directory( self ):
            
     print('[{:0.6f}] Setup TetGen directory'.format(current_time( self )))
     
-    dir_list                    = os.listdir()                                                                         # List elements within current directory
+    dir_list                    = os.listdir()                                                                          # List elements within current directory
     dir_len                     = len(dir_list)
     test_string                 = 'tetgen'
     test_string_len             = len(test_string)
@@ -149,6 +150,10 @@ def read_doc( self, filename ):
     
     file                        = self.input_dir + self.input_xml_filename
 
+    if os.path.exists( file ) == False:
+        print('[{:0.6f}] FATAL ERROR :: No input XML file found'.format(current_time( self )))
+        quit()
+
     _doc = etree.parse( file )
     _doc_address_ele            = _doc.find('address')
     _doc_address_text           = _doc_address_ele.text
@@ -175,6 +180,10 @@ def read_vars( self, filename ):
     
     file                        = self.input_dir + self.input_xml_filename
 
+    if os.path.exists( file ) == False:
+        print('[{:0.6f}] FATAL ERROR :: No input XML file found'.format(current_time( self )))
+        quit()
+    
     _doc = etree.parse( file )
     _doc_vars_ele = _doc.find('variables')
 

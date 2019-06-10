@@ -50,6 +50,7 @@ import  _morph
 import  _vis
 import  _mesh
 import  _febio
+import  _performance
 
 # additional python modules and libraries
 from    time                        import  sleep, time                 # Timers/delays
@@ -95,12 +96,14 @@ class geovar( object ):
     def __init__( self ):
 
         # VARIABLES
-        self.prog_start_time    = time()
+        self.prog_start_time    = time()                                        # start time (for performance analysis)
 
-        self.mode               = args.mode
+        self.mode               = args.mode                                     # operation mode (user input)
+        self.input_file         = args.input_file
         
         self.r                  = {}                                    # Initialize the 'r' dict for record of decoded responses
         self.configs            = {}                                    # Initialized the 'configs' dict
+        self.p                  = {}
         self.variant_iter       = 0
 
         self.g                  = {}                                    # Initialize the 'g' dict for geometry data
@@ -123,15 +126,12 @@ class geovar( object ):
         print( "PROGRAM SETUP" )
         print( " ========================================================= " )
 
-        _setup.setup_directories(       self )                                # retrieve directory information
-        _setup.generate_filenames(      self, args.input_file, args.mode )
-        _setup.read_doc(                self, args.input_file )                        # retrieve document information
-        _setup.read_vars(               self, args.input_file )                       # retrieve variable information
+        _setup.setup_directories(       self )                                  # retrieve directory information
+        _setup.generate_filenames(      self, self.input_file, args.mode )
+        _setup.read_doc(                self, self.input_file )                 # retrieve document information
+        _setup.read_vars(               self, self.input_file )                 # retrieve variable information
         _setup.generate_variant_array(  self )
-
-        #_febio.read_febio_file(         self, args.input_file )
-        
-        _onshape.connect_to_sketch(     self, args )                        # connect to the onshape document
+        _onshape.connect_to_sketch(     self, args )                            # connect to the onshape document
         _onshape.get_list_of_parts(     self )
 
 # --------------------------
@@ -179,12 +179,12 @@ class geovar( object ):
 
 prog = geovar()
 
-print(" \n ")
-print(" \n ")
-print( (" WARNING: THIS PROGRAM WILL GENERATE {} GEOMETRIC VARIANTS (.STL)...").format(len(prog.prods)))
+print()
+print()
+print('[{:0.6f}] WARNING: This program will generate {} geometric variants (.STL)...'.format(_performance.current_time( prog ), len(prog.prods)))
 _setup.query_variants( "Do you wish to continue?", default="yes")
-print(" \n ")
-print(" \n ")
+print()
+print()
 
 print( "PROGRAM STARTING " )
 print( " ========================================================= " )
@@ -193,7 +193,7 @@ Nprods = 1
 
 if prog.mode == 1:      # MODE 1: Geometric Variations ==================== #
     for i in range( 0, Nprods ):
-        print( "[{:0.6f}] GENERATING VARIANT {}/{}".format(prog.prog_time, (i+1), Nprods ) )
+        print('[{:0.6f}] GENERATING VARIANT {}/{}'.format(_performance.current_time( prog ), (i+1), Nprods ) )
         prog.generate_variant()
         print( " --------------------------------------------------------- " )
 
