@@ -63,14 +63,23 @@ def setup_output_directory( self ):
     print('[{:0.6f}] Setup output directory'.format(current_time( self )))
     current_dir                 = os.getcwd()
     output_dir                  = '{}\\output\\'.format( current_dir )
+    dst                         = '{}{}\\'.format( output_dir, datetime.now().strftime("%Y-%m-%d__%H_%M_%S") )
 
+    # ----------------------------------------------------------------------------------------------------------------- # create output (main) directory, if not yet created
     if os.path.exists( output_dir ) == False:
         print('[{:0.6f}] WARNING :: No output directory found... generating...'.format(current_time( self )))
         os.makedirs( output_dir )
     else:
         print('[{:0.6f}] Output directory found'.format(current_time( self )))
     
-    dst                         = "{}{}".format( output_dir, datetime.now().strftime("%Y-%m-%d__%H_%M_%S") )                    # create time-stamped destination directory
+    # ----------------------------------------------------------------------------------------------------------------- # create output (execution-specific) directory, if not yet created
+    if os.path.exists( dst ) == False:
+        print('[{:0.6f}] WARNING :: No destination directory found... generating...'.format(current_time( self )))
+        os.makedirs( dst )
+    else:
+        print('[{:0.6f}] Destination directory found'.format(current_time( self )))
+    
+    
     self.output_dir             = output_dir
     self.dst                    = dst
     

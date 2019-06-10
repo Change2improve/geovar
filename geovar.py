@@ -134,7 +134,7 @@ class geovar( object ):
         _onshape.connect_to_sketch(     self, args )                            # connect to the onshape document
         _onshape.get_list_of_parts(     self )
 
-# --------------------------
+# ----------------------------------------------------------------------------- #
 
     def generate_variant( self ):
         '''
@@ -144,15 +144,26 @@ class geovar( object ):
             - Updates configurations based on morphing array
             - Exports geometric variant (.STL)
         '''
+
         _onshape.get_configurations(    self )
         _onshape.get_values(            self )
-        _morph.simple_morph(            self )
-        _onshape.export_stl(            self )
-        _vis.import_stl(                self )
-        _vis.read_stl(                  self )
-        _vis.vis_stl(                   self, 0, 1 )
 
-# --------------------------
+        # --------------------------------------------------------------------- # on first iteration, only export
+        if self.variant_iter == 0:
+            _onshape.export_stl(        self )
+        # --------------------------------------------------------------------- # else, modify and export
+        elif self.variant_iter > 0:
+            _morph.simple_morph(        self )
+            _onshape.export_stl(        self )
+            
+        #_vis.import_stl(                self )
+        #_vis.read_stl(                  self )
+        #_vis.vis_stl(                   self, 0, 1 )
+
+        # --------------------------------------------------------------------- # update variant_iter
+        self.variant_iter       =   self.variant_iter  + 1
+
+# ----------------------------------------------------------------------------- #
 
     def mesh_variant( self ):
         '''

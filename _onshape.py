@@ -199,7 +199,7 @@ def export_stl( self ):
 
     stl = self.c._api.request('get','/api/partstudios/d/{}/w/{}/e/{}/stl'.format(self.did, self.wid, self.eid))
 
-
+    print( dest )
     stl_filename = ('{}{}_var{}.stl'.format(dest, partname, variant_iter))
     
     with open( stl_filename, 'w' ) as f:                                                                                            # Write STL to file
