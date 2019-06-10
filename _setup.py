@@ -36,7 +36,7 @@ from    _performance                import  *
 
 def setup_input_directory( self ):
     '''
-    Defines input directory
+    SETUP INPUT DIRECTORY
     '''
 
     print('[{:0.6f}] Setup input directory'.format(current_time( self )))
@@ -56,14 +56,13 @@ def setup_input_directory( self ):
 
 def setup_output_directory( self ):
     '''
-    Defines output directory
+    SETUP OUTPUT DIRECTORY
     '''
 
     self.prog_time              = time() - self.prog_start_time
     print('[{:0.6f}] Setup output directory'.format(current_time( self )))
     current_dir                 = os.getcwd()
     output_dir                  = '{}\\output\\'.format( current_dir )
-    print( output_dir )
 
     if os.path.exists( output_dir ) == False:
         print('[{:0.6f}] WARNING :: No output directory detected... geovar will generate it!'.format(current_time( self )))
@@ -72,16 +71,13 @@ def setup_output_directory( self ):
         print('[{:0.6f}] Output directory found'.format(current_time( self )))
     
     dst                         = "{}{}".format( output_dir, datetime.now().strftime("%Y-%m-%d__%H_%M_%S") )
-    print( dst )
     self.output_dir             = output_dir
     
 # ------------------------------------------------------------------------
 
 def setup_tetgen_directory( self ):
     '''
-    Locates the path to the tetgen application within;
-        - The repository structure
-        - On a Windows OS
+    SETUP TETGEN DIRECTORY
     '''
            
     print('[{:0.6f}] Setup TetGen directory'.format(current_time( self )))
@@ -98,15 +94,13 @@ def setup_tetgen_directory( self ):
 
     current_dir                 = os.getcwd()
     tetgen_dir                  = '{}\\{}\\build\\Debug\\'.format(current_dir,dir_list[match_index])
-
-    print( tetgen_dir )
     self.tetgen_dir             = tetgen_dir                                                                           # Passing tetgen path to the .self structure
            
 # ------------------------------------------------------------------------
 
 def setup_directories( self ):
     '''
-    Setup all required directories
+    SETUO DIRECTORIES
     '''
 
     # ------ UNIX systems ------
@@ -125,28 +119,16 @@ def setup_directories( self ):
 
 def generate_filenames( self, filename, mode ):
     '''
-    Generates Filenames for inputs
+    GENERATE FILENAMES
         - This program works on the premise that all input filenames, in
           accordance with the program's structure, have the same "name",
           while lacking the same extension
     '''
-    self.prog_time              = time() - self.prog_start_time
-    print( "[{:0.6f}] Setup filenames".format(self.prog_time) )
 
-##    print( ">> User provided INPUT FILENAME = {}".format( filename ) )
+    print('[{:0.6f}] Setup filenames'.format(current_time( self )))
 
-    # check for extension
     if filename.rfind('.'):
-##        print( "> The INPUT FILENAME has an extension... and will be removed!" )
         filename_woe            = filename[:filename.rfind('.')]
-
-##    print( ">> Geovar will look for the following input files:" )
-##    print( ">>> {}.stl".format(filename_woe) )
-##    print( ">>> {}.xml".format(filename_woe) )
-##    print( ">>> {}.vtk".format(filename_woe) )
-##    print( ">>> {}.feb".format(filename_woe) )
-##    print( ">>> Only a subset of these files may be used, depending on the operation mode")
-##    print( " --------------------------------------------------------- " )
     
     self.input_stl_filename = "{}.stl".format(filename_woe)
     self.input_xml_filename = "{}.xml".format(filename_woe)
@@ -163,10 +145,9 @@ def read_doc( self, filename ):
             doc_def contains the identification of the target document within the onshape platform
     '''
     
-    self.prog_time              = time() - self.prog_start_time
-    print( "[{:0.6f}] Reading Onshape doc. info. from input XML".format(self.prog_time) )
+    print('[{:0.6f}] Reading Onshape doc. info. from input XML'.format(current_time( self )))
     
-    file                        = self.input + self.input_xml_filename
+    file                        = self.input_dir + self.input_xml_filename
 
     _doc = etree.parse( file )
     _doc_address_ele            = _doc.find('address')
@@ -179,10 +160,6 @@ def read_doc( self, filename ):
             self.wid = _doc_address_text[i+1]                                                           # Store the workspace id
         elif _doc_address_text[i] == 'e':
             self.eid = _doc_address_text[i+1]                                                           # Store the element id
-            
-##    print( ">> DOCUMENT" + '\t' + "ID: " + self.did )
-##    print( ">> WORKSPACE" + '\t' + "ID: " + self.wid )
-##    print( ">> ELEMENT" + '\t' + "ID: " + self.eid )
     
 # ------------------------------------------------------------------------
 
@@ -194,10 +171,9 @@ def read_vars( self, filename ):
             doc_def contains the identification of the target document within the onshape platform
     '''
     
-    self.prog_time              = time() - self.prog_start_time
-    print( "[{:0.6f}] Reading variants info. from input XML".format(self.prog_time) )
+    print('[{:0.6f}] Reading variants info. from input XML'.format(current_time( self )))
     
-    file                        = self.input + self.input_xml_filename
+    file                        = self.input_dir + self.input_xml_filename
 
     _doc = etree.parse( file )
     _doc_vars_ele = _doc.find('variables')
@@ -205,7 +181,6 @@ def read_vars( self, filename ):
     var                         = {}
     var['nvar']                 = len(_doc_vars_ele)
     var['names']                = []
-##    print( ">> NUMBER OF VARIABLES" + '\t' + str(var['nvar']) )
 
     for i in range(0, len(_doc_vars_ele) ):
         var_name                = _doc_vars_ele[i].get("name")
@@ -215,8 +190,7 @@ def read_vars( self, filename ):
         var[var_name]['stop']   = float( _doc_vars_ele[i].get("stop") )
         var[var_name]['np']     = int( _doc_vars_ele[i].get("np") )
         var[var_name]['ep']     = int( _doc_vars_ele[i].get("ep") )
-##        print( ">> " + str(var_name) + '\t' + str(var[var_name]['start']) + '\t' + str(var[var_name]['stop']) + '\t' + str(var[var_name]['np']) + '\t' + str(var[var_name]['ep']) )
-
+        
     self.var                    = var
 
 # ------------------------------------------------------------------------
@@ -228,8 +202,7 @@ def generate_variant_array( self ):
         - Generates all possible combinations for all possible values of each variable
     '''
 
-    self.prog_time              = time() - self.prog_start_time
-    print( "[{:0.6f}] Generate geomatric variants array".format(self.prog_time) )
+    print('[{:0.6f}] Generate geomatric variants array'.format(current_time( self )))
     
     var                         = self.var                                                              # Load var from self structure 
     arr                         = []                                                                    # Define array 'arr' which will contain all the user input values for each user input variable
@@ -242,7 +215,7 @@ def generate_variant_array( self ):
         var[_name]['vals']      = []
         var[_name]['vals']      = np.linspace( _start, _stop, _np, _ep )                                # Generate values using linspace
         arr.append( var[_name]['vals'] )
-        print( ("[{:0.6f}] \t {} \t vals: {}").format(self.prog_time,_name,str(var[_name]['vals'])))                             # Reporting
+        print(('[{:0.6f}]\t{}\tvals: {}').format(current_time(self),_name,str(var[_name]['vals'])))     # Reporting
 
     arr = np.array(arr)                                                                                 # Convert 'arr' into a numpy array
     
