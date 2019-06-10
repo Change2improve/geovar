@@ -96,17 +96,15 @@ class geovar( object ):
     def __init__( self ):
 
         # VARIABLES
-        self.prog_start_time    = time()                                        # start time (for performance analysis)
+        self.prog_start_time    = time()                                # start time (for performance analysis)
 
-        self.mode               = args.mode                                     # operation mode (user input)
+        self.mode               = args.mode                             # operation mode (user input)
         self.input_file         = args.input_file
         
-        self.r                  = {}                                    # Initialize the 'r' dict for record of decoded responses
+        self.r                  = {}                                    # Initialize the 'r' dict for everything
         self.configs            = {}                                    # Initialized the 'configs' dict
         self.variant_iter       = 0
 
-        self.g                  = {}                                    # Initialize the 'g' dict for geometry data
-        
         self.setup()                                                    # Setup & define directories
         
 # --------------------------
@@ -146,12 +144,11 @@ class geovar( object ):
         
         _onshape.get_configurations(    self )
         _onshape.get_values(            self )
-        _morph.simple_morph(        self )
-        _onshape.export_stl(        self )
-            
-        #_vis.import_stl(                self )
-        #_vis.read_stl(                  self )
-        #_vis.vis_stl(                   self, 0, 1 )
+        _morph.simple_morph(            self )
+        _onshape.export_stl(            self )    
+        _vis.import_stl(                self )
+        _vis.read_stl(                  self )
+        _vis.vis_stl(                   self, 0, 1 )
 
         # --------------------------------------------------------------------- # update variant_iter
         self.variant_iter       =   self.variant_iter  + 1

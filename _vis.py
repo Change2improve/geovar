@@ -25,31 +25,28 @@ from    plotly.offline              import  *
 
 def import_stl( self ):
     '''
-    Import STL mesh file
-        - This function will be moved to the geometry module latyer
+    IMPORT STL MESH
     '''
 
     stl_file                                = self.stl_filename
     stl_mesh                                = mesh.Mesh.from_file( stl_file )
 
-    g                                       = self.g
+    r                                       = self.r
     variant_iter                            = self.variant_iter
-    g[str(variant_iter)]                    = {}
-    g[str(variant_iter)]['stl']             = {}
-    g[str(variant_iter)]['stl']['mesh']     = stl_mesh
+    r[str(variant_iter)]['stl']             = {}
+    r[str(variant_iter)]['stl']['mesh']     = stl_mesh
     
     self.stl_mesh                           = stl_mesh
-    self.g                                  = g
+    self.r                                  = r
 
 # --------------------------
 
 def read_stl( self ):
     '''
-    Extract STL mesh data
-        - This function will be moved to the geometry module latyer
+    EXTRACT DATA FROM STL MESH
     '''
 
-    g               = self.g
+    r               = self.r
     variant_iter    = self.variant_iter
     stl_mesh        = self.stl_mesh
     Ntris           = len( stl_mesh.points )
@@ -72,32 +69,35 @@ def read_stl( self ):
         v.append( Nnodes*i + 1 )
         w.append( Nnodes*i + 2 )
 
-    g[str(variant_iter)]['stl']['data']         = {}
-    g[str(variant_iter)]['stl']['data']['x']    = x
-    g[str(variant_iter)]['stl']['data']['y']    = y
-    g[str(variant_iter)]['stl']['data']['z']    = z
-    g[str(variant_iter)]['stl']['data']['u']    = u
-    g[str(variant_iter)]['stl']['data']['v']    = v
-    g[str(variant_iter)]['stl']['data']['w']    = w
+    r[str(variant_iter)]['stl']['data']         = {}
+    r[str(variant_iter)]['stl']['data']['x']    = x
+    r[str(variant_iter)]['stl']['data']['y']    = y
+    r[str(variant_iter)]['stl']['data']['z']    = z
+    r[str(variant_iter)]['stl']['data']['u']    = u
+    r[str(variant_iter)]['stl']['data']['v']    = v
+    r[str(variant_iter)]['stl']['data']['w']    = w
     
 
 # --------------------------
 
 def vis_stl( self, intensity, export ):
+    '''
+    VISUALIZE STL MESH
+    '''
 
-    g               = self.g
+    r               = self.r
     variant_iter    = self.variant_iter
     stl_filename    = self.stl_filename
-    units           = self.configs[variant_iter]['units']
+    #units           = self.configs[str(variant_iter)]['units']
+    # here we can make a section that deals with the units... in the dogbone example, variables are unitless...
 
-    print( units )
     
-    x               = g[str(variant_iter)]['stl']['data']['x']
-    y               = g[str(variant_iter)]['stl']['data']['y']
-    z               = g[str(variant_iter)]['stl']['data']['z']
-    u               = g[str(variant_iter)]['stl']['data']['u']
-    v               = g[str(variant_iter)]['stl']['data']['v']
-    w               = g[str(variant_iter)]['stl']['data']['w']
+    x               = r[str(variant_iter)]['stl']['data']['x']
+    y               = r[str(variant_iter)]['stl']['data']['y']
+    z               = r[str(variant_iter)]['stl']['data']['z']
+    u               = r[str(variant_iter)]['stl']['data']['u']
+    v               = r[str(variant_iter)]['stl']['data']['v']
+    w               = r[str(variant_iter)]['stl']['data']['w']
 
     
     if intensity == 0:
