@@ -103,7 +103,6 @@ class geovar( object ):
         
         self.r                  = {}                                    # Initialize the 'r' dict for record of decoded responses
         self.configs            = {}                                    # Initialized the 'configs' dict
-        self.p                  = {}
         self.variant_iter       = 0
 
         self.g                  = {}                                    # Initialize the 'g' dict for geometry data
@@ -144,17 +143,11 @@ class geovar( object ):
             - Updates configurations based on morphing array
             - Exports geometric variant (.STL)
         '''
-
+        
         _onshape.get_configurations(    self )
         _onshape.get_values(            self )
-
-        # --------------------------------------------------------------------- # on first iteration, only export
-        if self.variant_iter == 0:
-            _onshape.export_stl(        self )
-        # --------------------------------------------------------------------- # else, modify and export
-        elif self.variant_iter > 0:
-            _morph.simple_morph(        self )
-            _onshape.export_stl(        self )
+        _morph.simple_morph(        self )
+        _onshape.export_stl(        self )
             
         #_vis.import_stl(                self )
         #_vis.read_stl(                  self )
@@ -162,7 +155,7 @@ class geovar( object ):
 
         # --------------------------------------------------------------------- # update variant_iter
         self.variant_iter       =   self.variant_iter  + 1
-
+        
 # ----------------------------------------------------------------------------- #
 
     def mesh_variant( self ):
@@ -200,7 +193,7 @@ print()
 print( "PROGRAM STARTING " )
 print( " ========================================================= " )
 
-Nprods = 1
+Nprods = 2
 
 if prog.mode == 1:      # MODE 1: Geometric Variations ==================== #
     for i in range( 0, Nprods ):

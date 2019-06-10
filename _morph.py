@@ -56,6 +56,4 @@ def simple_morph( self ):
     _onshape.update_configurations( self, updates )
     # check if morph completed successfully...
 
-    self.variant_iter       = variant_iter + 1                              # Update iteration counter
-
 # --------------------------

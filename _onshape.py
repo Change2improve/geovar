@@ -161,13 +161,9 @@ def update_configurations( self, updates ):
     
     r                                       = self.r                                                                                # Load dict from self structure
     configs                                 = self.configs                                                                          # ...
-    p                                       = self.p
 
     r_iter                                  = self.variant_iter                                                                     # Using the variant iter variable to define the iteration
-    c_iter                                  = r_iter                                                                                # iteration number for configurations structure
-    p_iter                                  = r_iter                                                                                # ...for payload structure
-
-    p[str(p_iter)]                          = r[str(r_iter)]                                                                        # initialize payload structure by copying the contents of r
+    c_iter                                  = r_iter                                                                                # iteration number for configurations structure                                                                     # initialize payload structure by copying the contents of r
     
     Nconfigs                                = configs[str(c_iter)]['Nconfigs']                                                      # Number of configurations
     Nupdates                                = len(updates)
@@ -177,10 +173,10 @@ def update_configurations( self, updates ):
         quit()
     
     for i in range( 0, Nconfigs ):
-        p[str(p_iter)]['decoded']['configurationParameters'][i]['message']['rangeAndDefault']['message']['defaultValue'] = updates[i]
-        print( "[{:0.6f}] \t {} \t {} mm".format(self.prog_time, p[str(p_iter)]['decoded']['configurationParameters'][i]['message']['parameterId'], updates[i] ))
+        r[str(r_iter)]['decoded']['configurationParameters'][i]['message']['rangeAndDefault']['message']['defaultValue'] = updates[i]
+        print( "[{:0.6f}] \t {} \t {} mm".format(self.prog_time, r[str(r_iter)]['decoded']['configurationParameters'][i]['message']['parameterId'], updates[i] ))
 
-    payload = p[str(p_iter)]['decoded']
+    payload = r[str(r_iter)]['decoded']
     response                                = self.c._api.request('post','/api/partstudios/d/{}/w/{}/e/{}/configuration'.format(self.did, self.wid, self.eid),body=json.dumps(payload))                                                                             # Send configuration changes
     request_status( self, response )                                                                                                # The status function will print the status of the request
 
@@ -199,7 +195,6 @@ def export_stl( self ):
 
     stl = self.c._api.request('get','/api/partstudios/d/{}/w/{}/e/{}/stl'.format(self.did, self.wid, self.eid))
 
-    print( dest )
     stl_filename = ('{}{}_var{}.stl'.format(dest, partname, variant_iter))
     
     with open( stl_filename, 'w' ) as f:                                                                                            # Write STL to file
