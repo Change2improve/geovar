@@ -16,12 +16,6 @@
 *
 '''
 
-# onshape modules and libraries
-from    onshapepy.play              import  *                               # Onshape API
-
-# adapted onshape modules and libraries
-import  _onshape
-
 # additional python modules and libraries
 import  re
 import  os
@@ -35,35 +29,45 @@ try:
 except:
     from    pexpect.popen_spawn     import  PopenSpawn as spawn             # Call external programs (Windows)
 
+# onshape modules and libraries
+from    onshapepy.play              import  *                               # Onshape API
+
+# adapted onshape modules and libraries
+from    _performance                import  *
+import  _onshape
+
+
 # ************************************************************************
 # FUNCTIONS =============================================================*
 # ************************************************************************
 
-def tetgen( self ):
+def tetgen( self, verbose ):
     '''
-    Create a MESH out of the STL file.
-
-    INPUT:-
-        - file_name: The name you'd like the MESH file
-                     to be given.
+    GENERATE TETGEN MESH FROM STL FILE
     '''
 
+    print('[{:0.6f}] Generate TetGen mesh'.format(current_time( self )))
+    
     stl_filename            = self.stl_filename
+    tetgen_dir              = self.tetgen_dir
     
     if( system()=='Linux' ):
-        cmd = "{}tetgen -pq1.2 -g -F -C -V -N -G -I -a0.1 {}".format( self.tet, stl_filename )
+        print( " ERROR: geovar() has only been configured for Windows... ")
+        #cmd = "{}tetgen -pq1.2 -g -F -C -V -N -G -I -a0.1 {}".format( self.tet, stl_filename )
+        quit()
+
     elif( system()=='Windows' ):
-        #print( self.tet )
-        #print( self.stl_filename )
-        cmd = '{}tetgen.exe -pq1.2 -g -k -C -V -I -a0.1 "{}"'.format( self.tet, stl_filename )
-        print( cmd )
+        cmd = '{}tetgen.exe -pq1.2 -g -k -C -V -I -a0.1 "{}"'.format( tetgen_dir, stl_filename )
         
-    child = spawn( cmd, timeout=None )                              # Spawn child
+    child = spawn( cmd, timeout = None )                                                            # Spawn child
+
+
+    if verbose == 1:
+        print('[{:0.6f}] Mesh result and statistics'.format(current_time( self )))
+        for line in child:                                                                          # Read STDOUT ...
+            out = line.decode('utf-8').strip('\r\n')                                                # ... of spawned child ...
+            print( out )                                                                            # ... process and print.
     
-    for line in child:                                              # Read STDOUT ...
-        out = line.decode('utf-8').strip('\r\n')                    # ... of spawned child ...
-        print( out )                            # ... process and print.
-    
-    if( system()=='Linux' ): child.close()                          # Kill child process
+    if( system()=='Linux' ): child.close()                                                          # Kill child process
 
 # --------------------------

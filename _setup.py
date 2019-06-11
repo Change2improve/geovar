@@ -113,6 +113,8 @@ def setup_directories( self ):
     SETUO DIRECTORIES
     '''
 
+    print('[{:0.6f}] Setup directories'.format(current_time( self )))
+    
     # ------ UNIX systems ------
     if( system()=='Linux' ):
         print( " ERROR: geovar() has only been configured for Windows... ")

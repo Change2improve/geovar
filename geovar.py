@@ -75,7 +75,7 @@ string = """(1) Generate Geometric Variations of Input Geometry
             (3) Simulate Geometric Variations using FEBio
          """
 ap.add_argument( "-m"   , "--mode"     , type = int     ,
-                 dest   = "mode"       , default = 1    ,
+                 dest   = "mode"       , default = 2    ,
                  help   = "{}".format(string)           )
 
 # Input File
@@ -161,7 +161,7 @@ class geovar( object ):
             - Generates a mesh of the geometric variant
         '''
 
-        _mesh.tetgen(                   self )
+        _mesh.tetgen(                   self, 1 )
         
 
 # ----------------------------------------------------------------------------- #
@@ -189,23 +189,27 @@ try:
     print( "PROGRAM STARTING " )
     print( " ========================================================= " )
 
-    Nprods = prog.Nprods
+    Nprods = 4#prog.Nprods
 
-    if prog.mode == 1:      # MODE 1: Geometric Variations ==================== #
-        for i in range( 0, Nprods ):
-            print('[{:0.6f}] GENERATING VARIANT {}/{}'.format(_performance.current_time( prog ), (i+1), Nprods ) )
+    for i in range( 0, Nprods ):
+        print('[{:0.6f}] GENERATING VARIANT {}/{}'.format(_performance.current_time( prog ), (i+1), Nprods ) )
+
+        # MODE 1: Geometric Variations ======================================== #
+        if prog.mode == 1:
             prog.generate_variant()
-            print( " --------------------------------------------------------- " )
-
-    elif prog.mode == 2:    # MODE 2: Meshing  ================================ #
-        for i in range( 0, Nprods ):
+            
+        # MODE 2: Meshing  ==================================================== #
+        elif prog.mode == 2:
             prog.generate_variant()
             prog.mesh_variant()
-        
-    elif prog.mode == 3:    # MODE 3: Simulation ============================== #
-        print( "> MODE {} HAS NOT BEEN INTEGRATED...".format( prog.mode ) )
-        print( ">> Goodbye..." )
-        exit()
+
+        # MODE 3: Simulation ================================================== #
+        elif prog.mode == 3:    
+            print( "> MODE {} HAS NOT BEEN INTEGRATED...".format( prog.mode ) )
+            print( ">> Goodbye..." )
+            exit()
+
+        print( " --------------------------------------------------------- " )
 
 except KeyboardInterrupt:
     print('[{:0.6f}] PROGRAM TERMINATED...'.format(_performance.current_time( prog )))
