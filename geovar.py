@@ -146,9 +146,9 @@ class geovar( object ):
         _onshape.get_values(            self )
         _morph.simple_morph(            self )
         _onshape.export_stl(            self )    
-        _vis.import_stl(                self )
-        _vis.read_stl(                  self )
-        _vis.vis_stl(                   self, 0, 1, 1 )
+        #_vis.import_stl(                self )
+        #_vis.read_stl(                  self )
+        #_vis.vis_stl(                   self, 0, 1, 1 )
 
         # --------------------------------------------------------------------- # update variant_iter
         self.variant_iter       =   self.variant_iter  + 1
