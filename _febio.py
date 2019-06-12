@@ -62,7 +62,7 @@ def write_febio_file( febio_filename ):
 
 # ------------------------------------------------------------------------------------------------------------ #
 
-def get_febio_data( geo ):
+def get_febio_data( geo, _iter ):
     '''
     EXTRACT FEBio FILE DATA
     '''
@@ -72,17 +72,13 @@ def get_febio_data( geo ):
 
     # the inputs of this program should be the XML components of interest (e.g.: Geometry)
     geo_len = len(geo)
+    
+
+    fdata                           = {}
+    fdata[str(_iter)]               = {}
+    fdata[str(_iter)]['nodes']      = []
     nodeset = {}
-##    fdata                                           = {}
-##    fdata['baseline']                               = {}
-##    fdata['baseline']['geo']                        = {}
-##    fdata['baseline']['geo']['nodes']               = {}
-##    fdata['baseline']['geo']['nodes']['id']         = []
-##    fdata['baseline']['geo']['nodes']['text']       = []
-##    fdata['baseline']['geo']['elements']            = {}
-##    fdata['baseline']['geo']['elements']['id']      = []
-##    fdata['baseline']['geo']['elements']['text']    = []
-##    fdata['baseline']['geo']['nodeset']             = {}
+    fdata[str(_iter)]['nodeset']    = nodeset
 
     for i in range( 0, geo_len ):
 
@@ -103,10 +99,10 @@ def get_febio_data( geo ):
                     
 
     # update structure
-    #fdata['baseline']['geo']['nodes']['array']          = nodes_array
-    #fdata['baseline']['geo']['elements']['array']       = elements_array
+    fdata[str(_iter)]['nodes']      = nodes
+    fdata[str(_iter)]['nodeset']    = nodeset
     
-    return nodes_id, nodes, nodeset 
+    return fdata, nodes_id, nodes, nodeset 
 
 # ------------------------------------------------------------------------------------------------------------ #
 
