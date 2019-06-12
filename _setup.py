@@ -129,7 +129,7 @@ def setup_directories( self ):
 
 # ------------------------------------------------------------------------
 
-def generate_filenames( self, filename, mode ):
+def generate_filenames( self, filename):
     '''
     GENERATE FILENAMES
         - This program works on the premise that all input filenames, in
@@ -142,10 +142,39 @@ def generate_filenames( self, filename, mode ):
     if filename.rfind('.'):
         filename_woe            = filename[:filename.rfind('.')]
     
-    self.input_stl_filename = "{}.stl".format(filename_woe)
-    self.input_xml_filename = "{}.xml".format(filename_woe)
-    self.input_vtk_filename = "{}.vtk".format(filename_woe)
-    self.input_feb_filename = "{}.feb".format(filename_woe)
+    self.input_stl_filename     = "{}.stl".format(filename_woe)
+    self.input_xml_filename     = "{}.xml".format(filename_woe)
+    self.input_vtk_filename     = "{}.vtk".format(filename_woe)
+    self.input_feb_filename     = "{}.feb".format(filename_woe)
+
+# ------------------------------------------------------------------------
+
+def check_input_files( self, filename, mode ):
+    '''
+    CHECK FOR PRESENCE OR ABSENCE OF INPUT FILENAMES
+    '''
+
+    print('[{:0.6f}] Check input files'.format(current_time( self )))
+
+    # ----------------------------------------------------------------------------------------------------------------- # check for all modes
+    file                    = self.input_dir + self.input_xml_filename
+    print('[{:0.6f}] GEOVAR requires input XML file'.format(current_time( self )))
+    if os.path.exists( file ) == True:
+        print('[{:0.6f}] Input XML found, program will continue'.format(current_time( self )))
+    elif os.path.exists( file ) == False:
+        print('[{:0.6f}] FATAL ERROR :: No input XML file found'.format(current_time( self )))
+        quit()
+
+    # ----------------------------------------------------------------------------------------------------------------- # check for mode 2
+    if mode == 3:
+        file                    = self.input_dir + self.input_feb_filename
+        print('[{:0.6f}] MODE 3 Requires input FEBio file'.format(current_time( self )))
+        if os.path.exists( file ) == True:
+            print('[{:0.6f}] Input FEBio found, program will continue'.format(current_time( self )))
+        elif os.path.exists( file ) == False:
+            print('[{:0.6f}] FATAL ERROR :: No input FEBio file found'.format(current_time( self )))
+            quit()
+        
            
 # ------------------------------------------------------------------------
 

@@ -121,15 +121,20 @@ class geovar( object ):
         '''
 
         print( "PROGRAM SETUP" )
-        print( " ========================================================= " )
+        print( "===========================================================" )
 
         _setup.setup_directories(       self )                                  # retrieve directory information
-        _setup.generate_filenames(      self, self.input_file, args.mode )
+        _setup.generate_filenames(      self, self.input_file )
         _setup.read_doc(                self, self.input_file )                 # retrieve document information
         _setup.read_vars(               self, self.input_file )                 # retrieve variable information
         _setup.generate_variant_array(  self )
         _onshape.connect_to_sketch(     self, args )                            # connect to the onshape document
         _onshape.get_list_of_parts(     self )
+
+        if args.mode == 3:
+            # read febio file
+            # get febio data
+            # determine nodeset match
 
 # ----------------------------------------------------------------------------- #
 
