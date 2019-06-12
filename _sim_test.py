@@ -11,5 +11,5 @@ nodes_id, nodes, nodeset = get_febio_data( geo )
 
 #reader, vtk_nodes, vtk_nodes_array = read_vtk( 'dogbone_var1.vtk' )
 
-#nodeset_nodes = node_coord_match( geo, nodes_array )
+node_coord_match( nodeset )
 

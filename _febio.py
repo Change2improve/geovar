@@ -99,7 +99,7 @@ def get_febio_data( geo ):
             
         if geo[i].tag == 'NodeSet': # ------------------------------------------------------------------------ #
             print( "> Gathering NodeSet(s)..." )
-            nodeset = get_nodeset(      geo, i, nodeset )
+            nodeset = get_nodeset(      geo, i, nodes, nodeset )
                     
 
     # update structure
@@ -168,7 +168,7 @@ def get_elements( geo, index):
 
 # ------------------------------------------------------------------------------------------------------------ #
 
-def get_nodeset( geo, index, nodeset ):
+def get_nodeset( geo, index, nodes, nodeset ):
     '''
     GET NODESET DATA
     '''
@@ -184,19 +184,18 @@ def get_nodeset( geo, index, nodeset ):
     nodeset[str(nodeset_index)] = {}
     if nodeset_type[:-2] == 'FixedDisplacement': # ----------------------------------------------------------- #
         nodeset[str(nodeset_index)]['type']     = 'fixdisp{}'.format(nodeset_type[len(nodeset_type)-2:])
-        nodeset[str(nodeset_index)]['id']       = []
-        for j in range( 0, nodeset_len ):
-            nodeset[str(nodeset_index)]['id'].append( nodeset_obj[j].attrib['id'] )
 
     if nodeset_type[:-2] == 'PrescribedDisplacement': # ------------------------------------------------------ #
         nodeset[str(nodeset_index)]['type']     = 'presdisp{}'.format(nodeset_type[len(nodeset_type)-2:])
-        nodeset[str(nodeset_index)]['id']    = []
-        #nodeset[str(nodeset_index)]['nodes'] = []
-        for j in range( 0, nodeset_len ):
-            nodeset[str(nodeset_index)]['id'].append( nodeset_obj[j].attrib['id'] )
-
+        
     elif nodeset_type[:-2] != 'FixedDisplacement' and nodeset_type[:-2] != 'PrescribedDisplacement':
         message = "The current version of GEOVAR does not support FEBio's NoseSet:Type {}".format( nodeset_type )
         print( message )
+
+    nodeset[str(nodeset_index)]['id']    = []
+    nodeset[str(nodeset_index)]['nodes'] = []
+    for j in range( 0, nodeset_len ):
+        nodeset[str(nodeset_index)]['id'].append( nodeset_obj[j].attrib['id'] )
+        nodeset[str(nodeset_index)]['nodes'].append( nodes[ int(nodeset_obj[j].attrib['id'])-1] )
 
     return nodeset

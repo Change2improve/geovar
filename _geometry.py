@@ -17,77 +17,37 @@ import numpy as np
 # FUNCTIONS ============================================================ *
 # ************************************************************************
 
-def node_coord_match( geo, nodes_array ):
+def node_coord_match( nodeset ):
     '''
     MATCHES CORRESPONDING NODES ON THE BASIS OF COORDINATE EXACT SIMILARITIES
     '''
 
-    geo_len = len(geo)
+    nodeset_len = len(nodeset)
+    print(nodeset_len)
 
+    for i in range( 0, 1 ):
 
-    # unpack nodes ----------------------------------------------------- #
-    # nodes come from "node_array"
-    
-    
-    
-    for i in range( 0, 3 ):
+        print(' Working on {} '.format( nodeset[str(i)]['type'] ) )
 
-        if geo[i].tag == 'NodeSet':
+        # determine by average
+        nodeset_nodes   = nodeset[str(i)]['nodes']
+        nodes_len       = len(nodeset_nodes)
 
-            nodeset = geo[i]
-            nodeset_type    = nodeset.attrib['name']
-            print( nodeset_type )
+        nodes_sum       = np.zeros((3))
+        nodes_mean      = np.zeros((3))
+        nodes_sd        = np.zeros((3))
+        for j in range( 0, nodes_len ):
+            nodes_sum = nodes_sum + nodeset_nodes[j]
 
-            nodeset_len = len(nodeset)
-            print(nodeset_len)
+        nodes_mean = nodes_sum / nodes_len
 
-            # pull ids from nodeset ------------------------------------- #
-            nodeset_id          = []
-            nodeset_nodes       = []
+        for j in range( 0, nodes_len ):
+            nodes_sd = nodes_sd + ( nodeset_nodes[j] - nodes_mean )**2
 
-            nodes_coord_sum     = np.zeros((3))
-            nodes_coord_avg     = []
-            
-            for j in range( 0, nodeset_len ):
-                nodeset_id.append(      int(nodeset[j].attrib['id'])    )
-                nodeset_nodes.append(   nodes_array[nodeset_id[j] - 1]  )
-
-                nodes_coord_sum = nodes_coord_sum + nodes_array[nodeset_id[j] - 1]
-
-            print( nodeset_id )
-            print( nodeset_nodes )
-            print( nodes_coord_sum )
-
-                
-
-    '''
-    for i in range( 0, nodeset_len ):
+        nodes_sd = np.sqrt( nodes_sd / nodes_len )
         
-    # using the attributes
-    nodeset_type    = nodeset.attrib['name']
-    nodeset_len     = len(nodeset)
 
-    if nodeset_type[:-2] == 'FixedDisplacement': # ----------------------------------------------------------- #
-        label_str = 'fixdisp{}'.format(nodeset_type[len(nodeset_type)-2:])
-        fdata['baseline']['geo']['nodeset'][label_str]          = {}
-        fdata['baseline']['geo']['nodeset'][label_str]['id']    = []
-        for j in range( 0, nodeset_len ):
-            fdata['baseline']['geo']['nodeset'][label_str]['id'].append( nodeset[j].attrib['id'] )
-
-    if nodeset_type[:-2] == 'PrescribedDisplacement': # ------------------------------------------------------ #
-        label_str = 'presdisp{}'.format(nodeset_type[len(nodeset_type)-2:])
-        fdata['baseline']['geo']['nodeset'][label_str]          = {}
-        fdata['baseline']['geo']['nodeset'][label_str]['id']    = []
-        for j in range( 0, nodeset_len ):
-            fdata['baseline']['geo']['nodeset'][label_str]['id'].append( nodeset[j].attrib['id'] )
-
-    elif nodeset_type[:-2] != 'FixedDisplacement' and nodeset_type[:-2] != 'PrescribedDisplacement':
-        message = "The current version of GEOVAR does not support FEBio's NoseSet:Type {}".format( nodeset_type )
-        print( message )
-
-    return fdata
-    '''
-    return nodeset_nodes
-
+    print( nodes_sum, nodes_mean, nodes_sd )
+            
 # --------------------------
 
