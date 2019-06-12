@@ -106,7 +106,7 @@ def get_febio_data( geo ):
     fdata['baseline']['geo']['nodes']['array']          = nodes_array
     fdata['baseline']['geo']['elements']['array']       = elements_array
     
-    return fdata   
+    return fdata, nodes_array, elements_array   
 
 # ------------------------------------------------------------------------------------------------------------ #
 

@@ -1,45 +1,36 @@
 '''
 *
-* _morph
-* GEOVAR MORPH MODULE
+* _mesh
+* GEOVAR MESH MODULE
 *
-* Module designed to delegate "onshape-specific" functions or operations
+* Module designed to delegate "mesh-specific" functions or operations
 *
-* VERSION: 0.0.1
-
-* KNOWN ISSUES:
-*   - Nada atm.
-*
-*
-* AUTHOR                    :   Mohammad Odeh, Fluvio L. Lobo Fenoglietto
-* DATE                      :   Jan. 15th, 2019 Year of Our Lord
+* AUTHOR                    :   Fluvio L. Lobo Fenoglietto
+* DATE                      :   Jun. 12th, 2019
 *
 '''
 
-# additional python modules and libraries
-import  re
-import  os
+# Python Libraries and Modules
 import  numpy                       as      np
-from    platform                    import  system                          # Running platform info
-from    itertools                   import  product                         # Apply product rule on combinations
-from    time                        import  sleep, time                     # Timers/delays
-
+import  vtk
+from    vtk.util.numpy_support      import  vtk_to_numpy
+from    platform                    import  system                                                  # Running platform info
 try:
-    from    pexpect                 import  spawn                           # Call external programs (UNIX)
+    from    pexpect                 import  spawn                                                   # Call external programs (UNIX)
 except:
-    from    pexpect.popen_spawn     import  PopenSpawn as spawn             # Call external programs (Windows)
+    from    pexpect.popen_spawn     import  PopenSpawn as spawn                                     # Call external programs (Windows)
 
-# onshape modules and libraries
-from    onshapepy.play              import  *                               # Onshape API
+# Onshape Libraries and Modules
+from    onshapepy.play              import  *                                                       # Onshape API
 
-# adapted onshape modules and libraries
+# Geovar Libraries and Modules
 from    _performance                import  *
 import  _onshape
 
 
-# ************************************************************************
-# FUNCTIONS =============================================================*
-# ************************************************************************
+# ***************************************************************************************************
+# FUNCTIONS ======================================================================================= *
+# ***************************************************************************************************
 
 def tetgen( self, verbose ):
     '''
@@ -70,4 +61,24 @@ def tetgen( self, verbose ):
     
     if( system()=='Linux' ): child.close()                                                          # Kill child process
 
-# --------------------------
+# ------------------------------------------------------------------------------------------------- #
+
+def read_vtk( filename ):
+    '''
+    IMPORT/READ VTK MESH
+    '''
+
+    # load a vtk file as input
+    reader              = vtk.vtkUnstructuredGridReader()
+    reader.SetFileName("dogbone_var1.vtk")
+    reader.Update()
+
+    # Get the coordinates of nodes in the mesh
+    vtk_nodes           = reader.GetOutput().GetPoints().GetData()
+    vtk_nodes_array     = vtk_to_numpy( vtk_nodes )
+
+    return reader, vtk_nodes, vtk_nodes_array
+
+
+
+
