@@ -19,14 +19,15 @@ from    lxml                        import  etree
 # FUNCTIONS =============================================================*
 # ************************************************************************
 
-def read_febio_file( self, febio_filename ):
+def read_febio_file( febio_filename ):
     '''
-    Read FEBio file
+    READ FEBio FILE
     '''
 
     print( '\n' )
     print( "READ FEBio INFO..." )
-    file = self.input + febio_filename
+    #file = self.input + febio_filename
+    file = febio_filename
     print(file)
 
     febio_doc       = etree.parse( file )
@@ -45,19 +46,16 @@ def read_febio_file( self, febio_filename ):
     
 
     #return febio_doc, febio_root, geo, geo_index, geo_len
-    self.febio_doc  = febio_doc
-    self.febio_root = febio_root
-    
+    #self.febio_doc  = febio_doc
+    #self.febio_root = febio_root
 
-# --------------------------
+    return geo, febio_doc, febio_root
 
+# ------------------------------------------------------------------------------------------------------------ #
 
 def get_febio_data( geo ):
     '''
-    Extract FEBio data from FEBio file:
-        - nodes
-        - elements
-        - nodesets
+    EXTRACT FEBio FILE DATA
     '''
 
     print( '\n' )
@@ -101,11 +99,11 @@ def get_febio_data( geo ):
     
     return fdata   
 
-# --------------------------
+# ------------------------------------------------------------------------------------------------------------ #
 
 def get_nodes( geo, index, fdata ):
     '''
-    Get node data
+    GET NODE DATA
     '''
     nodes               = geo[index]
     nodes_len           = len( nodes )
@@ -125,11 +123,11 @@ def get_nodes( geo, index, fdata ):
 
     return fdata, nodes_array
 
-# --------------------------
+# ------------------------------------------------------------------------------------------------------------ #
 
 def get_elements( geo, index, fdata ):
     '''
-    Get node data
+    GET ELEMENT DATA
     '''
     elements            = geo[index]
     elements_len        = len( elements )
@@ -155,11 +153,11 @@ def get_elements( geo, index, fdata ):
 
     return fdata, elements_array
 
-# --------------------------
+# ------------------------------------------------------------------------------------------------------------ #
 
 def get_nodeset( geo, index, fdata ):
     '''
-    Get NodeSet data
+    GET NODESET DATA
     '''
     nodeset = geo[index]
     nodeset_len = len(nodeset)
@@ -168,14 +166,14 @@ def get_nodeset( geo, index, fdata ):
     nodeset_type = nodeset.attrib['name']
     nodeset_len = len(nodeset)
 
-    if nodeset_type[:-2] == 'FixedDisplacement': # --------------------------------------------------- #
+    if nodeset_type[:-2] == 'FixedDisplacement': # ----------------------------------------------------------- #
         label_str = 'fixdisp{}'.format(nodeset_type[len(nodeset_type)-2:])
         fdata['baseline']['geo']['nodeset'][label_str]          = {}
         fdata['baseline']['geo']['nodeset'][label_str]['id']    = []
         for j in range( 0, nodeset_len ):
             fdata['baseline']['geo']['nodeset'][label_str]['id'].append( nodeset[j].attrib['id'] )
 
-    if nodeset_type[:-2] == 'PrescribedDisplacement': # ---------------------------------------------- #
+    if nodeset_type[:-2] == 'PrescribedDisplacement': # ------------------------------------------------------ #
         label_str = 'presdisp{}'.format(nodeset_type[len(nodeset_type)-2:])
         fdata['baseline']['geo']['nodeset'][label_str]          = {}
         fdata['baseline']['geo']['nodeset'][label_str]['id']    = []
