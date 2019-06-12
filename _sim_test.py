@@ -1,6 +1,5 @@
 from _febio     import *
 from _mesh      import *
-from _geometry  import * 
 
 
 # this only needs to be done once, so we should push it to the setup... perhaps?
@@ -11,5 +10,5 @@ nodes_id, nodes, nodeset = get_febio_data( geo )
 
 #reader, vtk_nodes, vtk_nodes_array = read_vtk( 'dogbone_var1.vtk' )
 
-node_coord_match( nodeset )
+nodeset_match( nodeset )
 
