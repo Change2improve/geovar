@@ -206,9 +206,9 @@ def nodeset_match( nodeset ):
     MATCHES CORRESPONDING NODES ON THE BASIS OF COORDINATE EXACT SIMILARITIES
     '''
 
+    # -------------------------------------------------------------------------------------------------------- # here we identify the relation between the nodes associated with each boundary condition
     nodeset_len = len(nodeset)
-    #print(nodeset_len)
-
+    match_type = []
     match_axis = []
     match_mean = []
     match_sd   = []
@@ -241,15 +241,22 @@ def nodeset_match( nodeset ):
         if np.abs(nodes_sd_min) < tol:
             # capturing index of smallest deviation
             # capturing the average value of the smallest deviation
-            for i in range( 0, len(nodes_sd) ):
-                if nodes_sd[i] == nodes_sd_min:
-                    min_index = i
+            for k in range( 0, len(nodes_sd) ):
+                if nodes_sd[k] == nodes_sd_min:
+                    min_index = k
                     break
             nodes_mean_min = nodes_mean[min_index]
 
         # results
-        match_axis.append(  min_index )
-        match_mean.append(  nodes_mean_min )
-        match_sd.append(    nodes_sd_min )
+        match_type.append(  nodeset[str(i)]['type'][:-2]    )
+        match_axis.append(  min_index                       )
+        match_mean.append(  nodes_mean_min                  )
+        match_sd.append(    nodes_sd_min                    )
 
-    print( match_axis, match_mean, match_sd )
+    print( match_type, match_axis, match_mean, match_sd )
+
+    # -------------------------------------------------------------------------------------------------------- # here we identify the nodes that have that relation on the next part
+    # import nodes from vtk mesh
+    # generate new nodeset structure
+    
+    return nodeset
