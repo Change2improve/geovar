@@ -24,17 +24,17 @@ def read_febio_file( febio_filename ):
     READ FEBio FILE
     '''
 
-    print( '\n' )
-    print( "READ FEBio INFO..." )
+    #print( '\n' )
+    #print( "READ FEBio INFO..." )
     #file = self.input + febio_filename
     file = febio_filename
-    print(file)
+    #print(file)
 
     febio_doc       = etree.parse( file )
     febio_root      = febio_doc.getroot()
 
     root_len = len(febio_root)
-    print( root_len )
+    #print( root_len )
     for i in range( 0, root_len ):
         if febio_root[i].tag == 'Geometry':
             geo_index = i
@@ -67,8 +67,8 @@ def get_febio_data( geo ):
     EXTRACT FEBio FILE DATA
     '''
 
-    print( '\n' )
-    print( "EXTRACT FEBio INFO..." )
+    #print( '\n' )
+    #print( "EXTRACT FEBio INFO..." )
 
     # the inputs of this program should be the XML components of interest (e.g.: Geometry)
     geo_len = len(geo)
@@ -90,15 +90,15 @@ def get_febio_data( geo ):
         #print( geo[i].tag )
 
         if geo[i].tag == 'Nodes': # -------------------------------------------------------------------------- #
-            print( "> Gathering Nodes..." )
+            #print( "> Gathering Nodes..." )
             nodes_id, nodes      = get_nodes(        geo, i )
 
         if geo[i].tag == 'Elements': # ----------------------------------------------------------------------- #
-            print( "> Gathering Elements..." )
+            #print( "> Gathering Elements..." )
             elements_id, elements   = get_elements(     geo, i)
             
         if geo[i].tag == 'NodeSet': # ------------------------------------------------------------------------ #
-            print( "> Gathering NodeSet(s)..." )
+            #print( "> Gathering NodeSet(s)..." )
             nodeset = get_nodeset(      geo, i, nodes, nodeset )
                     
 
@@ -146,7 +146,7 @@ def get_elements( geo, index):
     # using attributes to ensure proper extraction
     # this will be implemented now and should be standard in the future
     if elements_obj.attrib['type'] == 'tet4':
-        print( ">> The mesh uses tets of 4 nodes" )
+        #print( ">> The mesh uses tets of 4 nodes" )
         nodes_per_tet = 4
 
     # initializing numpy arrays
@@ -189,8 +189,7 @@ def get_nodeset( geo, index, nodes, nodeset ):
         nodeset[str(nodeset_index)]['type']     = 'presdisp{}'.format(nodeset_type[len(nodeset_type)-2:])
         
     elif nodeset_type[:-2] != 'FixedDisplacement' and nodeset_type[:-2] != 'PrescribedDisplacement':
-        message = "The current version of GEOVAR does not support FEBio's NoseSet:Type {}".format( nodeset_type )
-        print( message )
+        print('The current version of GEOVAR does not support FEBios NoseSet:Type {}'.format( nodeset_type ))
 
     nodeset[str(nodeset_index)]['id']    = []
     nodeset[str(nodeset_index)]['nodes'] = []
