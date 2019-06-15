@@ -17,10 +17,10 @@
 
 -->
 <document>
-	<address>https://cad.onshape.com/documents/4e3832753dcb6a4a40d811d4/w/dc8514160372a09684f110f6/e/e4699547e107cc528a96377d</address>
+	<address>https://cad.onshape.com/documents/46cf420076dee634faa36045/w/08ef97ea0438ee5398ad9d7f/e/1a7780ae5b5c17f0da8cff28</address>
 	<variables>
-		<var name="Wr"	start="0.10"	stop="0.75"	np="5"	ep="1"></var>
-		<var name="Lr"	start="0.75"	stop="1.75"	np="5"	ep="1"></var>
-		<var name="R"	start="0.25"	stop="1"	np="5"	ep="1"></var>
+		<var name="inner_dia"	start="15"	stop="35"	np="3"	ep="1"></var>
+		<var name="outer_dia"	start="50"	stop="70"	np="3"	ep="1"></var>
+		<var name="height"		start="75"	stop="95"	np="3"	ep="1"></var>
 	</variables>
 </document>

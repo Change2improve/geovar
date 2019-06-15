@@ -81,7 +81,7 @@ ap.add_argument( "-m"   , "--mode"     , type = int     ,
 # Input File
 string = "Input file name (no extensions)"
 ap.add_argument( "-i"   , "--input_file"     , type = str           ,
-                 dest   = "input_file"       , default = "dogbone.xml"  ,
+                 dest   = "input_file"       , default = "permute.xml",
                  help   = "{}".format(string)                       )
 
 args = ap.parse_args()
@@ -130,11 +130,6 @@ class geovar( object ):
         _setup.generate_variant_array(  self )
         _onshape.connect_to_sketch(     self, args )                            # connect to the onshape document
         _onshape.get_list_of_parts(     self )
-
-        if args.mode == 3:
-            # read febio file
-            # get febio data
-            # determine nodeset match
 
 # ----------------------------------------------------------------------------- #
 
@@ -194,7 +189,7 @@ try:
     print( "PROGRAM STARTING " )
     print( " ========================================================= " )
 
-    Nprods = 4#prog.Nprods
+    Nprods = prog.Nprods
 
     for i in range( 0, Nprods ):
         print('[{:0.6f}] GENERATING VARIANT {}/{}'.format(_performance.current_time( prog ), (i+1), Nprods ) )
