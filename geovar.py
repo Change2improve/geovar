@@ -124,6 +124,7 @@ class geovar( object ):
         print( "===========================================================" )
 
         _setup.setup_directories(       self )                                  # retrieve directory information
+        print( self.input_file )
         _setup.generate_filenames(      self, self.input_file )
         _setup.read_doc(                self, self.input_file )                 # retrieve document information
         _setup.read_vars(               self, self.input_file )                 # retrieve variable information
@@ -182,7 +183,7 @@ try:
     print()
     print()
     print('[{:0.6f}] WARNING: This program will generate {} geometric variants (.STL)...'.format(_performance.current_time( prog ), prog.Nprods))
-    _setup.query_variants( "Do you wish to continue?", default="yes")
+    _setup.query_variants( '[{:0.6f}] Do you wish to continue?'.format(_performance.current_time( prog )), default="yes")
     print()
     print()
 

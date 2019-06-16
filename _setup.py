@@ -139,8 +139,10 @@ def generate_filenames( self, filename):
 
     print('[{:0.6f}] Setup filenames'.format(current_time( self )))
 
-    if filename.rfind('.'):
+    if filename.rfind('.') is not -1:
         filename_woe            = filename[:filename.rfind('.')]
+    elif filename.rfind('.') is -1:
+        filename_woe            = filename
     
     self.input_stl_filename     = "{}.stl".format(filename_woe)
     self.input_xml_filename     = "{}.xml".format(filename_woe)
@@ -189,7 +191,6 @@ def read_doc( self, filename ):
     print('[{:0.6f}] Reading Onshape doc. info. from input XML'.format(current_time( self )))
     
     file                        = self.input_dir + self.input_xml_filename
-
     if os.path.exists( file ) == False:
         print('[{:0.6f}] FATAL ERROR :: No input XML file found'.format(current_time( self )))
         quit()
@@ -301,10 +302,10 @@ def query_variants(question, default="yes"):
             return valid[default]
         elif choice in valid:
             if valid[choice] == False:
-                print(">> Terminating program...")
+                print('Terminating program...')
                 quit()
             else:
-                print(">> Proceed at your own risk..!")
+                print('Proceed at your own risk..!')
                 return valid[choice]
         else:
             sys.stdout.write("Please respond with 'yes' or 'no' "
